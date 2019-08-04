@@ -27,7 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	http://certventas.siglobpo.com'
 
 */
-$config['base_url'] = 'http://certventas.siglobpo.com';
+$config['base_url'] = 'http://localhost/provida/';
 
 /*
 |--------------------------------------------------------------------------
