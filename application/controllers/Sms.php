@@ -59,8 +59,9 @@ class Sms extends CI_Controller {
 			if($this->input->POST('other_messages'))
 				$other_messages = $this->input->POST('other_messages');
 
-			$query = $this->Sms_model->saveSms($username, $password, $ani, $dni, $message, $other_messages);
-			return $hola.json_encode($query);
+			$query = $this->Sms_model->saveSms($username, $password, $ani, $dnis, $message, $other_messages);
+
+			return 'hola'.$query;
 		}
 	}
 	
