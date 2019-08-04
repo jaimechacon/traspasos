@@ -39,6 +39,7 @@ class Sms extends CI_Controller {
 		if($json != null)
 		{
 			$data = json_decode($json);
+			$query = $this->Sms_model->saveSms($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages);
 			if($data != null && $data->username != null && $data->password != null)
 			{
 				if($data->username == "Sglo2019" && $data->username == "Sg.2019$$##")
