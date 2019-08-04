@@ -63,7 +63,7 @@ class Sms extends CI_Controller {
 		// Converts it into a PHP object
 		$data = json_decode($json);
 
-		$query = $this->Sms_model->saveSms($data->username, $data->$password, $data->$ani, $data->$dnis, $data->$message, $data->$other_messages);
+		$query = $this->Sms_model->saveSms($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages);
 
 		return 'hola'.$query;
 		//$this->load->view('listarUsuarios', $usuario);
