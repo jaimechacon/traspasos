@@ -27,47 +27,26 @@ class Sms extends CI_Controller {
 
 	public function receiveSMS()
 	{
-		//$usuario = $this->session->userdata();
-		//$usuarios = $this->usuario_model->buscarUsuario('', (int)$usuario["id_usuario"]);
-		//$usuario['usuarios'] = $usuarios;
-		//$usuario['controller'] = 'usuario';
-
 		$username = "";
 		$password = "";
 		$ani = "";
 		$dnis = "";
 		$message = "";
 		$other_messages = "";
-
-
-		if($this->input->POST('username'))
-			$username = json_decode($this->input->POST('username'));
-
-		if($this->input->POST('password'))
-			$password = json_decode($this->input->POST('password'));
-
-		if($this->input->POST('ani'))
-			$ani = json_decode($this->input->POST('ani'));
-
-		if($this->input->POST('dnis'))
-			$dnis = json_decode($this->input->POST('dnis'));
-
-		if($this->input->POST('message'))
-			$message = json_decode($this->input->POST('message'));
-
-		if($this->input->POST('other_messages'))
-			$other_messages = json_decode($this->input->POST('other_messages'));
 		
 		$json = file_get_contents('php://input');
 
-		// Converts it into a PHP object
-		$data = json_decode($json);
-
-		$query = $this->Sms_model->saveSms($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages);
-
-		return 'hola'.$query;
-		//$this->load->view('listarUsuarios', $usuario);
-
+		if($json != null)
+		{
+			$data = json_decode($json);
+			if($data != null && $data->username != null && $data->password != null)
+			{
+				if($data->username == "Sglo2019" && $data->username == "Sg.2019$$##")
+				{
+					$query = $this->Sms_model->saveSms($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages);
+				}
+			}
+		}
 	}
 	
 }
