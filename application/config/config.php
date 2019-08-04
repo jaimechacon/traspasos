@@ -23,7 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 	http://www.2gdc.com/
-	http://localhost/provida/'
+	http://localhost/provida/
+	http://certventas.siglobpo.com'
 
 */
 $config['base_url'] = 'http://certventas.siglobpo.com';

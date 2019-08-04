@@ -1,8 +1,9 @@
-.DS_Store
-assets/files/*
-application/grabaciones/*
-application/grabaciones/
 application/config/config.php
+application/config/database.php
+assets/files/*
+#application/grabaciones/*
+#application/grabaciones/
+
 application/cache/*
 !application/cache/index.html
 
@@ -32,6 +33,3 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 /tests/tests/
 /tests/results/
-
-application/config/config.php
-application/config/database.php
