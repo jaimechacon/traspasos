@@ -27,42 +27,42 @@ class Sms extends CI_Controller {
 
 	public function receiveSMS()
 	{
-		$usuario = $this->session->userdata();
-		if($usuario){
-			//$usuarios = $this->usuario_model->buscarUsuario('', (int)$usuario["id_usuario"]);
-			//$usuario['usuarios'] = $usuarios;
-			//$usuario['controller'] = 'usuario';
+		//$usuario = $this->session->userdata();
+		//$usuarios = $this->usuario_model->buscarUsuario('', (int)$usuario["id_usuario"]);
+		//$usuario['usuarios'] = $usuarios;
+		//$usuario['controller'] = 'usuario';
 
-			$username = "";
-			$password = "";
-			$ani = "";
-			$dnis = "";
-			$message = "";
-			$other_messages = "";
+		$username = "";
+		$password = "";
+		$ani = "";
+		$dnis = "";
+		$message = "";
+		$other_messages = "";
 
 
-			if($this->input->POST('username'))
-				$username = $this->input->POST('username');
+		if($this->input->POST('username'))
+			$username = json_decode($this->input->POST('username'));
 
-			if($this->input->POST('password'))
-				$password = $this->input->POST('password');
+		if($this->input->POST('password'))
+			$password = json_decode($this->input->POST('password'));
 
-			if($this->input->POST('ani'))
-				$ani = $this->input->POST('ani');
+		if($this->input->POST('ani'))
+			$ani = json_decode($this->input->POST('ani'));
 
-			if($this->input->POST('dnis'))
-				$dnis = $this->input->POST('dnis');
+		if($this->input->POST('dnis'))
+			$dnis = json_decode($this->input->POST('dnis'));
 
-			if($this->input->POST('message'))
-				$message = $this->input->POST('message');
+		if($this->input->POST('message'))
+			$message = json_decode($this->input->POST('message'));
 
-			if($this->input->POST('other_messages'))
-				$other_messages = $this->input->POST('other_messages');
+		if($this->input->POST('other_messages'))
+			$other_messages = json_decode($this->input->POST('other_messages'));
+		
+		$query = $this->Sms_model->saveSms($username, $password, $ani, $dnis, $message, $other_messages);
 
-			$query = $this->Sms_model->saveSms($username, $password, $ani, $dnis, $message, $other_messages);
+		return 'hola'.$query;
+		//$this->load->view('listarUsuarios', $usuario);
 
-			return 'hola'.$query;
-		}
 	}
 	
 }
