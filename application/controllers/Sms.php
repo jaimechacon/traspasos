@@ -7,13 +7,12 @@ class Sms extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Sms_model');
-		//$this->load->model('perfil_model');
 	}
 
 	public function index()
 	{
 		$usuario = $this->session->userdata();
-		if($usuario){
+		if(isset($usuario['id_usuario'])){
 
 			$validacionesPendientes = $this->Sms_model->listarTraspasosPendientes($usuario['id_usuario']);
 			$usuario['validacionesPendientes'] = $validacionesPendientes;
