@@ -36,7 +36,17 @@ class Sms extends CI_Controller {
 			{
 				if($data->username == "Sglo2019" && $data->password == "Sg.2019$$##")
 				{
-					$query = $this->Sms_model->saveSms($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages);
+					var_dump(explode("_",'175903267_107311071_1_89233272_1234'));
+					var_dump(sizeof(explode("_",'175903267_107311071_1_89233272_1234')));
+					$datos = explode("_", $data->message);
+					if(sizeof($datos) === 5){
+						$rut = $datos[0];
+						$serie = $datos[1];
+						$tipo_documento = $datos[2];
+						$telefono = $datos[3];
+						$folio = $datos[4];
+						$query = $this->Sms_model->saveSms($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio);
+					}
 				}
 			}
 		}

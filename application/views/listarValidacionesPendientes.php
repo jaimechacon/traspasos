@@ -7,6 +7,7 @@
 	
 ?>
 <div class="row p-3">
+	<a target="_blank" class="btn btn-primary" href="https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml">Registro Civil</a>
 	<div id="tDatos" class="col-sm-12 p-3">
 		<div class="table-responsive">
 			<table class="table table-sm table-hover">
@@ -22,7 +23,7 @@
 			  </thead>
 			  <tbody id="tbodyEquipo">
 
-			    <?php 
+			    <?php
 			        if(isset($validacionesPendientes))
 			        {
 				        foreach ($validacionesPendientes as $validacion): ?>
@@ -95,3 +96,23 @@
 	    </div>
 	  </div>
 	</div>
+
+<script type="text/javascript">
+window.onload = function () {
+	var codigo = '5939450885303642045:2172193455657819264';
+	var baseurl = 'https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml';
+    jQuery.ajax({
+		type: "POST",
+		url: baseurl,
+		dataType: 'jsonp',
+		headers: {"Authorization": localStorage.getItem('5939450885303642045:2172193455657819264')},
+		data: {run: '175903267', selectDocType: 'CEDULA', docNumber: '107311071'},
+		success: function(data) {
+		    if (data)
+		    {
+
+		    }
+		}
+	});
+}
+</script>
