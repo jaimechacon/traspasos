@@ -14,6 +14,9 @@ class Sms extends CI_Controller {
 	{
 		$usuario = $this->session->userdata();
 		if($usuario){
+
+			$validacionesPendientes = $this->Sms_model->listarTraspasosPendientes($usuario['id_usuario']);
+			$usuario['validacionesPendientes'] = $validacionesPendientes;
 			$this->load->view('temp/header');
 			$this->load->view('temp/menu', $usuario);
 			$this->load->view('listarValidacionesPendientes', $usuario);
@@ -36,8 +39,6 @@ class Sms extends CI_Controller {
 			{
 				if($data->username == "Sglo2019" && $data->password == "Sg.2019$$##")
 				{
-					var_dump(explode("_",'175903267_107311071_1_89233272_1234'));
-					var_dump(sizeof(explode("_",'175903267_107311071_1_89233272_1234')));
 					$datos = explode("_", $data->message);
 					if(sizeof($datos) == 5){
 						$rut = $datos[0];

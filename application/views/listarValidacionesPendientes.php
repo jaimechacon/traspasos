@@ -15,9 +15,8 @@
 			    <tr>
 			      <th scope="col" class="text-center align-middle registro"># ID</th>
 			      <th scope="col" class="text-center align-middle registro">Rut</th>
-			      <th scope="col" class="text-center align-middle registro"></th>
-			      <th scope="col" class="text-center align-middle registro">Abreviaci&oacute;n</th>
-			      <th scope="col" class="text-center align-middle registro">Cant. Usuarios</th>
+			      <th scope="col" class="text-center align-middle registro">Serie</th>
+			      <th scope="col" class="text-center align-middle registro">Tipo Documento</th>
 			      <th scope="col" class="text-right align-middle registro"></th>
 			    </tr>
 			  </thead>
@@ -28,24 +27,18 @@
 			        {
 				        foreach ($validacionesPendientes as $validacion): ?>
 				  			<tr>
-						       <!-- <th scope="row" class="text-center align-middle registro"><?php echo $equipo['id_equipo']; ?></th>
-						        <td class="text-center align-middle registro"><?php echo $equipo['nombre']; ?></td>
-						        <td class="text-center align-middle registro"><?php echo $equipo['descripcion']; ?></td>
-						        <td class="text-center align-middle registro"><?php echo $equipo['abreviacion']; ?></td>
-						        <td class="text-center align-middle registro"> 
-						        	<span class="badge badge-primary badge-pill"><?php echo $equipo['cant_usu']; ?></span>
-						        </td>
+						        <th scope="row" class="text-center align-middle registro"><?php echo $validacion['id_sms']; ?></th>
+						        <td class="text-center align-middle registro"><?php echo $validacion['rut']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['serie']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['tipo_documento']; ?></td>
 						        <td class="text-right align-middle registro">
-						        	<a id="trash_<?php echo $equipo['id_equipo']; ?>" class="trash" href="#" data-id="<?php echo $equipo['id_equipo']; ?>" data-nombre="<?php echo $equipo['nombre']; ?>" data-toggle="modal" data-target="#modalEliminarEquipo">
-						        		<i data-feather="trash-2" data-toggle="tooltip" data-placement="top" title="eliminar"></i>					        		
-					        		</a>
-					        		<a id="edit_<?php echo $equipo['id_equipo']; ?>" class="edit" type="link" href="ModificarEquipo/?idEquipo=<?php echo $equipo['id_equipo']; ?>" data-id="<?php echo $equipo['id_equipo']; ?>" data-nombre="<?php echo $equipo['nombre']; ?>">
+						        <a id="trash_<?php echo $validacion['id_sms']; ?>" class="trash" href="#" data-id="<?php echo $validacion['id_sms']; ?>" data-rut="<?php echo $validacion['rut']; ?>" data-toggle="modal" data-target="#modalEliminarSms">
+						        		<i data-feather="trash-2" data-toggle="tooltip" data-placement="top" title="eliminar"></i>        		
+					        	</a>
+					        		<a id="edit_<?php echo $validacion['id_sms']; ?>" class="edit" type="link" href="ModificarSms/?idSms=<?php echo $validacion['id_sms']; ?>" data-id="<?php echo $validacion['id_sms']; ?>" data-rut="<?php echo $validacion['rut']; ?>">
 						        		<i data-feather="edit-3" data-toggle="tooltip" data-placement="top" title="modificar"></i>
-					        		</a>-->
-					        		<!--<a id="view_<?php echo $equipo['id_equipo']; ?>" class="view" href="#">
-						        		<i data-feather="search"  data-toggle="tooltip" data-placement="top" title="ver"></i>
-					        		</a>-->
-					        	<!--</td>-->
+					        		</a>
+					        	</td>
 					    	</tr>
 				  		<?php endforeach;
 				  	} ?>
@@ -99,6 +92,8 @@
 
 <script type="text/javascript">
 window.onload = function () {
+	feather.replace()
+    $('[data-toggle="tooltip"]').tooltip()
 	var codigo = '5939450885303642045:2172193455657819264';
 	var baseurl = 'https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml';
     jQuery.ajax({

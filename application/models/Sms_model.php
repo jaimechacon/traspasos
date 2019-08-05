@@ -13,4 +13,10 @@ class Sms_model extends CI_Model
 		$query = $this->db->insert('sms', array('username' => $username, 'password' => $password, 'ani' => $ani, 'dnis' => $dnis, 'message' => $message, 'other_messages' => $other_messages, 'id_estado' => 1, 'fecha' => date(), 'rut' => $rut, 'serie' => $serie, 'tipo_documento' => $tipo_documento, 'telefono' => $telefono, 'folio' => $folio));
 		return $query;
 	}
+
+	public function listarTraspasosPendientes($idUsuario)
+	{
+		$query = $this->db->query("call `traspasosdb`.`listarTraspasosPendientes`(".$idUsuario.");");
+		return $query->result_array();
+	}
 }
