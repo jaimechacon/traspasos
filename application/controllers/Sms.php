@@ -16,30 +16,22 @@ class Sms extends CI_Controller {
 		if($usuario){
 			$this->load->view('temp/header');
 			$this->load->view('temp/menu', $usuario);
-			$this->load->view('listarUsuarios', $usuario);
+			$this->load->view('listarValidacionesPendientes', $usuario);
 			$this->load->view('temp/footer');
 		}else
 		{
-			//$data['message'] = 'Verifique su email y contrase&ntilde;a.';
 			redirect('Inicio');
 		}
 	}
 
 	public function receiveSMS()
 	{
-		$username = "";
-		$password = "";
-		$ani = "";
-		$dnis = "";
-		$message = "";
-		$other_messages = "";
-		
 		$json = file_get_contents('php://input');
 
 		if($json != null)
 		{
 			$data = json_decode($json);
-			
+
 			if($data != null && $data->username != null && $data->password != null)
 			{
 				if($data->username == "Sglo2019" && $data->password == "Sg.2019$$##")

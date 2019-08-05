@@ -10,7 +10,7 @@ class Usuario_model extends CI_Model
 
 	public function login($email, $contrasenia)
 	{
-		$usuario = $this->db->get_where('usuarios', array('u_email' => $email, 'u_contrasenia' => $contrasenia), 1);
+		$usuario = $this->db->get_where('usuarios', array('u_email' => $email), 1);
 		return $usuario->row_array();
 	}
 

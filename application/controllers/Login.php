@@ -24,7 +24,7 @@ class Login extends CI_Controller {
 		$contrasenia = addslashes($this->input->post('contrasenia'));
 
 		$result = $this->usuario_model->login($email, $contrasenia);
-		if($result)
+		if(password_verify($contrasenia, $result['u_contrasenia']))
 		{
 			$menus = $this->obtener_menu($result['id_usuario']);
 			$this->session->set_userdata('id_usuario', $result['id_usuario']);
