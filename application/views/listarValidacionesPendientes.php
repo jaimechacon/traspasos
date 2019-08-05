@@ -15,7 +15,7 @@
 			    <tr>
 			      <th scope="col" class="text-center align-middle registro"># ID</th>
 			      <th scope="col" class="text-center align-middle registro">Rut</th>
-			      <th scope="col" class="text-center align-middle registro">Descripci&oacute;n</th>
+			      <th scope="col" class="text-center align-middle registro"></th>
 			      <th scope="col" class="text-center align-middle registro">Abreviaci&oacute;n</th>
 			      <th scope="col" class="text-center align-middle registro">Cant. Usuarios</th>
 			      <th scope="col" class="text-right align-middle registro"></th>
