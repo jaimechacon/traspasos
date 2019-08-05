@@ -42,7 +42,7 @@ class Sms extends CI_Controller {
 					if(sizeof($datos) == 5){
 						$rut = $datos[0];
 						$serie = $datos[1];
-						$tipo_documento = $datos[2];
+						$tipo_documento = (int)$datos[2];
 						$telefono = $datos[3];
 						$folio = $datos[4];
 
