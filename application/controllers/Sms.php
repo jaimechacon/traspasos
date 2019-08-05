@@ -46,7 +46,7 @@ class Sms extends CI_Controller {
 						$telefono = $datos[3];
 						$folio = $datos[4];
 
-						$query = $this->Sms_model->saveSms($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio);
+						$query = $this->Sms_model->saveSms($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono);#, $folio);
 					}
 				}
 			}
