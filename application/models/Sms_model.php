@@ -8,10 +8,12 @@ class Sms_model extends CI_Model
 		parent::__construct();
 	}
 
-	public function saveSms($username, $password, $ani, $dnis, $message, $other_messages, $rut, $serie, $tipo_documento, $telefono, $folio)
+	public function agregarSMS($username, $password, $ani, $dnis, $message, $other_messages, $rut, $serie, $tipo_documento, $telefono, $folio)
 	{
-		$query = $this->db->insert('sms', array('username' => $username, 'password' => $password, 'ani' => $ani, 'dnis' => $dnis, 'message' => $message, 'other_messages' => $other_messages, 'id_estado' => 1, 'fecha' => date(), 'rut' => $rut, 'serie' => $serie, 'tipo_documento' => $tipo_documento, 'telefono' => $telefono, 'folio' => $folio));
-		return $query;
+		#$query = $this->db->insert('sms', array('username' => $username, 'password' => $password, 'ani' => $ani, 'dnis' => $dnis, 'message' => $message, 'other_messages' => $other_messages, 'id_estado' => 1, 'fecha' => date(), 'rut' => $rut, 'serie' => $serie, 'tipo_documento' => $tipo_documento, 'telefono' => $telefono, 'folio' => $folio));
+		#return $query;
+		$query = $this->db->query("call `traspasosdb`.`agregarSMS`('".$username."', '".$password."', '".$ani."', '".$dnis."', '".$message."', '".$other_messages."', '".$rut."', '".$serie."', ".$tipo_documento.", '".$telefono."', '".$folio."');");
+		return $query->result_array();	
 	}
 
 	public function listarTraspasosPendientes($idUsuario)

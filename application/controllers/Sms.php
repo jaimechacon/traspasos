@@ -33,7 +33,6 @@ class Sms extends CI_Controller {
 		if($json != null)
 		{
 			$data = json_decode($json);
-
 			if($data != null && $data->username != null && $data->password != null)
 			{
 				if($data->username == "Sglo2019" && $data->password == "Sg.2019$$##")
@@ -46,11 +45,62 @@ class Sms extends CI_Controller {
 						$telefono = $datos[3];
 						$folio = $datos[4];
 
-						$query = $this->Sms_model->saveSms($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio);
+						$query = $this->Sms_model->agregarSMS($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio);
+
+						if($query != null && $query[0]['resultado'] == "1")
+						{
+							//validar con previred
+						}else{
+							$mensaje = $query[0]['mensaje'];
+							$parametros['celular'] = $data->ani;							
+							$se_envio = $this->enviasmsacliente($parametros);
+
+							if($se_envio === 0){
+								for ($intentos=0; $intentos < 3; $intentos++) { 
+									if($se_envio === 0){
+										$se_envio = $this->enviasmsacliente($parametros);
+									}
+								}
+							}
+						}
 					}
 				}
 			}
 		}
 	}
+
+	private function enviarSms($parametros){
+	    $codsms=null;
+	    #$nombre = explode(" ", $parametros['nombres'])[0];
+	    #$apellido = explode(" ", $parametros['apellidos'])[0];
+
+	    #$mensaje = 'Provida: Estimado '.$nombre.' '.$apellido.', verifica tu identidad en la url: '.base_url().'Traspaso/verificarIdentidadCliente/'.$parametros['idTraspaso'].' .';
+	    $mensaje =  $parametros['mensaje'];
+
+	    // echo $idllamada; exit();
+	    ini_set("soap.wsdl_cache_enabled", "0"); 
+
+	    //$mensaje = "Número de Atención: ".$idllamada." Rut Cliente: ".$rut;
+
+	    //$client = new SoapClient(WS_URL_ITD);
+	    $client = new SoapClient('http://ida.itdchile.cl/services/smsApiService?wsdl');
+
+	    $array_ws = array('in0' => 'jchacon',
+	                      'in1' => 'chacon8049',
+	                      'in2' => $parametros['celular'],
+	                      'in3' => $mensaje);
+
+	    $response = $client->sendSms($array_ws);
+	    //var_dump($response); exit();
+	    $codsms = $response->out->entry[1]->value;
+	    //var_dump($response);
+	    //echo $codsms; exit();
+
+	    if ($codsms != null and $codsms != '' and $codsms != '-1') {       
+	    return 1;
+	      }else{
+	    return 0;
+	      } 
+    }
 	
 }
