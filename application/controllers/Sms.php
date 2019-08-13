@@ -28,8 +28,29 @@ class Sms extends CI_Controller {
 
 	public function prueba()
 	{
-		$query = $this->Sms_model->agregarSMS('Sglo2019', "Sg.2019$$##", '56989233272', '56442251412', 'prueba', 'dataother_message', '179898989', '123456', 4, '12345', '123');
-		var_dump($query);
+		$query = $this->Sms_model->agregarSMS('Sglo2019', "Sg.2019$$##", '56989233272', '56442251412', 'prueba', 'dataother_message', '179898989', '123456', '4', '12345', '123');
+		
+		
+		if($query != null && $query[0]['resultado'] == "1")
+		{
+							//validar con previred
+		}else
+		{
+			var_dump($query[0]['resultado']);
+			$mensaje = 'preuba';
+			$parametros['celular'] = '56989233272';							
+			$parametros['mensaje'] = $mensaje;
+			$se_envio = $this->enviarSms($parametros);
+
+			if($se_envio === 0){
+				for ($intentos=0; $intentos < 3; $intentos++) { 
+					if($se_envio === 0){
+						$se_envio = $this->enviarSms($parametros);
+					}
+				}
+			}
+		}
+		
 	}
 
 	public function receiveSMS()
@@ -58,13 +79,14 @@ class Sms extends CI_Controller {
 							//validar con previred
 						}else{
 							$mensaje = $query[0]['mensaje'];
-							$parametros['celular'] = $data->ani;							
-							$se_envio = $this->enviasmsacliente($parametros);
+							$parametros['celular'] = $data->ani;
+							$parametros['mensaje'] = $mensaje;
+							$se_envio = $this->enviarSms($parametros);
 
 							if($se_envio === 0){
 								for ($intentos=0; $intentos < 3; $intentos++) { 
 									if($se_envio === 0){
-										$se_envio = $this->enviasmsacliente($parametros);
+										$se_envio = $this->enviarSms($parametros);
 									}
 								}
 							}
