@@ -26,7 +26,7 @@ class Sms extends CI_Controller {
 		}
 	}
 
-	public function prueba()
+	/*public function prueba()
 	{
 		$query = $this->Sms_model->agregarSMS('Sglo2019', "Sg.2019$$##", '56989233272', '56442251412', 'prueba', 'dataother_message', '179898989', '123456', '4', '12345', '123');
 		
@@ -50,8 +50,7 @@ class Sms extends CI_Controller {
 				}
 			}
 		}
-		
-	}
+	}*/
 
 	public function receiveSMS()
 	{
