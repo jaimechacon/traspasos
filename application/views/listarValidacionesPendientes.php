@@ -6,38 +6,49 @@
 	}
 	
 ?>
-<div class="row p-3">
-	<a target="_blank" class="btn btn-primary" href="https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml">Registro Civil</a>
-	<div id="tDatos" class="col-sm-12 p-3">
-		<div class="table-responsive">
+<div class="row p-3" id="contenedor">
+	<a id="link_rc" name="link_rc" target="_blank" class="btn btn-primary" href="https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml">Registro Civil</a>
+	<div id="tDatos" class="col-sm-12 p-3" name="tDatos">
+		<div class="table-responsive" id="div_tabla_datos" name="div_tabla_datos">
 			<table class="table table-sm table-hover">
 			  <thead>
 			    <tr>
-			      <th scope="col" class="text-center align-middle registro"># ID</th>
-			      <th scope="col" class="text-center align-middle registro">Rut</th>
-			      <th scope="col" class="text-center align-middle registro">Serie</th>
-			      <th scope="col" class="text-center align-middle registro">Tipo Documento</th>
-			      <th scope="col" class="text-right align-middle registro"></th>
+			      <th id="thId" name="thId" scope="col" class="text-center align-middle registro"># ID</th>
+			      <th id="thRut" name="thRut" scope="col" class="text-center align-middle registro">Rut</th>
+			      <th id="thSerie" name="thSerie" scope="col" class="text-center align-middle registro">Serie</th>
+			      <th id="thTipoDoc" name="thTipoDoc" scope="col" class="text-center align-middle registro">Tipo Documento</th>
+			      <th id="thCantRepeticiones" name="thCantRepeticiones" scope="col" class="text-center align-middle registro">Cant. Repeticiones</th>
+			      <th id="thSinConexion" name="thSinConexion" scope="col" class="text-center align-middle registro">Sin Conexion</th>
+			      <th id="thErrorRC" name="thErrorRC" scope="col" class="text-center align-middle registro">Error RC</th>
+			      <th id="thNoVigente" name="thNoVigente" scope="col" class="text-center align-middle registro">No Vigente</th>
+			      <th id="thVigente" name="thVigente" scope="col" class="text-center align-middle registro">Vigente</th>
 			    </tr>
 			  </thead>
-			  <tbody id="tbodyEquipo">
+			  <tbody id="tbodyEquipo" name="tbodyEquipo">
 
 			    <?php
 			        if(isset($validacionesPendientes))
 			        {
+			        	$fila = 0;
 				        foreach ($validacionesPendientes as $validacion): ?>
-				  			<tr>
-						        <th scope="row" class="text-center align-middle registro"><?php echo $validacion['id_sms']; ?></th>
-						        <td class="text-center align-middle registro"><?php echo $validacion['rut']; ?></td>
-						        <td class="text-center align-middle registro"><?php echo $validacion['serie']; ?></td>
-						        <td class="text-center align-middle registro"><?php echo $validacion['tipo_documento']; ?></td>
-						        <td class="text-right align-middle registro">
-						        <a id="trash_<?php echo $validacion['id_sms']; ?>" class="trash" href="#" data-id="<?php echo $validacion['id_sms']; ?>" data-rut="<?php echo $validacion['rut']; ?>" data-toggle="modal" data-target="#modalEliminarSms">
-						        		<i data-feather="trash-2" data-toggle="tooltip" data-placement="top" title="eliminar"></i>        		
-					        	</a>
-					        		<a id="edit_<?php echo $validacion['id_sms']; ?>" class="edit" type="link" href="ModificarSms/?idSms=<?php echo $validacion['id_sms']; ?>" data-id="<?php echo $validacion['id_sms']; ?>" data-rut="<?php echo $validacion['rut']; ?>">
-						        		<i data-feather="edit-3" data-toggle="tooltip" data-placement="top" title="modificar"></i>
-					        		</a>
+
+				  			<tr id="row_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="row_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">
+						        <th id="id_sms_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="id_sms_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['id_sms']; ?></th>
+						        <td id="rut_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="rut_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['rut']; ?></td>
+						        <td id="serie_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="serie_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['serie']; ?></td>
+						        <td id="tipo_documento_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tipo_documento_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['tipo_documento']; ?></td>
+						        <td id="cant_repeticiones_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="cant_repeticiones_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['cant_repeticiones']; ?></td>
+						        <td id="tdSinConexion_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tdSinConexion_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro">
+						        	<button id="btnSinConexion_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-danger btnEstados" data-id="<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">Sin Conexion</button>
+					        	</td>
+					        	 <td id="tdErrorRC_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tdErrorRC_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro">
+						        	<button id="btnErrorRC_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnErrorRC_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-info btnEstados" data-id="<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">Error RC</button>
+					        	</td>
+					        	<td id="tdNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tdNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro">
+						        	<button id="btnNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-warning btnEstados" data-id="<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">No Vigente</button>
+					        	</td>
+					        	<td id="tdVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tdVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro">
+						        	<button id="btnVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-success btnEstados" data-id="<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">Vigente</button>
 					        	</td>
 					    	</tr>
 				  		<?php endforeach;
@@ -89,25 +100,3 @@
 	    </div>
 	  </div>
 	</div>
-
-<script type="text/javascript">
-window.onload = function () {
-	feather.replace()
-    $('[data-toggle="tooltip"]').tooltip()
-	var codigo = '5939450885303642045:2172193455657819264';
-	var baseurl = 'https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml';
-    jQuery.ajax({
-		type: "POST",
-		url: baseurl,
-		dataType: 'jsonp',
-		headers: {"Authorization": localStorage.getItem('5939450885303642045:2172193455657819264')},
-		data: {run: '175903267', selectDocType: 'CEDULA', docNumber: '107311071'},
-		success: function(data) {
-		    if (data)
-		    {
-
-		    }
-		}
-	});
-}
-</script>

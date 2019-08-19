@@ -13,44 +13,64 @@ class Sms extends CI_Controller {
 	{
 		$usuario = $this->session->userdata();
 		if(isset($usuario['id_usuario'])){
-
 			$validacionesPendientes = $this->Sms_model->listarTraspasosPendientes($usuario['id_usuario']);
 			$usuario['validacionesPendientes'] = $validacionesPendientes;
+			$usuario['controller'] = 'sms';
 			$this->load->view('temp/header');
 			$this->load->view('temp/menu', $usuario);
 			$this->load->view('listarValidacionesPendientes', $usuario);
-			$this->load->view('temp/footer');
+			$this->load->view('temp/footer', $usuario);
 		}else
 		{
 			redirect('Inicio');
 		}
 	}
 
-	/*public function prueba()
+	public function listarValidacionesPendientes()
 	{
-		$query = $this->Sms_model->agregarSMS('Sglo2019', "Sg.2019$$##", '56989233272', '56442251412', 'prueba', 'dataother_message', '179898989', '123456', '4', '12345', '123');
-		
-		
-		if($query != null && $query[0]['resultado'] == "1")
-		{
-							//validar con previred
+		$usuario = $this->session->userdata();
+		if(isset($usuario['id_usuario'])){
+			$validacionesPendientes = $this->Sms_model->listarTraspasosPendientes($usuario['id_usuario']);
+			$usuario['validacionesPendientes'] = $validacionesPendientes;
+			$usuario['controller'] = 'sms';
+			$this->load->view('temp/header');
+			$this->load->view('temp/menu', $usuario);
+			$this->load->view('listarValidacionesPendientes', $usuario);
+			$this->load->view('temp/footer', $usuario);
 		}else
 		{
-			var_dump($query[0]['resultado']);
-			$mensaje = 'preuba';
-			$parametros['celular'] = '56989233272';							
-			$parametros['mensaje'] = $mensaje;
-			$se_envio = $this->enviarSms($parametros);
+			redirect('Inicio');
+		}
+	}
 
-			if($se_envio === 0){
-				for ($intentos=0; $intentos < 3; $intentos++) { 
-					if($se_envio === 0){
-						$se_envio = $this->enviarSms($parametros);
-					}
+	public function validarRCOT()
+	{
+		$usuario = $this->session->userdata();
+		if(isset($usuario['id_usuario'])){
+			$id_sms = "null";
+			if(!is_null($this->input->post('id_sms')) && $this->input->post('id_sms') != "-1" && $this->input->post('id_sms') != "")
+				$id_sms = $this->input->post('id_sms');
+
+			$tipo = "null";
+			if(!is_null($this->input->post('tipo')) && $this->input->post('tipo') != "-1" && $this->input->post('tipo') != "")
+				$tipo = $this->input->post('tipo');
+
+
+			$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
+			if(isset($resultado))
+			{
+				if(isset($resultado[0]))
+				{
+					echo json_encode($resultado[0]["resultado"]);
 				}
 			}
+			
+			//redirect('Sms')
+		}else
+		{
+			redirect('Login');
 		}
-	}*/
+	}	
 
 	public function receiveSMS()
 	{

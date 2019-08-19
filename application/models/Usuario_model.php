@@ -51,9 +51,9 @@ class Usuario_model extends CI_Model
 
 	public function traerPerfilUsu($id_usuario)
 	{
-		$query = $this->db->query("		select p.pf_nombre as perfil from usuarios usu inner join usuarios_perfiles up on usu.id_usuario = up.id_usuario
+		$query = $this->db->query("		select p.pf_nombre as perfil, p.pf_analista as analista from usuarios usu inner join usuarios_perfiles up on usu.id_usuario = up.id_usuario
 		inner join perfiles p on up.id_perfil = p.id_perfil
-		where usu.id_usuario = ".$id_usuario." group by p.pf_nombre;");
+		where usu.id_usuario = ".$id_usuario." group by p.pf_nombre, p.pf_analista;");
 		return $query->result_array();
 	}
 

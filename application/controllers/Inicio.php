@@ -19,10 +19,15 @@ class Inicio extends CI_Controller {
 			$perfil = $this->usuario_model->traerPerfilUsu($usuario["id_usuario"]);
 			$usuario['controller'] = 'inicio';
 			$usuario['perfil'] = $perfil[0];
-			$this->load->view('temp/header');
-			$this->load->view('temp/menu', $usuario);
-			$this->load->view('inicioSesion', $usuario);
-			$this->load->view('temp/footer', $usuario);
+			if($perfil[0]['analista'] == "4")
+			{
+				redirect('Sms');
+			}else{
+				$this->load->view('temp/header');
+				$this->load->view('temp/menu', $usuario);
+				$this->load->view('inicioSesion', $usuario);
+				$this->load->view('temp/footer', $usuario);
+			}
 		}else
 		{
 			$this->session->sess_destroy();
