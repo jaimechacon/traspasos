@@ -10,11 +10,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <title>Sistema de Traspasos Provida</title>
   <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url();?>/assets/img/logo.ico">
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  
-  <link rel="shortcut icon" type="image/x-icon" href="">
+  <link rel="stylesheet" href="<?php echo base_url();?>/assets/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <?php if($login == 1): ?>
-  <link rel="stylesheet" href="https://getbootstrap.com/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
+  <link rel="stylesheet" href="<?php echo base_url();?>/assets/css/signin.css" rel="stylesheet">
   <?php endif; ?>
 
   <link rel="stylesheet" href="<?php echo base_url();?>/assets/css/style.css" rel="stylesheet">
