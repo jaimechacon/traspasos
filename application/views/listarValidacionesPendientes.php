@@ -40,16 +40,16 @@
 						        <td id="tipo_documento_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tipo_documento_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['tipo_documento']; ?></td>
 						        <td id="cant_repeticiones_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="cant_repeticiones_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['cant_repeticiones']; ?></td>
 						        <td id="tdSinConexion_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tdSinConexion_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro">
-						        	<button id="btnSinConexion_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnSinConexion_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-danger btnEstados" data-id="<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">Sin Conexion</button>
+						        	<button id="btnSinConexion_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnSinConexion_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-danger btnEstados" data-id="<?php echo $validacion['id_sms']; ?>">Sin Conexion</button>
 					        	</td>
 					        	 <td id="tdErrorRC_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tdErrorRC_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro">
-						        	<button id="btnErrorRC_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnErrorRC_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-info btnEstados" data-id="<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">Error RC</button>
+						        	<button id="btnErrorRC_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnErrorRC_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-info btnEstados" data-id="<?php echo $validacion['id_sms']; ?>">Error RC</button>
 					        	</td>
 					        	<td id="tdNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tdNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro">
-						        	<button id="btnNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-warning btnEstados" data-id="<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">No Vigente</button>
+						        	<button id="btnNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-warning btnEstados" data-id="<?php echo $validacion['id_sms']; ?>">No Vigente</button>
 					        	</td>
 					        	<td id="tdVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tdVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro">
-						        	<button id="btnVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-success btnEstados" data-id="<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">Vigente</button>
+						        	<button id="btnVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-success btnEstados" data-id="<?php echo $validacion['id_sms']; ?>">Vigente</button>
 					        	</td>
 					    	</tr>
 				  		<?php endforeach;
