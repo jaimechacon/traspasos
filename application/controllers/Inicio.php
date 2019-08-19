@@ -44,7 +44,6 @@ class Inicio extends CI_Controller {
 		$usuario = $this->session->userdata();
 		if(!$usuario){
 			$this->session->sess_destroy();
-			echo 'asdfsadf';
 		}else
 		{
 			$login['login'] = 0;
