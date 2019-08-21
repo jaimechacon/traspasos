@@ -468,6 +468,8 @@ class Sms extends CI_Controller {
 						$telefono = $datos[3];
 						$folio = $datos[4];
 
+						var_dump($data);
+
 						$query = $this->Sms_model->agregarSMS($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio);
 
 						if($query != null && $query[0]['resultado'] == "1")
@@ -483,6 +485,7 @@ class Sms extends CI_Controller {
 								for ($intentos=0; $intentos < 3; $intentos++) { 
 									if($se_envio === 0){
 										$se_envio = $this->enviarSms($parametros);
+										var_dump($se_envio);
 									}
 								}
 							}
