@@ -26,4 +26,10 @@ class Sms_model extends CI_Model
 		$query = $this->db->query("call `traspasosdb`.`validarRCOT`(".$idUsuario.", ".$idSms.", ".$idEstado.");");
 		return $query->result_array();
 	}
+
+	public function actualizarOTPrevired($idUsuario, $idSms, $nombres, $apellidoP, $apellidoM, $genero, $institucion)
+	{
+		$query = $this->db->query("call `traspasosdb`.`actualizarOTPrevired`(".$idUsuario.", ".$idSms.", '".$nombres."', '".$apellidoP."', '".$apellidoM."', ".$genero.", '".$institucion."');");
+		return $query->result_array();
+	}
 }

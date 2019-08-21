@@ -4,18 +4,29 @@
 	if(!$id_usuario){
 	  redirect('Login');
 	}
-	
 ?>
 <div class="row p-3">
 	<div id="tDatos" class="col-sm-12 p-3">
-		<div class="table-responsive">
-			<table class="table table-sm table-hover">
+		<div class="">
+			<table class="table table-sm table-hover" id="listaTraspasos">
 			  <thead>
 			    <tr>
 			      <th scope="col" class="text-center align-middle registro"># ID</th>
-			      <th scope="col" class="text-center align-middle registro">Rut</th>
-			      <th scope="col" class="text-center align-middle registro">Serie</th>
-			      <th scope="col" class="text-center align-middle registro">Tipo Documento</th>
+			      <th scope="col" class="text-center align-middle registro">Sucursal</th>
+			      <th scope="col" class="text-center align-middle registro">Usuario</th>
+			      <th scope="col" class="text-center align-middle registro">Rut Afiliado</th>
+			      <!--<th scope="col" class="text-center align-middle registro">Serie</th>-->
+			      <!--<th scope="col" class="text-center align-middle registro">Tipo Documento</th>-->
+			      <th scope="col" class="text-center align-middle registro">Nombres</th>
+			      <th scope="col" class="text-center align-middle registro">Apellido Paterno</th>
+			      <th scope="col" class="text-center align-middle registro">Apellido Materno</th>
+			      <th scope="col" class="text-center align-middle registro">AFP Origen</th>
+			      <th scope="col" class="text-center align-middle registro">Telefono</th>
+			      <th scope="col" class="text-center align-middle registro">Folio</th>
+			      <th scope="col" class="text-center align-middle registro">Fecha</th>
+			      <th scope="col" class="text-center align-middle registro">Estado Cedula</th>
+			      <th scope="col" class="text-center align-middle registro">Estado Certificaci&oacute;n</th>
+			      <th scope="col" class="text-center align-middle registro">Via ingreso</th>
 			    </tr>
 			  </thead>
 			  <tbody id="tbodyEquipo">
@@ -26,9 +37,21 @@
 				        foreach ($traspasos as $validacion): ?>
 				  			<tr>
 						        <th scope="row" class="text-center align-middle registro"><?php echo $validacion['id_sms']; ?></th>
+						        <td class="text-center align-middle registro"><?php echo $validacion['sucursal']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['u_nombres']." ".$validacion['u_apellidos']; ?></td>
 						        <td class="text-center align-middle registro"><?php echo $validacion['rut']; ?></td>
-						        <td class="text-center align-middle registro"><?php echo $validacion['serie']; ?></td>
-						        <td class="text-center align-middle registro"><?php echo $validacion['tipo_documento']; ?></td>
+						        <!--<td class="text-center align-middle registro"><?php echo $validacion['serie']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['tipo_documento']; ?></td>-->
+						        <td class="text-center align-middle registro"><?php echo $validacion['nombres']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['apellido_paterno']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['apellido_materno']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['institucion']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['ani']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['folio']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['fecha']; ?></td>
+						        <td class="text-center align-middle registro font-weight-bold <?php echo ($validacion['rc_resultado'] == "1" ? "text-success" : ($validacion['rc_resultado'] == "2" ? "text-danger" : ($validacion['rc_resultado'] == "3" ? "text-info" : "text-warning"))); ?>"><?php echo $validacion['nombre_resultado_rc']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo ''; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['via_entrada']; ?></td>
 					    	</tr>
 				  		<?php endforeach;
 				  	} ?>
