@@ -451,7 +451,6 @@ class Sms extends CI_Controller {
 
 	public function receiveSMS()
 	{
-		$query = $this->Sms_model->agregarSMS('Sglo2019', "Sg.2019$$##", "56989233272", "56442251412", "175903267_123123123_1_89233272_1234", 'hola', '175903267', '123123123', '1', '89233272', '1234');
 		$json = file_get_contents('php://input');
 
 		if($json != null)

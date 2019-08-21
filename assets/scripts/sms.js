@@ -43,7 +43,7 @@ $(document).ready(function() {
 				success: function(data) {
 				    if (data)
 				    {
-				    	//location.reload();
+				    	location.reload();
 				    }
 				}
 			});
