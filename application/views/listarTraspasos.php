@@ -50,7 +50,7 @@
 						        <td class="text-center align-middle registro"><?php echo $validacion['folio']; ?></td>
 						        <td class="text-center align-middle registro"><?php echo $validacion['fecha']; ?></td>
 						        <td class="text-center align-middle registro font-weight-bold <?php echo ($validacion['rc_resultado'] == "1" ? "text-success" : ($validacion['rc_resultado'] == "2" ? "text-danger" : ($validacion['rc_resultado'] == "3" ? "text-info" : "text-warning"))); ?>"><?php echo $validacion['nombre_resultado_rc']; ?></td>
-						        <td class="text-center align-middle registro"><?php echo ''; ?></td>
+						        <td class="text-center align-middle registro font-weight-bold <?php echo ($validacion['id_certificado'] == "1" ? "text-success" : ($validacion['id_certificado'] == "2" ? "text-danger" : "text-warning")); ?>"><?php echo $validacion['certificado']; ?></td>
 						        <td class="text-center align-middle registro"><?php echo $validacion['via_entrada']; ?></td>
 					    	</tr>
 				  		<?php endforeach;

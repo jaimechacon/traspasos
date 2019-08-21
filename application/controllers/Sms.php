@@ -399,6 +399,9 @@ class Sms extends CI_Controller {
 
 			$es_hombre = array_rand($generos,1);
 
+			$certificados = array('1' => 'Certificado', '2' => 'Rechazado', '3' => 'No Contactado');
+			$certificado = array_rand($certificados,1);
+
 			if ($se_valida == '1' && $tipo <> 4 && $tipo <> 2)
 			{
 				$nombres_afiliado = "";
@@ -410,7 +413,7 @@ class Sms extends CI_Controller {
 				$institucion = $afps[$afpSel];
 
 				mysqli_next_result($this->db->conn_id);
-				$resultado = $this->Sms_model->actualizarOTPrevired($usuario['id_usuario'], $id_sms, $nombres_afiliado, $apellidos[$apellidoSel[0]], $apellidos[$apellidoSel[1]], $es_hombre, $institucion);
+				$resultado = $this->Sms_model->actualizarOTPrevired($usuario['id_usuario'], $id_sms, $nombres_afiliado, $apellidos[$apellidoSel[0]], $apellidos[$apellidoSel[1]], $es_hombre, $institucion, $certificado);
 
 				if(isset($resultado))
 				{
