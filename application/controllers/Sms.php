@@ -451,6 +451,7 @@ class Sms extends CI_Controller {
 
 	public function receiveSMS()
 	{
+		$query = $this->Sms_model->agregarSMS('Sglo2019', "Sg.2019$$##", "56989233272", "56442251412", "175903267_123123123_1_89233272_1234", 'hola', '175903267', '123123123', '1', '89233272', '1234');
 		$json = file_get_contents('php://input');
 
 		if($json != null)
@@ -468,8 +469,6 @@ class Sms extends CI_Controller {
 						$telefono = $datos[3];
 						$folio = $datos[4];
 
-						var_dump($data);
-
 						$query = $this->Sms_model->agregarSMS($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio);
 
 						if($query != null && $query[0]['resultado'] == "1")
@@ -485,7 +484,6 @@ class Sms extends CI_Controller {
 								for ($intentos=0; $intentos < 3; $intentos++) { 
 									if($se_envio === 0){
 										$se_envio = $this->enviarSms($parametros);
-										var_dump($se_envio);
 									}
 								}
 							}
