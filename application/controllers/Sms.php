@@ -7,7 +7,7 @@ class Sms extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Sms_model');
-		$this->load->library('nuSoap_lib');
+		$this->load->library('NuSoap_lib');
 	}
 
 	public function index()
