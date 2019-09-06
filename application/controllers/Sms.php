@@ -299,7 +299,7 @@ class Sms extends CI_Controller {
 						$rut = $datos[0];
 						$serie = $datos[1];
 						$tipo_documento = (int)$datos[2];
-						$telefono = '56'.$datos[3];
+						$telefono = $datos[3];
 						$folio = $datos[4];
 
 
