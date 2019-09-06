@@ -20,10 +20,10 @@ class Login extends CI_Controller {
 
 	public function ingresar()
 	{
-		$email = addslashes($this->input->post('email'));
+		$rut = addslashes($this->input->post('rut'));
 		$contrasenia = addslashes($this->input->post('contrasenia'));
 
-		$result = $this->usuario_model->login($email, $contrasenia);
+		$result = $this->usuario_model->login($rut, $contrasenia);
 		if(password_verify($contrasenia, $result['u_contrasenia']))
 		{
 			$menus = $this->obtener_menu($result['id_usuario']);
@@ -31,6 +31,7 @@ class Login extends CI_Controller {
 			$this->session->set_userdata('u_rut', $result['u_rut']);
 			$this->session->set_userdata('u_nombres', $result['u_nombres']);
 			$this->session->set_userdata('u_apellidos', $result['u_apellidos']);
+			$this->session->set_userdata('pf_analista', $result['pf_analista']);
 			$this->session->set_userdata('u_menu', $menus);
 			redirect('Inicio');
 		}else{

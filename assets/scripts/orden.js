@@ -1,21 +1,21 @@
  $(document).ready(function() {
-	 	$(".btnEstados").on('click', function(e) {
-	 		alert('hola');	 		
-		});
+		feather.replace()
+
+
 
 		$('#listaTraspasos').dataTable({
 	        searching: true,
 	        //scrollX : false,
-	        //responsive: false,
+	        responsive: true,
 	        paging:         true,
 	        //dom: 'rtip',
 	        //"dom": '<rf<t>ip>',
 	        ordering:       true,
 	        info:           true,
-	        columnDefs: [
-	          { targets: 'no-sort', orderable: false }
-	        ],
-	        //bDestroy:       true,
+	        //columnDefs: [
+	          //{ targets: 'no-sort', orderable: false }
+	        //],
+	        bDestroy:       true,
 	         
 	        "oLanguage": {
 	            "sLengthMenu": "_MENU_ Registros por p&aacute;gina",
@@ -34,9 +34,23 @@
 	        },
 	        lengthMenu: [[10, 20], [10, 20]]
 	    });
+
+	    $("#btnExportarTodoExcel, #imgExportarExcel").on('click', function() {
+			var loader = document.getElementById("loader");
+		    loader.removeAttribute('hidden');
+		    institucion = -1;
+		    hospital = -1;
+		    rut_proveedor = "";
+			
+			//var url = window.location.href.replace("ListarPagos", "exportarexcel");
+		    var urlFinal = window.location.href.replace("listarTraspasosCall", "exportarexcelNeotel");
+		    window.location.href = urlFinal;
+		    loader.setAttribute('hidden', '');
+	  	});
 	});
 	window.onload = function () {
-		feather.replace()
+		
+		/*feather.replace()
 	    $('[data-toggle="tooltip"]').tooltip()
 		var codigo = '5939450885303642045:2172193455657819264';
 		var baseurl = 'https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml';
@@ -52,5 +66,5 @@
 
 			    }
 			}
-		});
+		});*/
 	}

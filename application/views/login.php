@@ -9,8 +9,10 @@
     echo '<div class="alert alert-danger" role="alert">'.$message.'</div>';
     }
     ?>
-    <label for="email" class="sr-only">Correo</label>
-    <input type="email" id="email" name="email" class="form-control" placeholder="Correo" required autofocus>
+    <!--<label for="email" class="sr-only">Correo</label>
+    <input type="email" id="email" name="email" class="form-control" placeholder="Correo" required autofocus>-->
+    <label for="Rut" class="sr-only">Rut</label>
+    <input type="rut" id="rut" name="rut" class="form-control" placeholder="Ingrese su Rut" required autofocus>
     <label for="contrasenia" class="sr-only">Password</label>
     <input type="password" id="contrasenia" name="contrasenia" class="form-control" placeholder="Contrase&ntilde;a" required>
     <div class="checkbox mb-3">

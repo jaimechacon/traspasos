@@ -7,6 +7,7 @@ class Sms extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Sms_model');
+		$this->load->library('nuSoap_lib');
 	}
 
 	public function index()
@@ -20,6 +21,7 @@ class Sms extends CI_Controller {
 			$this->load->view('temp/menu', $usuario);
 			$this->load->view('listarValidacionesPendientes', $usuario);
 			$this->load->view('temp/footer', $usuario);
+			//$this->add_customer();
 		}else
 		{
 			redirect('Inicio');
@@ -57,398 +59,227 @@ class Sms extends CI_Controller {
 
 
 			$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
-
+			
 
 			if(isset($resultado))
 			{
 				if(isset($resultado[0]))
 				{
-					$this->obtenerDatosPrevired($id_sms, $tipo);
-					echo json_encode($resultado[0]["resultado"]);
-				}
-			}
-			
-			//redirect('Sms')
-		}else
-		{
-			redirect('Login');
-		}
-	}	
-
-	private function obtenerDatosPrevired($id_sms, $tipo)
-	{
-
-		$usuario = $this->session->userdata();
-		if(isset($usuario['id_usuario'])){
-			$nombresH = array("1"=>"Santiago",
-							"2"=>"Ricardo",
-							"3"=>"Alfonso",
-							"4"=>"Rafael",
-							"5"=>"Iñaki",
-							"6"=>"Iren",
-							"7"=>"Evan",
-							"8"=>"Clemente",
-							"9"=>"Quirze",
-							"10"=>"Marcos",
-							"11"=>"Boris",
-							"12"=>"Emilio",
-							"13"=>"Luis",
-							"14"=>"Leónidas",
-							"15"=>"Gonzalo",
-							"16"=>"Joan",
-							"17"=>"Michel",
-							"18"=>"Fabián",
-							"19"=>"Manuel",
-							"20"=>"Galván",
-							"21"=>"Jonathan",
-							"22"=>"Esteve",
-							"23"=>"Antolino",
-							"24"=>"Pablo",
-							"25"=>"Felipe",
-							"26"=>"Eladio",
-							"27"=>"Xob",
-							"28"=>"Iker",
-							"29"=>"Eugenio",
-							"30"=>"Jordi",
-							"31"=>"Aitor",
-							"32"=>"Alfredo",
-							"33"=>"Daniel",
-							"34"=>"Javier",
-							"35"=>"Goio",
-							"36"=>"Leonardo",
-							"37"=>"Óscar",
-							"38"=>"Anxo",
-							"39"=>"Arnau",
-							"40"=>"Moisés",
-							"41"=>"Brayan",
-							"42"=>"Ángel",
-							"43"=>"Gabriel",
-							"44"=>"Gaizka",
-							"45"=>"Enrique",
-							"46"=>"Roberto",
-							"47"=>"Adrián",
-							"48"=>"Manel",
-							"49"=>"Ismael",
-							"50"=>"Julio",
-							"51"=>"Cristián",
-							"52"=>"Marcial",
-							"53"=>"Facundo",
-							"54"=>"Kurt",
-							"55"=>"Tirso",
-							"56"=>"Nacho",
-							"57"=>"Alejo",
-							"58"=>"Alejandro",
-							"59"=>"Jose María",
-							"60"=>"Ximo",
-							"61"=>"Renato",
-							"62"=>"Damián",
-							"63"=>"Simón",
-							"64"=>"Enio",
-							"65"=>"Nicolás",
-							"66"=>"Amadeo",
-							"67"=>"Thiago",
-							"68"=>"Arseni",
-							"69"=>"Erick",
-							"70"=>"Dionisio",
-							"71"=>"Antonio",
-							"72"=>"Esteban",
-							"73"=>"Ignacio",
-							"74"=>"Diego",
-							"75"=>"Mario",
-							"76"=>"Gabin",
-							"77"=>"Camilo",
-							"78"=>"Kamil",
-							"79"=>"Adonis",
-							"80"=>"Braulio",
-							"81"=>"Andreu",
-							"82"=>"Reinaldo",
-							"83"=>"Alberto",
-							"84"=>"Guzmán",
-							"85"=>"Elvio",
-							"86"=>"Jeremías",
-							"87"=>"Miguel",
-							"88"=>"Isidoro",
-							"89"=>"Gorka",
-							"90"=>"Abelardo",
-							"91"=>"Ezio",
-							"92"=>"Aleixandre",
-							"93"=>"Guillermo",
-							"94"=>"Juan",
-							"95"=>"Pedro",
-							"96"=>"Pepe",
-							"97"=>"Gil",
-							"98"=>"Ulises");
-
-			$nombresM = array("1"=>"Cristina",
-							"2"=>"Alicia",
-							"3"=>"Lara",
-							"4"=>"Celeste",
-							"5"=>"Frida",
-							"6"=>"Carolina",
-							"7"=>"Estela",
-							"8"=>"Begoña",
-							"9"=>"Isabel",
-							"10"=>"Esperanza",
-							"11"=>"Aurora",
-							"12"=>"Matilde",
-							"13"=>"Lourdes",
-							"14"=>"Inés",
-							"15"=>"Olaia",
-							"16"=>"Agatha",
-							"17"=>"Rita",
-							"18"=>"Rebeca",
-							"19"=>"Melania",
-							"20"=>"Silvia",
-							"21"=>"Esmeralda",
-							"22"=>"Victoria",
-							"23"=>"Elsa",
-							"24"=>"Fiona",
-							"25"=>"Francisca",
-							"26"=>"Erica",
-							"27"=>"Rut",
-							"28"=>"Natalia",
-							"29"=>"Tatiana",
-							"30"=>"Raquel",
-							"31"=>"Amparo",
-							"32"=>"Cora",
-							"33"=>"Miriam",
-							"34"=>"Diamante",
-							"35"=>"Azucena",
-							"36"=>"Luisa",
-							"37"=>"Agatha",
-							"38"=>"Rita",
-							"39"=>"Rebeca",
-							"40"=>"Melania",
-							"41"=>"Silvia",
-							"42"=>"Esmeralda",
-							"43"=>"Victoria",
-							"44"=>"Elsa",
-							"45"=>"Fiona",
-							"46"=>"Francisca",
-							"47"=>"Erica",
-							"48"=>"Rut",
-							"49"=>"Natalia",
-							"50"=>"Tatiana",
-							"51"=>"Raquel",
-							"52"=>"Amparo",
-							"53"=>"Cora",
-							"54"=>"Miriam",
-							"55"=>"Diamante",
-							"56"=>"Azucena",
-							"57"=>"Luisa",
-							"58"=>"Adela",
-							"59"=>"Alegría",
-							"60"=>"Teresa",
-							"61"=>"Nuria",
-							"62"=>"Olalla",
-							"63"=>"Belén",
-							"64"=>"Hirune",
-							"65"=>"Julia",
-							"66"=>"Marta",
-							"67"=>"Idoia",
-							"68"=>"Ariadna",
-							"69"=>"Ginebra",
-							"70"=>"Catalina",
-							"71"=>"Chantal",
-							"72"=>"María",
-							"73"=>"Débora",
-							"74"=>"Alana",
-							"75"=>"Zulema",
-							"76"=>"Amaia",
-							"77"=>"Natacha",
-							"78"=>"Carmen",
-							"79"=>"Magdalena",
-							"80"=>"Bea",
-							"81"=>"Cloé",
-							"82"=>"Montserrat",
-							"83"=>"Lucrecia",
-							"84"=>"Jasmina",
-							"85"=>"Izaskun",
-							"86"=>"Carla",
-							"87"=>"Fabricia",
-							"88"=>"Alina",
-							"89"=>"Paquita",
-							"90"=>"Patricia",
-							"91"=>"Dayana",
-							"92"=>"Ivet",
-							"93"=>"Delia",
-							"94"=>"Emilia",
-							"95"=>"Sandra",
-							"96"=>"Marlena",
-							"97"=>"Noelia",
-							"98"=>"Anabel");
-
-			$apellidos = array("1"=>"GARCIA",
-							"2"=>"GONZALEZ",
-							"3"=>"FERNANDEZ",
-							"4"=>"PEREZ",
-							"5"=>"LOPEZ",
-							"6"=>"RODRIGUEZ",
-							"7"=>"MARTINEZ",
-							"8"=>"SANCHEZ",
-							"9"=>"GOMEZ",
-							"10"=>"ALVAREZ",
-							"11"=>"MARTIN",
-							"12"=>"DIAZ",
-							"13"=>"ALONSO",
-							"14"=>"RUIZ",
-							"15"=>"HERNANDEZ",
-							"16"=>"GUTIERREZ",
-							"17"=>"BLANCO",
-							"18"=>"JIMENEZ",
-							"19"=>"MORENO",
-							"20"=>"MUÑOZ",
-							"21"=>"VAZQUEZ",
-							"22"=>"GIL",
-							"23"=>"DOMINGUEZ",
-							"24"=>"CASTRO",
-							"25"=>"RAMOS",
-							"26"=>"ROMERO",
-							"27"=>"TORRES",
-							"28"=>"IGLESIAS",
-							"29"=>"NAVARRO",
-							"30"=>"RUBIO",
-							"31"=>"SERRANO",
-							"32"=>"SANTOS",
-							"33"=>"CALVO",
-							"34"=>"PRIETO",
-							"35"=>"SUAREZ",
-							"36"=>"NUÑEZ",
-							"37"=>"ORTIZ",
-							"38"=>"ORTEGA",
-							"39"=>"DELGADO",
-							"40"=>"SANZ",
-							"41"=>"DIEZ",
-							"42"=>"SAN",
-							"43"=>"MENDEZ",
-							"44"=>"PEÑA",
-							"45"=>"VIDAL",
-							"46"=>"GARRIDO",
-							"47"=>"MORALES",
-							"48"=>"VEGA",
-							"49"=>"LORENZO",
-							"50"=>"CASTILLO",
-							"51"=>"GALLEGO",
-							"52"=>"LOZANO",
-							"53"=>"MOLINA",
-							"54"=>"CRUZ",
-							"55"=>"RAMIREZ",
-							"56"=>"FUENTES",
-							"57"=>"HERRERO",
-							"58"=>"MARIN",
-							"59"=>"ARIAS",
-							"60"=>"PASCUAL",
-							"61"=>"CAMPOS",
-							"62"=>"CRESPO",
-							"63"=>"NIETO",
-							"64"=>"CANO",
-							"65"=>"VICENTE",
-							"66"=>"PARDO",
-							"67"=>"MIGUEL",
-							"68"=>"LEON",
-							"69"=>"IBAÑEZ",
-							"70"=>"MONTERO",
-							"71"=>"CORTES",
-							"72"=>"REY",
-							"73"=>"MEDINA",
-							"74"=>"SOTO",
-							"75"=>"GUERRERO",
-							"76"=>"ESTEBAN",
-							"77"=>"CABALLERO",
-							"78"=>"SAEZ",
-							"79"=>"ANDRES",
-							"80"=>"FUENTE",
-							"81"=>"MARCOS",
-							"82"=>"VELASCO",
-							"83"=>"HERRERA",
-							"84"=>"VILLAR",
-							"85"=>"SIERRA",
-							"86"=>"CARRASCO",
-							"87"=>"DURAN",
-							"88"=>"GIMENEZ",
-							"89"=>"OTERO",
-							"90"=>"HIDALGO",
-							"91"=>"ROMAN",
-							"92"=>"RIO",
-							"93"=>"MONTES",
-							"94"=>"MERINO",
-							"95"=>"RIVAS",
-							"96"=>"FERRER",
-							"97"=>"REDONDO",
-							"98"=>"BRAVO",
-							"99"=>"FLORES",
-							"100"=>"IZQUIERDO");
-
-			$afps = array('1' => '1003 Cuprum', '1' => '1005 Habitat', '1' => '1032 Planvital', '1' => '1033 Capital', '1' => '1034 Modelo');
-
-			$nombreHSel = array_rand($nombresH,2);
-			$nombres_hombre = strtolower($nombresH[$nombreHSel[0]]." ".$nombresH[$nombreHSel[1]]);
-
-			$nombreMSel = array_rand($nombresM,2);
-			$nombres_mujer = strtolower($nombresM[$nombreMSel[0]]." ".$nombresM[$nombreMSel[1]]);
-			
-			$apellidoSel = array_rand($apellidos,2);
-
-			$afpSel = array_rand($afps,1);
-
-			$opciones = array('1' => 1, '2' => 2);
-
-			$se_valida = '1';#array_rand($opciones,1);
-
-			$generos = array('0' => 0, '1' => 1);
-
-			$es_hombre = array_rand($generos,1);
-
-			$certificados = array('1' => 'Certificado', '2' => 'Rechazado', '3' => 'No Contactado');
-			$certificado = array_rand($certificados,1);
-
-			if ($se_valida == '1' && $tipo <> 4 && $tipo <> 2)
-			{
-				$nombres_afiliado = "";
-				if($es_hombre == "1")
-					$nombres_afiliado = $nombres_hombre;
-				else
-					$nombres_afiliado = $nombres_mujer;
-
-				$institucion = $afps[$afpSel];
-
-				mysqli_next_result($this->db->conn_id);
-				$resultado = $this->Sms_model->actualizarOTPrevired($usuario['id_usuario'], $id_sms, $nombres_afiliado, $apellidos[$apellidoSel[0]], $apellidos[$apellidoSel[1]], $es_hombre, $institucion, $certificado);
-
-				if(isset($resultado))
-				{
-					if(isset($resultado[0]))
+					if(isset($resultado[0]['rut_afiliado']) && isset($resultado[0]['periodo']) && isset($resultado[0]['telefono']))
 					{
-						//if(isset($resultado[0]) == "1")
-						//{
-							$mensaje = "";
-							$telefono = $resultado[0]['u_celular'];
-							if($tipo == "1" && $se_valida = "1")
-							{
-								$mensaje = "Afiliado VIGENTE, institucion: ".$institucion;
-							}
+						$telefono = $resultado[0]['telefono'];
+						$rut_afiliado = (substr($resultado[0]['rut_afiliado'], 0, ((strlen($resultado[0]['rut_afiliado']))-1)).'-'.substr($resultado[0]['rut_afiliado'], ((strlen($resultado[0]['rut_afiliado']))-1), 1));
 
-							if($tipo == "2")
-							{
-								$mensaje = "Afiliado NO VIGENTE";
-							}
+						$mensaje = "";
+						if($tipo == "1" || $tipo == "2")
+						{
+							$mensaje = "Num. prechequeo : ".$id_sms." Rut: ".$rut_afiliado;
+						}
 
-							if($tipo == "3" || $tipo == "4")
-							{
-								$mensaje = "Afiliado PENDIENTE DE VALIDACION";
-							}
+						/*if($tipo == "2")
+						{
+							$mensaje = "Afiliado NO VIGENTE";
+						}*/
 
+						if($tipo == "3")
+						{
+							$mensaje = "Usted no pudo ser validado. Provida AFP";
+						}
+
+						if($tipo == "4" && $resultado[0]['enviar_sms'] == "1")
+						{
+							$mensaje = "No pudo ser validado. Provida AFP";
+						}
+
+						if($mensaje != "")
+						{
 							$parametros['celular'] = $telefono;
 							$parametros['mensaje'] = $mensaje;
 							$se_envio = $this->enviarSms($parametros);
-						//}
+						}
+
+						//var_dump($se_envio, $telefono, $mensaje, $tipo);
+
+						$periodo = $resultado[0]['periodo'];
+						$this->obtenerDatosPrevired($id_sms, $rut_afiliado, $periodo, $tipo);
+						echo json_encode($resultado[0]["resultado"]);
 					}
+					
+
+
 				}
 			}
 		}else
 		{
 			redirect('Login');
 		}
+	}
+
+	private function obtenerDatosPrevired($id_sms, $rut_afiliado, $periodo, $tipo) {
+
+		try {
+			$usuario = $this->session->userdata();
+			if(isset($usuario['id_usuario'])){
+				$post = '<?xml version="1.0" encoding="ISO-8859-1" ?>';
+				$post .= '<peticion llave="ProvidaPrevired2019">';
+				$post .= '<peticionservicio tipo="AUT">';
+				$post .= '<parametro nombre="usuario" valor="76265736-8" />';
+				$post .= '<parametro nombre="password" valor="ProvidaPrevired2019" />';
+				$post .= '</peticionservicio>';
+				$post .= '<peticionservicio tipo="CAF">';
+			    $post .= '<parametro nombre="rut" valor="'.$rut_afiliado.'" />';
+			    $post .= '<parametro nombre="periodo" valor="'.$periodo.'" />';
+		        $post .= '</peticionservicio>';
+		     	$post .= '</peticion>';
+
+		     	$cliente = new nusoap_client("https://qagintegracion.previred.com/wIntegracion/axis/services/MonitorPrevired?wsdl", true);
+		     	$array_ws = array('xml' => $post);
+		     	$respuesta = $cliente->call('ejecuta', array('xml' => $post));
+
+				$simpleXml = simplexml_load_string($respuesta);
+
+				$cant = 0;
+				$cantNod = 0;				
+
+				if(isset($simpleXml) && isset($simpleXml->control) && isset($simpleXml->control['codigo']) && sizeof(((string)$simpleXml->control['codigo'][0])) > 0)
+				{
+					$codigo = (string)$simpleXml->control['codigo'];
+					if($codigo == "9000")
+					{
+						foreach ($simpleXml->respuestaservicio as $servicio) {
+							if(isset($servicio) && isset($servicio->attributes()['tipo']) && sizeof((string)$servicio->attributes()['tipo']) > 0)
+							{
+								//var_dump(isset($servicio->attributes()['tipo']));
+								$tipo_servicio = (string)$servicio->attributes()['tipo'];
+								if($tipo_servicio == 'CAF')
+								{
+									if(isset($servicio) && isset($servicio->control) && isset($servicio->control['codigo']) && sizeof(((string)$servicio->control['codigo'])) > 0)
+									{
+										$codigo_servicio = (string)$servicio->control['codigo'];
+										if($codigo_servicio == '9050' && isset($servicio->respuestacaf->linea))
+										{
+											// sin errores
+											//var_dump(''.(string)$servicio->respuestacaf->linea->attributes());
+											/*var_dump('Rut: '.(string)$servicio->respuestacaf->linea->attributes()['rut'].'<br/>');
+											var_dump('Nombres: '.(string)$servicio->respuestacaf->linea->attributes()['nombres'].'<br/>');
+											var_dump('Apellido_Paterno: '.(string)$servicio->respuestacaf->linea->attributes()['apellidopaterno'].'<br/>');
+											var_dump('Apellid_Materno: '.(string)$servicio->respuestacaf->linea->attributes()['apellidomaterno'].'<br/>');
+											var_dump('Cod_AFP: '.(string)$servicio->respuestacaf->linea->attributes()['codafp'].'<br/>');
+											var_dump('Nombre_AFP: '.(string)$servicio->respuestacaf->linea->attributes()['nomafp'].'<br/>');
+											var_dump('Fecha_Nac: '.(string)$servicio->respuestacaf->linea->attributes()['fechanacimiento'].'<br/>');
+											var_dump('Genero: '.(string)$servicio->respuestacaf->linea->attributes()['sexo'].'<br/>');
+											var_dump('Fecha_Ing: '.(string)$servicio->respuestacaf->linea->attributes()['fechaingreso'].'<br/>');
+											var_dump('Fecha_Sub: '.(string)$servicio->respuestacaf->linea->attributes()['fechasubscripcion'].'<br/>');
+											var_dump('Fecha_Inc: '.(string)$servicio->respuestacaf->linea->attributes()['fechaincorporacion'].'<br/>');
+											var_dump('Tipo_Solicitud: '.(string)$servicio->respuestacaf->linea->attributes()['tiposolicitud'].'<br/>');
+											var_dump('Situacion: '.(string)$servicio->respuestacaf->linea->attributes()['situacion'].'<br/>');
+											var_dump('Cta_Personales: '.(string)$servicio->respuestacaf->linea->attributes()['cuentaspersonales'].'<br/>');*/
+
+											$rut = (string)$servicio->respuestacaf->linea->attributes()['rut'];
+											$nombres = (string)$servicio->respuestacaf->linea->attributes()['nombres'];
+											$apellido_Paterno = (string)$servicio->respuestacaf->linea->attributes()['apellidopaterno'];
+											$apellid_Materno = (string)$servicio->respuestacaf->linea->attributes()['apellidomaterno'];
+											$cod_AFP = (string)$servicio->respuestacaf->linea->attributes()['codafp'];
+											$nombre_AFP = (string)$servicio->respuestacaf->linea->attributes()['nomafp'];
+											$fecha_Nac = (string)$servicio->respuestacaf->linea->attributes()['fechanacimiento'];
+											$genero = (string)$servicio->respuestacaf->linea->attributes()['sexo'];
+											$fecha_Ing = (string)$servicio->respuestacaf->linea->attributes()['fechaingreso'];
+											$fecha_Sub = (string)$servicio->respuestacaf->linea->attributes()['fechasubscripcion'];
+											$fecha_Inc = (string)$servicio->respuestacaf->linea->attributes()['fechaincorporacion'];
+											$tipo_Solicitud = (string)$servicio->respuestacaf->linea->attributes()['tiposolicitud'];
+											$situacion = (string)$servicio->respuestacaf->linea->attributes()['situacion'];
+											$cta_Personales = (string)$servicio->respuestacaf->linea->attributes()['cuentaspersonales'];
+
+											//var_dump($servicio->respuestacaf);
+											$es_hombre = ($genero == "M" ? 1 : ($genero == "F" ? 0 : null));
+											mysqli_next_result($this->db->conn_id);
+											$resultado = $this->Sms_model->actualizarOTPrevired($usuario['id_usuario'], $id_sms, $nombres, $apellido_Paterno, $apellid_Materno, $es_hombre, $nombre_AFP, $cod_AFP, $cta_Personales, date("Y-m-d", strtotime($fecha_Nac)), date("Y-m-d", strtotime($fecha_Ing)), date("Y-m-d", strtotime($fecha_Sub)), date("Y-m-d", strtotime($fecha_Inc)), $tipo_Solicitud, $situacion, $situacion);
+
+											if(isset($resultado))
+											{
+												if(isset($resultado[0]))
+												{
+													if(isset($resultado[0]) == "1")
+													{
+														
+														/*$mensaje = "";
+														$telefono = $resultado[0]['telefono'];
+
+														if($tipo == "1")
+														{
+															$mensaje = "Afiliado VIGENTE, institucion: ".$cod_AFP.' - '.$nombre_AFP;
+														}
+
+														if($tipo == "2")
+														{
+															$mensaje = "Afiliado NO VIGENTE";
+														}
+
+														if($tipo == "3" || $tipo == "4")
+														{
+															$mensaje = "Afiliado PENDIENTE DE VALIDACION";
+														}
+
+														$parametros['celular'] = $telefono;
+														$parametros['mensaje'] = $mensaje;
+														$se_envio = $this->enviarSms($parametros);*/
+													}else
+													{
+
+													}
+												}
+											}
+
+
+										}else
+										{
+											if($codigo_servicio == '9060')
+											{
+												//Error en el tipo de servicio indicado.
+											}else
+											{
+												if ($codigo_servicio == '9070') {
+													//El usuario no tiene permisos para ejecutar este servicio
+												} else {
+													//Error no identificado
+												}
+											}
+										}
+									}
+									
+								}
+							}
+
+							//var_dump((string)$value->attributes()['tipo']);
+
+						}
+						//var_dump('exito');
+					}else
+					{
+						var_dump('error en el formato del xml');
+					}
+				}
+			}else{
+				redirect('Login');
+			}
+		} catch (Exception $e) {
+			
+		}
+	}
+
+	public function Parse($url) {
+
+		$fileContents= $url;
+
+		$fileContents = str_replace(array("\n", "\r", "\t"), '', $fileContents);
+
+		$fileContents = str_replace('<?xml version="1.0" encoding="ISO-8859-1"?>', '', $fileContents);
+
+		$simpleXml = simplexml_load_string($fileContents);
+
+		$json = json_encode($simpleXml);
+
+		return $json;
 
 	}
 
@@ -468,8 +299,9 @@ class Sms extends CI_Controller {
 						$rut = $datos[0];
 						$serie = $datos[1];
 						$tipo_documento = (int)$datos[2];
-						$telefono = $datos[3];
+						$telefono = '56'.$datos[3];
 						$folio = $datos[4];
+
 
 						$query = $this->Sms_model->agregarSMS($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio);
 

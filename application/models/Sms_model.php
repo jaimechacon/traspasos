@@ -27,9 +27,9 @@ class Sms_model extends CI_Model
 		return $query->result_array();
 	}
 
-	public function actualizarOTPrevired($idUsuario, $idSms, $nombres, $apellidoP, $apellidoM, $genero, $institucion, $certificado)
+	public function actualizarOTPrevired($idUsuario, $idSms, $nombres, $apellidoP, $apellidoM, $genero, $institucion, $cod_institucion, $cuentas_personales_institucion, $fecha_nac, $fecha_ingreso, $fecha_subscripcion, $fecha_incorporacion, $tipo_solicitud, $situacion)
 	{
-		$query = $this->db->query("call `traspasosdb`.`actualizarOTPrevired`(".$idUsuario.", ".$idSms.", '".$nombres."', '".$apellidoP."', '".$apellidoM."', ".$genero.", '".$institucion."', ".$certificado.");");
+		$query = $this->db->query("call `traspasosdb`.`actualizarOTPrevired`(".$idUsuario.", ".$idSms.", '".$nombres."', '".$apellidoP."', '".$apellidoM."', ".$genero.", '".$institucion."', '".$cod_institucion."', '".$cuentas_personales_institucion."', '".$fecha_nac."', '".$fecha_ingreso."', '".$fecha_subscripcion."', '".$fecha_incorporacion."', '".$tipo_solicitud."', '".$situacion."');");
 		return $query->result_array();
 	}
 }

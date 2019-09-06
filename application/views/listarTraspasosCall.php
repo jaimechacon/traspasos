@@ -6,6 +6,16 @@
 	}
 ?>
 <div class="row p-3">
+	<div class="col-sm-12 text-right">
+		<button id="btnExportarExcel" type="button" class="btn btn-link">Exportar a CSV
+			<i style="margin-bottom: 5px;" data-feather="download"></i>
+		</button>
+
+		<button id="btnExportarTodoExcel" type="button" class="btn btn-link">Exportar todo a CSV
+			<i style="margin-bottom: 5px;" data-feather="download"></i>
+		</button>
+		<!--<img  id="imgExportarExcel" src="<?php //echo base_url();?>assets/img/icons/excel.png" width="30" class="d-inline-block align-top" alt="">-->
+	</div>
 	<div id="tDatos" class="col-sm-12 p-3">
 		<div class="">
 			<table class="table table-sm table-hover" id="listaTraspasos">
@@ -81,6 +91,8 @@
   </div>
 </div>
 
+<div id="loader" class="loader" hidden></div>
+
 <!-- Modal Eliminar -->
 	<div class="modal fade" id="modalEliminarEquipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
@@ -105,8 +117,8 @@
 
 <script type="text/javascript">
 window.onload = function () {
-	//feather.replace();
-    //$('[data-toggle="tooltip"]').tooltip();
+	feather.replace();
+    $('[data-toggle="tooltip"]').tooltip();
 	//var codigo = '5939450885303642045:2172193455657819264';
 	//var baseurl = 'https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml';
     /*jQuery.ajax({
