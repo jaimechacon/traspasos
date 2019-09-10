@@ -7,22 +7,163 @@
 ?>
 <div class="row p-3">
 	<div class="col-sm-12 text-right">
-		<button id="btnExportarExcel" type="button" class="btn btn-link">Exportar a CSV
+		<button id="btnExportarExcel" type="button" class="btn btn-link">Exportar a CSV con filtros
 			<i style="margin-bottom: 5px;" data-feather="download"></i>
 		</button>
 
-		<button id="btnExportarTodoExcel" type="button" class="btn btn-link">Exportar todo a CSV
+		<button id="btnExportarTodoExcel" type="button" class="btn btn-link">Exportar autom&aacute;ticamente a CSV
 			<i style="margin-bottom: 5px;" data-feather="download"></i>
 		</button>
 		<!--<img  id="imgExportarExcel" src="<?php //echo base_url();?>assets/img/icons/excel.png" width="30" class="d-inline-block align-top" alt="">-->
 	</div>
+		
+	<div class="col-sm-12">
+		<div class="row">			
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-3">
+						<span class="">Sucursal</span>
+					</div>
+					<div class="col-sm-9">
+						<select id="sucursalCall" class="custom-select custom-select-sm">
+						   	<option value="-1">Todos</option>
+							<?php 
+							if($sucursales)
+							{
+								foreach ($sucursales as $sucursal) {
+									if(isset($idSucursal) && (int)$sucursal['id_sucursal'] == $idSucursal)
+                                    {
+                                            echo '<option value="'.$sucursal['id_sucursal'].'" selected>'.$sucursal['nombre'].'</option>';
+                                    }else
+                                    {
+                                            echo '<option value="'.$sucursal['id_sucursal'].'">'.$sucursal['nombre'].'</option>';
+                                    }
+								}
+							}
+							?>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-3">
+						<span class="">Vendedor</span>
+					</div>
+					<div class="col-sm-9">
+						<select id="vendedorCall" class="custom-select custom-select-sm">
+						    <option value="-1">Todos</option>
+							<?php 
+							if($vendedores)
+							{
+								foreach ($vendedores as $vendedor) {
+									if(isset($idVendedor) && (int)$vendedor['id_usuario'] == $idVendedor)
+									{
+                                        echo '<option value="'.$vendedor['id_usuario'].'" selected>'.$vendedor['u_rut'].'</option>';
+                                    }else
+                                    {
+                                        echo '<option value="'.$vendedor['id_usuario'].'">'.$vendedor['u_rut'].'</option>';
+                                    }
+								}
+							}
+							?>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 mt-3">
+		<div class="row">			
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-3">
+						<span class="">Fecha Desde</span>
+					</div>
+					<div class="col-sm-9">
+						<input type="date" id="fechaDesde" name="fechaDesde" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-3">
+						<span class="">Fecha Hasta</span>
+					</div>
+					<div class="col-sm-9">
+						<input type="date" id="fechaHasta" name="fechaHasta" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 mt-3">
+		<div class="row">			
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-3">
+						<span class="">Estado C&eacute;dula</span>
+					</div>
+					<div class="col-sm-9">
+						<select id="estadoRC" class="custom-select custom-select-sm">
+						   	<option value="-1">Todos</option>
+						   		<option value="1" <?php echo ((isset($idEstadoRC) && $idEstadoRC == '1') ? 'selected' : '') ?> >VIGENTE</option>
+						   		<option value="2" <?php echo ((isset($idEstadoRC) && $idEstadoRC == '2') ? 'selected' : '') ?> >NO VIGENTE</option>
+						   		<option value="3" <?php echo ((isset($idEstadoRC) && $idEstadoRC == '3') ? 'selected' : '') ?> >ERROR DE DATOS</option>
+						   		<option value="4" <?php echo ((isset($idEstadoRC) && $idEstadoRC == '4') ? 'selected' : '') ?> >NO VALIDADO</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-3">
+						<span class="">Estado Certificaci&oacute;n</span>
+					</div>
+					<div class="col-sm-9">
+						<select id="estadoC" class="custom-select custom-select-sm">
+						    <option value="-1">Todos</option>
+							<?php 
+							if($estadosC)
+							{
+								foreach ($estadosC as $estado_c) {
+									if(isset($idEstadoC) && (int)$estado_c['id_estado'] == $idEstadoC)
+									{
+                                        echo '<option value="'.$estado_c['id_estado'].'" selected>'.$estado_c['nombre'].'</option>';
+                                    }else
+                                    {
+                                        echo '<option value="'.$estado_c['id_estado'].'">'.$estado_c['nombre'].'</option>';
+                                    }
+								}
+							}
+							?>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-12 mt-3">
+		<div class="row">			
+			<div class="col-sm-12">
+				<div class="row">
+					<div class="col-sm-12 text-right">
+						<button id="btnBuscar" type="button" class="btn btn-primary">Filtrar <i class="mb-1" data-feather="search"></i></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		
 	<div id="tDatos" class="col-sm-12 p-3">
-		<div class="">
+		<div id="tTraspasos">
 			<table class="table table-sm table-hover" id="listaTraspasos">
 			  <thead>
 			    <tr>
 			      <th scope="col" class="text-center align-middle registro"># ID</th>
 			      <th scope="col" class="text-center align-middle registro">Sucursal</th>
+			      <th scope="col" class="text-center align-middle registro">Rut Usuario</th>
 			      <th scope="col" class="text-center align-middle registro">Usuario</th>
 			      <th scope="col" class="text-center align-middle registro">Rut Afiliado</th>
 			      <!--<th scope="col" class="text-center align-middle registro">Serie</th>-->
@@ -39,7 +180,7 @@
 			      <th scope="col" class="text-center align-middle registro">Via ingreso</th>
 			    </tr>
 			  </thead>
-			  <tbody id="tbodyEquipo">
+			  <tbody id="tbodyTraspasos">
 
 			    <?php
 			        if(isset($traspasos))
@@ -48,6 +189,7 @@
 				  			<tr>
 						        <th scope="row" class="text-center align-middle registro"><?php echo $validacion['id_sms']; ?></th>
 						        <td class="text-center align-middle registro"><?php echo $validacion['sucursal']; ?></td>
+						        <td class="text-center align-middle registro"><?php echo $validacion['u_rut']; ?></td>
 						        <td class="text-center align-middle registro"><?php echo $validacion['u_nombres']." ".$validacion['u_apellidos']; ?></td>
 						        <td class="text-center align-middle registro"><?php echo $validacion['rut']; ?></td>
 						        <!--<td class="text-center align-middle registro"><?php echo $validacion['serie']; ?></td>

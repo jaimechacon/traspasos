@@ -83,12 +83,12 @@ class Sms extends CI_Controller {
 
 						if($tipo == "3")
 						{
-							$mensaje = "Usted no pudo ser validado. Provida AFP";
+							$mensaje = "Su rut no pudo ser validado. Provida AFP";
 						}
 
 						if($tipo == "4" && $resultado[0]['enviar_sms'] == "1")
 						{
-							$mensaje = "No pudo ser validado. Provida AFP";
+							$mensaje = "Su rut no pudo ser validado. Provida AFP";
 						}
 
 						if($mensaje != "")
