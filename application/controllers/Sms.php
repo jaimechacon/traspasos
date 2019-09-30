@@ -73,7 +73,7 @@ class Sms extends CI_Controller {
 						$mensaje = "";
 						if($tipo == "1" || $tipo == "2")
 						{
-							$mensaje = "Num. prechequeo : ".$id_sms." Rut: ".$rut_afiliado;
+							$mensaje = "ProVida AFP Confirma la recepción de tus datos. El código de validación es ".$id_sms.".";
 						}
 
 						/*if($tipo == "2")
@@ -83,12 +83,12 @@ class Sms extends CI_Controller {
 
 						if($tipo == "3")
 						{
-							$mensaje = "Su rut no pudo ser validado. Provida AFP";
+							$mensaje = "ProVida no pudo validar los datos de tu cédula de identidad. Por favor revísalos con el ejecutivo.";
 						}
 
 						if($tipo == "4" && $resultado[0]['enviar_sms'] == "1")
 						{
-							$mensaje = "Su rut no pudo ser validado. Provida AFP";
+							$mensaje = "ProVida no pudo validar los datos de tu cédula de identidad. Por favor revísalos con el ejecutivo.";
 						}
 
 						if($mensaje != "")
