@@ -32,4 +32,10 @@ class Sms_model extends CI_Model
 		$query = $this->db->query("call `traspasosdb`.`actualizarOTPrevired`(".$idUsuario.", ".$idSms.", '".$nombres."', '".$apellidoP."', '".$apellidoM."', ".$genero.", '".$institucion."', '".$cod_institucion."', '".$cuentas_personales_institucion."', '".$fecha_nac."', '".$fecha_ingreso."', '".$fecha_subscripcion."', '".$fecha_incorporacion."', '".$tipo_solicitud."', '".$situacion."');");
 		return $query->result_array();
 	}
+
+	public function agregarLog($idUsuario, $idSms, $mensaje)
+	{
+		$query = $this->db->query("call `traspasosdb`.`agregarLog`(".$idUsuario.", ".$idSms.", '".$mensaje."');");
+		return $query->result_array();
+	}
 }
