@@ -141,7 +141,7 @@ class Sms extends CI_Controller {
 
 				//mysqli_next_result($this->db->conn_id);
 				//$resultado = $this->Sms_model->agregarLog($usuario['id_usuario'], $id_sms, $simpleXml);
-
+				var_dump($simpleXml);
 				$cant = 0;
 				$cantNod = 0;
 
