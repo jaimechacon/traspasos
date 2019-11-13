@@ -139,8 +139,11 @@ class Sms extends CI_Controller {
 
 				$simpleXml = simplexml_load_string($respuesta);
 
+				mysqli_next_result($this->db->conn_id);
+				$resultado = $this->Sms_model->actualizarOTPrevired($usuario['id_usuario'], $id_sms, $simpleXml, "null", "null", "null", "null", "null", "null", "null", "null","null","null", "null","null","null");
+
 				$cant = 0;
-				$cantNod = 0;				
+				$cantNod = 0;
 
 				if(isset($simpleXml) && isset($simpleXml->control) && isset($simpleXml->control['codigo']) && sizeof(((string)$simpleXml->control['codigo'][0])) > 0)
 				{
