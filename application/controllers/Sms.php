@@ -132,8 +132,8 @@ class Sms extends CI_Controller {
 		        $post .= '</peticionservicio>';
 		     	$post .= '</peticion>';
 
-		     	$cliente = new nusoap_client("https://qagintegracion.previred.com/wIntegracion/axis/services/MonitorPrevired?wsdl", true);
-		     	//$cliente = new nusoap_client("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", true);
+		     	//$cliente = new nusoap_client("https://qagintegracion.previred.com/wIntegracion/axis/services/MonitorPrevired?wsdl", true);
+		     	$cliente = new nusoap_client("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", true);
 		     	$array_ws = array('xml' => $post);
 		     	$respuesta = $cliente->call('ejecuta', array('xml' => $post));
 
