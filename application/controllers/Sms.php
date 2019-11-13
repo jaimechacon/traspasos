@@ -127,13 +127,13 @@ class Sms extends CI_Controller {
 				$post .= '<parametro nombre="password" valor="ProvidaPrevired2019" />';
 				$post .= '</peticionservicio>';
 				$post .= '<peticionservicio tipo="CAF">';
-			    $post .= '<parametro nombre="rut" valor="'.$rut_afiliado.'" />';
+			    $post .= '<parametro nombre="rut" valor="9206896K" />';//.$rut_afiliado.'" />';
 			    $post .= '<parametro nombre="periodo" valor="'.$periodo.'" />';
 		        $post .= '</peticionservicio>';
 		     	$post .= '</peticion>';
 
-		     	//$cliente = new nusoap_client("https://qagintegracion.previred.com/wIntegracion/axis/services/MonitorPrevired?wsdl", true);
-		     	$cliente = new nusoap_client("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", true);
+		     	$cliente = new nusoap_client("https://qagintegracion.previred.com/wIntegracion/axis/services/MonitorPrevired?wsdl", true);
+		     	//$cliente = new nusoap_client("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", true);
 		     	$array_ws = array('xml' => $post);
 		     	$respuesta = $cliente->call('ejecuta', array('xml' => $post));
 
