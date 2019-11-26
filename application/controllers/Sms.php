@@ -121,10 +121,10 @@ class Sms extends CI_Controller {
 			$usuario = $this->session->userdata();
 			if(isset($usuario['id_usuario'])){
 				$post = '<?xml version="1.0" encoding="ISO-8859-1" ?>';
-				$post .= '<peticion llave="ProvidaPrevired2019">';
+				$post .= '<peticion llave="2vUR4BV2iS">';
 				$post .= '<peticionservicio tipo="AUT">';
-				$post .= '<parametro nombre="usuario" valor="76265736-8" />';
-				$post .= '<parametro nombre="password" valor="Provida" />'; //ProvidaPrevired2019" />';
+				$post .= '<parametro nombre="usuario" valor="76.391.999-4" />';
+				$post .= '<parametro nombre="password" valor="2vUR4BV2iS" />'; //ProvidaPrevired2019" />';
 				$post .= '</peticionservicio>';
 				$post .= '<peticionservicio tipo="CAF">';
 			    $post .= '<parametro nombre="rut" valor="'.$rut_afiliado.'" />';
@@ -141,7 +141,7 @@ class Sms extends CI_Controller {
 
 				//mysqli_next_result($this->db->conn_id);
 				//$resultado = $this->Sms_model->agregarLog($usuario['id_usuario'], $id_sms, $simpleXml);
-				var_dump($simpleXml);
+				//var_dump($simpleXml);
 				$cant = 0;
 				$cantNod = 0;
 
