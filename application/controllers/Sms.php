@@ -141,14 +141,14 @@ class Sms extends CI_Controller {
 				$url = 'https://wbackend.previred.com/axis/services/MonitorPrevired';
 				$cert = 'PATH/TO/CLIENT/CERT';
 
-				$context = stream_context_create([
+				/*$context = stream_context_create([
 				    'ssl' => [
 				        'crypto_method' =>  STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT,
 				        'verify_peer' => true,
 				        'verify_peer_name' => true,
 				        'allow_self_signed' => false
 				    ]
-				]);
+				]);*/
 
 				$params = [
 				    'location' => $url,
