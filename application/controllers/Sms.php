@@ -160,7 +160,7 @@ class Sms extends CI_Controller {
 				    'allow_self_signed' => false,
 				    'connection_timeout' => 180,
 				    'keep_alive' => false,
-				    'stream_context' => $context,
+				    //'stream_context' => $context,
 				    'xml' => $post
 				];
 
