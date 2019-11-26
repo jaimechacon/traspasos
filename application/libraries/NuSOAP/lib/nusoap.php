@@ -1497,7 +1497,7 @@ class nusoap_xmlschema extends nusoap_base  {
 			case 'import':
 			    if (isset($attrs['schemaLocation'])) {
 					$this->xdebug('import namespace ' . $attrs['namespace'] . ' from ' . $attrs['schemaLocation']);
-                    $this->imports[$attrs['namespace']][] = array('location' =>  'https://wbackend.previred.com/axis/services/MonitorPrevired'/*$attrs['schemaLocation']*/, 'loaded' => false);
+                    $this->imports[$attrs['namespace']][] = array('location' => $attrs['schemaLocation'], 'loaded' => false);
 				} else {
 					$this->xdebug('import namespace ' . $attrs['namespace']);
                     $this->imports[$attrs['namespace']][] = array('location' => '', 'loaded' => true);
@@ -1508,8 +1508,8 @@ class nusoap_xmlschema extends nusoap_base  {
 			break;
 			case 'include':
 			    if (isset($attrs['schemaLocation'])) {
-					$this->xdebug('include into namespace ' . $this->schemaTargetNamespace . ' from ' . 'https://wbackend.previred.com/axis/services/MonitorPrevired'/*$attrs['schemaLocation']*/);
-                    $this->imports[$this->schemaTargetNamespace][] = array('location' => 'https://wbackend.previred.com/axis/services/MonitorPrevired'/*$attrs['schemaLocation']*/, 'loaded' => false);
+					$this->xdebug('include into namespace ' . $this->schemaTargetNamespace . ' from ' . $attrs['schemaLocation']);
+                    $this->imports[$this->schemaTargetNamespace][] = array('location' => $attrs['schemaLocation'], 'loaded' => false);
 				} else {
 					$this->xdebug('ignoring invalid XML Schema construct: include without schemaLocation attribute');
 				}

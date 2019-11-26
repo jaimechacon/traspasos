@@ -60,7 +60,7 @@ class Sms extends CI_Controller {
 
 			$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
 			
-			var_dump($resultado);
+			//var_dump($resultado);
 			if(isset($resultado))
 			{
 				if(isset($resultado[0]))
@@ -73,7 +73,7 @@ class Sms extends CI_Controller {
 
 						$mensaje = "";
 
-						var_dump($telefono);
+						//var_dump($telefono);
 
 						if($tipo == "1" || $tipo == "2")
 						{
@@ -145,7 +145,7 @@ class Sms extends CI_Controller {
 				//mysqli_next_result($this->db->conn_id);
 				//$resultado = $this->Sms_model->agregarLog($usuario['id_usuario'], $id_sms, $simpleXml);
 				var_dump($cliente);
-				var_dump($respuesta);
+				//var_dump($respuesta);
 				$cant = 0;
 				$cantNod = 0;
 
