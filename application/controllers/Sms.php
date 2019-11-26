@@ -139,17 +139,19 @@ class Sms extends CI_Controller {
 		     	$client = new SoapClient("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", array('location' => "https://wbackend.previred.com/axis/services/MonitorPrevired"));
 
 		     	$response = $client->__soapCall("ejecuta", array('xml' => $post));
-		     	var_dump($response);
+
+		     	$simpleXml = simplexml_load_string($response);
+		     	//var_dump($response);
 
 		     	//$cliente = new nusoap_client("https://qagintegracion.previred.com/wIntegracion/axis/services/MonitorPrevired?wsdl", true);
-		     	$cliente = new nusoap_client("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", array('location' => "https://wbackend.previred.com/axis/services/MonitorPrevired"), true);
+		     	/*$cliente = new nusoap_client("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", true);
 		     	$array_ws = array('xml' => $post);
 		     	$respuesta = $cliente->call('ejecuta', array('xml' => $post));
-				$simpleXml = simplexml_load_string($respuesta);
+				$simpleXml = simplexml_load_string($respuesta);*/
 
 				//mysqli_next_result($this->db->conn_id);
 				//$resultado = $this->Sms_model->agregarLog($usuario['id_usuario'], $id_sms, $simpleXml);
-				var_dump($cliente);
+				//var_dump($cliente);
 				//var_dump($respuesta);
 				$cant = 0;
 				$cantNod = 0;
