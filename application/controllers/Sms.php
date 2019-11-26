@@ -60,17 +60,21 @@ class Sms extends CI_Controller {
 
 			$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
 			
-
+			var_dump($resultado);
 			if(isset($resultado))
 			{
 				if(isset($resultado[0]))
 				{
 					if(isset($resultado[0]['rut_afiliado']) && isset($resultado[0]['periodo']) && isset($resultado[0]['telefono']))
 					{
+
 						$telefono = $resultado[0]['telefono'];
 						$rut_afiliado = (substr($resultado[0]['rut_afiliado'], 0, ((strlen($resultado[0]['rut_afiliado']))-1)).'-'.substr($resultado[0]['rut_afiliado'], ((strlen($resultado[0]['rut_afiliado']))-1), 1));
 
 						$mensaje = "";
+
+						var_dump($telefono);
+						
 						if($tipo == "1" || $tipo == "2")
 						{
 							$mensaje = "ProVida AFP Confirma la recepción de tus datos. El código de validación es ".$id_sms.".";
