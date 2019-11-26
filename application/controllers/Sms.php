@@ -164,11 +164,20 @@ class Sms extends CI_Controller {
 				    'xml' => $post
 				];
 
-				$client = new SoapClient($wsdl, $params);
+				$soapx = new SoapClient($wsdl,
+				    array(
+				    	'trace' => true,
+						'cache_wsdl' => WSDL_CACHE_NONE,
+						'location' => $url,
+						'xml' => $post
+						)
+				);
+
+				//$client = new SoapClient($wsdl, $params);
 
 		     	//$client = new SoapClient("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", array('location' => "https://wbackend.previred.com/axis/services/MonitorPrevired"));
 
-		     	$response = $client->__soapCall("ejecuta", array('xml' => $post));
+		     	$response = $soapx->__soapCall("ejecuta", array('xml' => $post));
 
 		     	$simpleXml = simplexml_load_string($response);
 		     	//var_dump($response);
