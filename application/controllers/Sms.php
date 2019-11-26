@@ -74,7 +74,7 @@ class Sms extends CI_Controller {
 						$mensaje = "";
 
 						var_dump($telefono);
-						
+
 						if($tipo == "1" || $tipo == "2")
 						{
 							$mensaje = "ProVida AFP Confirma la recepción de tus datos. El código de validación es ".$id_sms.".";
@@ -140,12 +140,12 @@ class Sms extends CI_Controller {
 		     	$cliente = new nusoap_client("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", true);
 		     	$array_ws = array('xml' => $post);
 		     	$respuesta = $cliente->call('ejecuta', array('xml' => $post));
-
 				$simpleXml = simplexml_load_string($respuesta);
 
 				//mysqli_next_result($this->db->conn_id);
 				//$resultado = $this->Sms_model->agregarLog($usuario['id_usuario'], $id_sms, $simpleXml);
-				var_dump($simpleXml);
+				var_dump($cliente);
+				var_dump($respuesta);
 				$cant = 0;
 				$cantNod = 0;
 
