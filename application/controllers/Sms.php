@@ -136,7 +136,7 @@ class Sms extends CI_Controller {
 		        $post .= '</peticionservicio>';
 		     	$post .= '</peticion>';
 
-		     	$client = new SoapClient("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", array('location' => "https://wbackend.previred.com/axis/services/MonitorPrevired");
+		     	$client = new SoapClient("https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl", array('location' => "https://wbackend.previred.com/axis/services/MonitorPrevired"));
 
 		     	$response = $client->__soapCall("ejecuta", array('xml' => $post));
 		     	var_dump($response);
