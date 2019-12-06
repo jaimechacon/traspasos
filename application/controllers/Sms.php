@@ -140,13 +140,11 @@ class Sms extends CI_Controller {
 				
 				if(isset($resultado))
 				{
-					var_dump($resultado);
 					if(isset($resultado[0]))
 					{
-						var_dump($resultado[0]);
 						if(isset($resultado[0]['rut_afiliado']) && isset($resultado[0]['periodo']) && isset($resultado[0]['telefono']))
 						{
-							$mensaje = "";							
+							$mensaje = "";
 							echo json_encode($resultado[0]["resultado"]);
 						}
 					}
