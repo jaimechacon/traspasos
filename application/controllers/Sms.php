@@ -35,7 +35,7 @@ class Sms extends CI_Controller {
 			$validacionesPendientes = $this->Sms_model->listarTraspasosPendientesRut($usuario['id_usuario']);
 			$usuario['validacionesPendientes'] = $validacionesPendientes;
 			$usuario['controller'] = 'sms';
-			$this->load->view('temp/header');}
+			$this->load->view('temp/header');
 			$this->load->view('temp/menu', $usuario);
 			$this->load->view('validarRut', $usuario);
 			$this->load->view('temp/footer', $usuario);
