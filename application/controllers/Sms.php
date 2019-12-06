@@ -137,11 +137,13 @@ class Sms extends CI_Controller {
 			}else
 			{	
 				$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
-				var_dump($resultado);
+				
 				if(isset($resultado))
 				{
+					var_dump($resultado);
 					if(isset($resultado[0]))
 					{
+						var_dump($resultado[0]);
 						if(isset($resultado[0]['rut_afiliado']) && isset($resultado[0]['periodo']) && isset($resultado[0]['telefono']))
 						{
 							$mensaje = "";							
