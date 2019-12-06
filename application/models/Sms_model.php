@@ -38,4 +38,10 @@ class Sms_model extends CI_Model
 		$query = $this->db->query("call `traspasosdb`.`agregarLog`(".$idUsuario.", ".$idSms.", '".$mensaje."');");
 		return $query->result_array();
 	}
+
+	public function listarTraspasosPendientesRut($idUsuario)
+	{
+		$query = $this->db->query("call `traspasosdb`.`listarTraspasosPendientesRut`(".$idUsuario.");");
+		return $query->result_array();
+	}
 }

@@ -28,6 +28,24 @@ class Sms extends CI_Controller {
 		}
 	}
 
+	public function validarRut()
+	{
+		$usuario = $this->session->userdata();
+		if(isset($usuario['id_usuario'])){
+			$validacionesPendientes = $this->Sms_model->listarTraspasosPendientesRut($usuario['id_usuario']);
+			$usuario['validacionesPendientes'] = $validacionesPendientes;
+			$usuario['controller'] = 'sms';
+			$this->load->view('temp/header');}
+			$this->load->view('temp/menu', $usuario);
+			$this->load->view('validarRut', $usuario);
+			$this->load->view('temp/footer', $usuario);
+			//$this->add_customer();
+		}else
+		{
+			redirect('Inicio');
+		}
+	}
+
 	public function listarValidacionesPendientes()
 	{
 		$usuario = $this->session->userdata();
@@ -160,7 +178,7 @@ class Sms extends CI_Controller {
 				if(isset($simpleXml) && isset($simpleXml->control) && isset($simpleXml->control['codigo']) && sizeof(((string)$simpleXml->control['codigo'][0])) > 0)
 				{
 					$codigo = (string)$simpleXml->control['codigo'];
-					
+
 					if($codigo == "9000")
 					{
 						foreach ($simpleXml->respuestaservicio as $servicio) {
