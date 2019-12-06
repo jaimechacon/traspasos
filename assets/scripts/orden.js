@@ -8,7 +8,7 @@
 	        paging:         true,
 	        //dom: 'rtip',
 	        //"dom": '<rf<t>ip>',
-	        ordering:       true,
+	        "order":        [[ 0, "desc" ]],
 	        info:           true,
 	        //columnDefs: [
 	          //{ targets: 'no-sort', orderable: false }
@@ -149,7 +149,7 @@
 							        paging:         true,
 							        //dom: 'rtip',
 							        //"dom": '<rf<t>ip>',
-							        ordering:       true,
+							        "order":        [[ 0, "desc" ]],
 							        info:           true,
 							        //columnDefs: [
 							          //{ targets: 'no-sort', orderable: false }
