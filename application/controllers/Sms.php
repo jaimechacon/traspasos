@@ -160,7 +160,7 @@ class Sms extends CI_Controller {
 				if(isset($simpleXml) && isset($simpleXml->control) && isset($simpleXml->control['codigo']) && sizeof(((string)$simpleXml->control['codigo'][0])) > 0)
 				{
 					$codigo = (string)$simpleXml->control['codigo'];
-					var_dump($codigo);
+					
 					if($codigo == "9000")
 					{
 						foreach ($simpleXml->respuestaservicio as $servicio) {
