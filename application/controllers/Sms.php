@@ -75,64 +75,81 @@ class Sms extends CI_Controller {
 			if(!is_null($this->input->post('tipo')) && $this->input->post('tipo') != "-1" && $this->input->post('tipo') != "")
 				$tipo = $this->input->post('tipo');
 
-			$tipo = "1";
-			$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
-			
-			$validarRut = "null";
+			$validarRut = null;
+			if(!is_null($this->input->post('validarRut')) && $this->input->post('validarRut') == "1" && $this->input->post('validarRut') != "")
+				$validarRut = $this->input->post('validarRut');
 
-			//var_dump($resultado);
-			if(isset($resultado))
-			{
-				if(isset($resultado[0]))
+
+			if (is_null($validarRut)) {
+				$tipo = "1";
+				$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
+
+				//var_dump($resultado);
+				if(isset($resultado))
 				{
-					if(isset($resultado[0]['rut_afiliado']) && isset($resultado[0]['periodo']) && isset($resultado[0]['telefono']))
+					if(isset($resultado[0]))
 					{
-
-						$telefono = $resultado[0]['telefono'];
-						$rut_afiliado = (substr($resultado[0]['rut_afiliado'], 0, ((strlen($resultado[0]['rut_afiliado']))-1)).'-'.substr($resultado[0]['rut_afiliado'], ((strlen($resultado[0]['rut_afiliado']))-1), 1));
-
-						$mensaje = "";
-
-						//var_dump($telefono);
-
-						if($tipo == "1" || $tipo == "2")
+						if(isset($resultado[0]['rut_afiliado']) && isset($resultado[0]['periodo']) && isset($resultado[0]['telefono']))
 						{
-							$mensaje = "ProVida AFP Confirma la recepción de tus datos. El código de validación es ".$id_sms.".";
+
+							$telefono = $resultado[0]['telefono'];
+							$rut_afiliado = (substr($resultado[0]['rut_afiliado'], 0, ((strlen($resultado[0]['rut_afiliado']))-1)).'-'.substr($resultado[0]['rut_afiliado'], ((strlen($resultado[0]['rut_afiliado']))-1), 1));
+
+							$mensaje = "";
+
+							//var_dump($telefono);
+
+							if($tipo == "1" || $tipo == "2")
+							{
+								$mensaje = "ProVida AFP Confirma la recepción de tus datos. El código de validación es ".$id_sms.".";
+							}
+
+							/*if($tipo == "2")
+							{
+								$mensaje = "Afiliado NO VIGENTE";
+							}*/
+
+							if($tipo == "3")
+							{
+								$mensaje = "ProVida no pudo validar los datos de tu cédula de identidad. Por favor revísalos con el ejecutivo.";
+							}
+
+							if($tipo == "4" && $resultado[0]['enviar_sms'] == "1")
+							{
+								$mensaje = "ProVida no pudo validar los datos de tu cédula de identidad. Por favor revísalos con el ejecutivo.";
+							}
+
+							if($mensaje != "")
+							{
+								$parametros['celular'] = $telefono;
+								$parametros['mensaje'] = $mensaje;
+								$se_envio = $this->enviarSms($parametros);
+							}
+
+							//var_dump($se_envio, $telefono, $mensaje, $tipo);
+
+							$periodo = $resultado[0]['periodo'];
+							$this->obtenerDatosPrevired($id_sms, $rut_afiliado, $periodo, $tipo);
+							echo json_encode($resultado[0]["resultado"]);
 						}
-
-						/*if($tipo == "2")
-						{
-							$mensaje = "Afiliado NO VIGENTE";
-						}*/
-
-						if($tipo == "3")
-						{
-							$mensaje = "ProVida no pudo validar los datos de tu cédula de identidad. Por favor revísalos con el ejecutivo.";
-						}
-
-						if($tipo == "4" && $resultado[0]['enviar_sms'] == "1")
-						{
-							$mensaje = "ProVida no pudo validar los datos de tu cédula de identidad. Por favor revísalos con el ejecutivo.";
-						}
-
-						if($mensaje != "")
-						{
-							$parametros['celular'] = $telefono;
-							$parametros['mensaje'] = $mensaje;
-							$se_envio = $this->enviarSms($parametros);
-						}
-
-						//var_dump($se_envio, $telefono, $mensaje, $tipo);
-
-						$periodo = $resultado[0]['periodo'];
-						$this->obtenerDatosPrevired($id_sms, $rut_afiliado, $periodo, $tipo);
-						echo json_encode($resultado[0]["resultado"]);
 					}
-					
-
-
+				}
+			}else
+			{	
+				$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
+				if(isset($resultado))
+				{
+					if(isset($resultado[0]))
+					{
+						if(isset($resultado[0]['rut_afiliado']) && isset($resultado[0]['periodo']) && isset($resultado[0]['telefono']))
+						{
+							$mensaje = "";							
+							echo json_encode($resultado[0]["resultado"]);
+						}
+					}
 				}
 			}
+			
 		}else
 		{
 			redirect('Login');

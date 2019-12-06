@@ -54,17 +54,17 @@ $(document).ready(function() {
  		var estado = -1;
  		if(e.currentTarget.className.includes('btn-success', 1))
  		{
- 			estado = 1;
+ 			estado = 5;
  		}else
  		{
  			if(e.currentTarget.className.includes('btn-warning', 1))
 			{
-				estado = 2;
+				estado = 6;
 			}else
 	 		{
 	 			if(e.currentTarget.className.includes('btn-info', 1))
 				{
-					estado = 3;
+					estado = 7;
 				}else
 		 		{
 		 			if(e.currentTarget.className.includes('btn-danger', 1))
