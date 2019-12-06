@@ -57,7 +57,7 @@ class Sms extends CI_Controller {
 			if(!is_null($this->input->post('tipo')) && $this->input->post('tipo') != "-1" && $this->input->post('tipo') != "")
 				$tipo = $this->input->post('tipo');
 
-
+			$tipo = "1";
 			$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
 			
 			//var_dump($resultado);
@@ -160,6 +160,7 @@ class Sms extends CI_Controller {
 				if(isset($simpleXml) && isset($simpleXml->control) && isset($simpleXml->control['codigo']) && sizeof(((string)$simpleXml->control['codigo'][0])) > 0)
 				{
 					$codigo = (string)$simpleXml->control['codigo'];
+					var_dump($codigo);
 					if($codigo == "9000")
 					{
 						foreach ($simpleXml->respuestaservicio as $servicio) {
