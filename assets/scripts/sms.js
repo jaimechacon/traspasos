@@ -49,6 +49,51 @@ $(document).ready(function() {
 			});
  		}
 	});
+
+ 	$(".btnEstadosRut").on('click', function(e) {
+ 		var estado = -1;
+ 		if(e.currentTarget.className.includes('btn-success', 1))
+ 		{
+ 			estado = 1;
+ 		}else
+ 		{
+ 			if(e.currentTarget.className.includes('btn-warning', 1))
+			{
+				estado = 2;
+			}else
+	 		{
+	 			if(e.currentTarget.className.includes('btn-info', 1))
+				{
+					estado = 3;
+				}else
+		 		{
+		 			if(e.currentTarget.className.includes('btn-danger', 1))
+					{
+						estado = 4;
+					}
+		 		}
+	 		}
+ 		}
+
+ 		if(estado > -1){
+ 			var id_sms = e.currentTarget.dataset.id;
+			var baseurl = window.origin + '/Sms/validarRCOT';
+		    jQuery.ajax({
+				type: "POST",
+				url: baseurl,
+				dataType: 'json',
+				data: { id_sms: id_sms, tipo: estado, validarRut: 1 },
+				success: function(data) {
+				    if (data)
+				    {
+				    	location.reload();
+				    }
+				}
+			});
+ 		}
+	});
+
+
 });
 
 window.onload = function () {
