@@ -24,6 +24,18 @@ class Login extends CI_Controller {
 		$contrasenia = addslashes($this->input->post('contrasenia'));
 
 		$result = $this->usuario_model->login($rut, $contrasenia);
+
+		//var_dump($contrasenia, $result['u_contrasenia']);
+		//$hashed_password = crypt('123');
+		//var_dump($hashed_password);
+		//var_dump(password_verify($contrasenia, $result['u_contrasenia']));
+		//$opciones = [
+		  //   'cost' => 11,
+    //'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+	//	];
+	//	var_dump($result['u_contrasenia'].'</h3></br>');
+		//var_dump(password_hash($contrasenia, PASSWORD_DEFAULT));
+
 		if(password_verify($contrasenia, $result['u_contrasenia']))
 		{
 			$menus = $this->obtener_menu($result['id_usuario']);
@@ -36,7 +48,7 @@ class Login extends CI_Controller {
 			redirect('Inicio');
 		}else{
 			$login['login'] = 1;
-			$data['message'] = 'Verifique su email y contrase&ntilde;a.';
+			$data['message'] = 'Verifique su rut y contrase&ntilde;a.';
 			$this->load->view('temp/header_index', $login);
 			$this->load->view('login', $data);
 			$this->load->view('temp/footer');
