@@ -4,7 +4,6 @@
 	if(!$id_usuario){
 	  redirect('Login');
 	}
-	
 ?>
 <div class="row p-3" id="contenedor">
 	<a id="link_rc" name="link_rc" target="_blank" class="btn btn-primary" href="https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml">Registro Civil</a>
@@ -35,7 +34,12 @@
 				  			<tr id="row_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="row_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">
 						        <th id="id_sms_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="id_sms_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['id_sms']; ?></th>
 						        <td id="rut_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="rut_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo 
-						        (substr($validacion['rut'], 0, ((strlen($validacion['rut']))-1)).'-'.substr($validacion['rut'], ((strlen($validacion['rut']))-1), 1)); ?></td>
+						        (!strpos($validacion['rut'], '-')?
+						        	(substr($validacion['rut'], 0, ((strlen($validacion['rut']))-1)).'-'.substr($validacion['rut'], ((strlen($validacion['rut']))-1), 1))
+						        	: $validacion['rut']
+
+						    	)
+						        ; ?></td>
 						        <td id="serie_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="serie_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['serie']; ?></td>
 						        <td id="tipo_documento_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tipo_documento_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['tipo_documento']; ?></td>
 						        <td id="cant_repeticiones_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="cant_repeticiones_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['cant_repeticiones']; ?></td>
