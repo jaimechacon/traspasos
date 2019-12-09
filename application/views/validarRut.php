@@ -34,7 +34,7 @@
 
 				  			<tr id="row_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="row_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>">
 						        <th id="id_sms_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="id_sms_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo $validacion['id_sms']; ?></th>
-						        <td id="rut_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="rut_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php (!strpos($validacion['rut'], '-')?
+						        <td id="rut_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="rut_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro"><?php echo (!strpos($validacion['rut'], '-')?
 						        	(substr($validacion['rut'], 0, ((strlen($validacion['rut']))-1)).'-'.substr($validacion['rut'], ((strlen($validacion['rut']))-1), 1))
 						        	: $validacion['rut']
 
