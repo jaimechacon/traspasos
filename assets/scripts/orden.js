@@ -124,7 +124,7 @@
 						            row = row.concat('\n<th scope="row" class="text-center align-middle registro">', myJSON.tabla[i]['id_sms'], '</th>');
 							        row = row.concat('\n<td class="text-center align-middle registro">', (jQuery.isEmptyObject(myJSON.tabla[i]['sucursal']) ? '' : myJSON.tabla[i]['sucursal']), '</td>');
 							        row = row.concat('\n<td class="text-center align-middle registro">', (jQuery.isEmptyObject(myJSON.tabla[i]['u_rut']) ? '' : myJSON.tabla[i]['u_rut']), '</td>');
-							        row = row.concat('\n<td class="text-center align-middle registro">', (jQuery.isEmptyObject(myJSON.tabla[i]['u_nombres']) ? '' : myJSON.tabla[i]['u_nombres']), (jQuery.isEmptyObject(myJSON.tabla[i]['u_apellidos']) ? '' : concat(' ', myJSON.tabla[i]['u_apellidos'])), '</td>');
+							        row = row.concat('\n<td class="text-center align-middle registro">', (jQuery.isEmptyObject(myJSON.tabla[i]['u_nombres']) ? '' : myJSON.tabla[i]['u_nombres']), (jQuery.isEmptyObject(myJSON.tabla[i]['u_apellidos']) ? '' : ' '.concat(myJSON.tabla[i]['u_apellidos'])), '</td>');
 							        row = row.concat('\n<td class="text-center align-middle registro">', (jQuery.isEmptyObject(myJSON.tabla[i]['rut']) ? '' : myJSON.tabla[i]['rut']), '</td>');
 							        row = row.concat('\n<td class="text-center align-middle registro">', (jQuery.isEmptyObject(myJSON.tabla[i]['nombres']) ? '' : myJSON.tabla[i]['nombres']), '</td>');
 							        row = row.concat('\n<td class="text-center align-middle registro">', (jQuery.isEmptyObject(myJSON.tabla[i]['apellido_paterno']) ? '' : myJSON.tabla[i]['apellido_paterno']), '</td>');
