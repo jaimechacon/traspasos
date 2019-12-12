@@ -136,7 +136,7 @@ class Orden extends CI_Controller {
 
 			$registrosOT = $this->Orden_model->insertCRMNeotel($idSucursal, $idUsuarioVendedor, $id_estado_rc, $fecha_inicio, $fecha_fin, $id_estado_certificacion, $usuario["id_usuario"], $por_defecto);
 			
-			$this->excel->getActiveSheet()->setTitle('OT_Automatico');
+			$this->excel->getActiveSheet()->setTitle('Contactos');
 			#var_dump($institucion, $hospital, $proveedor, $mes, $anio);
 			#var_dump($pagos);
 	        //Contador de filas
@@ -271,7 +271,7 @@ class Orden extends CI_Controller {
 
 			$registrosOT = $this->Orden_model->insertCRMNeotel($idSucursal, $idUsuarioVendedor, $id_estado_rc, $fecha_desde, $fecha_hasta, $id_estado_certificacion, $usuario["id_usuario"], $por_defecto);
 			
-			$this->excel->getActiveSheet()->setTitle('OT_filtros');
+			$this->excel->getActiveSheet()->setTitle('Contactos');
 			#var_dump($institucion, $hospital, $proveedor, $mes, $anio);
 			#var_dump($pagos);
 	        //Contador de filas
