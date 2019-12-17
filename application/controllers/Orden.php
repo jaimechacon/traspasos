@@ -93,9 +93,12 @@ class Orden extends CI_Controller {
 					$usuario["estadosC"] = $estadosC;
 
 				$usuario_operacional = (sizeof($sucursales) > 1 ? true : false);
+
+				$usuario_supervisor = (sizeof($vendedores) > 1 ? true : false);
 				
 
 				$usuario['usuario_operacional'] = $usuario_operacional;
+				$usuario['usuario_supervisor'] = $usuario_supervisor;
 
 				mysqli_next_result($this->db->conn_id);
 				$traspasos = $this->Orden_model->listarTraspasosUsuario($usuario['id_usuario'], "null", "null", "null", "null", "null", "null", "null");
