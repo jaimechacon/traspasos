@@ -455,26 +455,26 @@ class Orden extends CI_Controller {
 		     $id_estado_rc = "null";
 		     $id_estado_c = "null";
 
-			if(!is_null($this->input->post('idsucursal')) && $this->input->post('idsucursal') != "-1" 
-			#	&& $this->input->post('id_sucursal') != ""
+			if(!is_null($this->input->get('idsucursal')) && $this->input->get('idsucursal') != "-1" 
+			#	&& $this->input->get('id_sucursal') != ""
 			)
-				$id_sucursal = (trim($this->input->post('idsucursal')) == "" ? "''" : $this->input->post('idsucursal'));
+				$id_sucursal = (trim($this->input->get('idsucursal')) == "" ? "''" : $this->input->get('idsucursal'));
 
-			if(!is_null($this->input->post('idvendedor')) && $this->input->post('idvendedor') != "-1" #&& $this->input->post('id_usuario_vendedor') != ""
+			if(!is_null($this->input->get('idvendedor')) && $this->input->get('idvendedor') != "-1" #&& $this->input->get('id_usuario_vendedor') != ""
 			)
-				$id_usuario_vendedor = (trim($this->input->post('idvendedor')) == "" ? "''" : $this->input->post('idvendedor'));
+				$id_usuario_vendedor = (trim($this->input->get('idvendedor')) == "" ? "''" : $this->input->get('idvendedor'));
 
-			if(!is_null($this->input->post('fechadesde')) && $this->input->post('fechadesde') != "-1" && $this->input->post('fechadesde') != "")
-				$fecha_desde = $this->input->post('fechadesde');
+			if(!is_null($this->input->get('fechadesde')) && $this->input->get('fechadesde') != "-1" && $this->input->get('fechadesde') != "")
+				$fecha_desde = $this->input->get('fechadesde');
 
-			if(!is_null($this->input->post('fechahasta')) && $this->input->post('fechahasta') != "-1" && $this->input->post('fechahasta') != "")
-				$fecha_hasta = $this->input->post('fechahasta');
+			if(!is_null($this->input->get('fechahasta')) && $this->input->get('fechahasta') != "-1" && $this->input->get('fechahasta') != "")
+				$fecha_hasta = $this->input->get('fechahasta');
 
-			if(!is_null($this->input->post('idestadorc')) && $this->input->post('idestadorc') != "-1" && $this->input->post('idestadorc') != "")
-				$id_estado_rc = $this->input->post('idestadorc');
+			if(!is_null($this->input->get('idestadorc')) && $this->input->get('idestadorc') != "-1" && $this->input->get('idestadorc') != "")
+				$id_estado_rc = $this->input->get('idestadorc');
 
-			if(!is_null($this->input->post('idestadoc')) && $this->input->post('idestadoc') != "-1" && $this->input->post('idestadoc') != "")
-				$id_estado_c = $this->input->post('idestadoc');
+			if(!is_null($this->input->get('idestadoc')) && $this->input->get('idestadoc') != "-1" && $this->input->get('idestadoc') != "")
+				$id_estado_c = $this->input->get('idestadoc');
 
 			$traspasos = $this->Orden_model->listarTraspasosUsuario($usuario['id_usuario'], $id_sucursal, $id_usuario_vendedor, $fecha_desde, $fecha_hasta, $id_estado_rc, $id_estado_c, "null");
 
