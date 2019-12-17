@@ -8,9 +8,9 @@ class Orden_model extends CI_Model
 		parent::__construct();
 	}
 
-	public function listarTraspasosUsuario($idUsuario)
+	public function listarTraspasosUsuario($idUsuario, $idSucursal, $idUsuarioVendedor, $fechaDesde, $fechaHasta, $idEstadoRC, $idEstadoC, $idTipoDoc)
 	{
-		$query = $this->db->query("call `traspasosdb`.`listarTraspasosUsuario`(".$idUsuario.");");
+		$query = $this->db->query("call `traspasosdb`.`listarTraspasosUsuario`(".$idUsuario.", ".$idSucursal.", ".$idUsuarioVendedor.", ".($fechaDesde == "null" ? $fechaDesde : ("'".$fechaDesde."'")).", ".($fechaHasta == "null" ? $fechaHasta : ("'".$fechaHasta."'")).", ".$idEstadoRC.", ".$idEstadoC.", ".$idTipoDoc.");");
 		return $query->result_array();
 	}
 
