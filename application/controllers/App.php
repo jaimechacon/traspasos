@@ -6,7 +6,7 @@ class App extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Sms_model');
+		$this->load->model('App_model');
 		$this->load->library('NuSoap_lib');
 	}
 
@@ -19,9 +19,21 @@ class App extends CI_Controller {
 			///readfile($data);
 			//force_download($data, NULL);
 			//exit;
-			header("Content-Type: application/force-download");
-		    header('Content-Disposition: attachment; filename='.$name);
-		    readfile($data);
+
+			$resultado = $this->App_model->agregarLog($usuario['id_usuario'], 'Descarga APK', 'Descarga APK');
+
+				if(isset($resultado))
+				{
+					if(isset($resultado[0]))
+					{
+						if(isset($resultado[0]['resultado']) && $resultado[0]['resultado'] == "1")
+						{
+							header("Content-Type: application/force-download");
+						    header('Content-Disposition: attachment; filename='.$name);
+						    readfile($data);
+						}
+					}
+				}
 		}else
 		{
 			redirect('Inicio');

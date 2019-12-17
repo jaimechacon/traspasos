@@ -6,13 +6,12 @@
 	}
 ?>
 <div class="row p-3">
+<?php if ($usuario_operacional) { ?>
 	<div class="col-sm-12 text-right">
 		<button id="btnExportarExcelUsuario" type="button" class="btn btn-link">Exportar a CSV
 			<i style="margin-bottom: 5px;" data-feather="download"></i>
 		</button>
 	</div>
-
-<?php if ($usuario_operacional) { ?>
 	<div class="col-sm-12">
 		<div class="row">			
 			<div class="col-sm-6">
