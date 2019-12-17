@@ -92,7 +92,7 @@ class Orden extends CI_Controller {
 				if($estadosC)
 					$usuario["estadosC"] = $estadosC;
 
-				$usuario_operacional = (sizeof($vendedores) > 0 ? true : false);
+				$usuario_operacional = (sizeof($sucursales) > 1 ? true : false);
 				
 
 				$usuario['usuario_operacional'] = $usuario_operacional;
