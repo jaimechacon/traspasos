@@ -14,6 +14,8 @@ class Sms extends CI_Controller {
 	{
 		$usuario = $this->session->userdata();
 		if(isset($usuario['id_usuario'])){
+			$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $data->message, $data->other_messages);
+			mysqli_next_result($this->db->conn_id);
 			$validacionesPendientes = $this->Sms_model->listarTraspasosPendientes($usuario['id_usuario']);
 			$usuario['validacionesPendientes'] = $validacionesPendientes;
 			$usuario['controller'] = 'sms';
