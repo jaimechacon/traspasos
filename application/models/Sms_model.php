@@ -38,4 +38,11 @@ class Sms_model extends CI_Model
 		$query = $this->db->query("call `traspasosdb`.`listarTraspasosPendientesRut`(".$idUsuario.");");
 		return $query->result_array();
 	}
+
+	public function agregarLogSMS($username, $password, $ani, $dnis, $message, $other_messages)
+	{
+		$query2 = $this->db->query("call `traspasosdb`.`agregarSMS`('".$username."', '".$password."', '".$ani."', '".$dnis."', '".$message."', '".$other_messages."'");
+
+		return $query2->result_array();
+	}
 }
