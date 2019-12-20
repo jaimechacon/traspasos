@@ -378,7 +378,9 @@ class Sms extends CI_Controller {
 						}
 					}else
 					{
+						var_dump($data);
 						$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $data->message, $data->other_messages);
+						var_dump($query);
 					}
 				}
 			}
