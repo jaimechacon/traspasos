@@ -349,9 +349,6 @@ class Sms extends CI_Controller {
 			{
 				if($data->username == "Sglo2019" && $data->password == "Sg.2019$$##")
 				{
-
-					$query = $this->Sms_model->agregarLogSMS($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages);
-					
 					$datos = explode("_", $data->message);
 					if(sizeof($datos) == 5){
 						$rut = $datos[0];
@@ -360,8 +357,6 @@ class Sms extends CI_Controller {
 						$telefono = $datos[3];
 						$folio = $datos[4];
 						
-
-						mysqli_next_result($this->db->conn_id);
 						$query = $this->Sms_model->agregarSMS($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio);
 
 						if($query != null && $query[0]['resultado'] == "1")
@@ -381,6 +376,9 @@ class Sms extends CI_Controller {
 								}
 							}
 						}
+					}else
+					{
+						$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $data->message, $data->other_messages);
 					}
 				}
 			}
