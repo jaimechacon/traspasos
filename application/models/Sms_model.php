@@ -39,9 +39,9 @@ class Sms_model extends CI_Model
 		return $query->result_array();
 	}
 
-	public function agregarLogSMS($username, $ani, $dnis, $message, $other_messages)
+	public function agregarLogSMS($username, $ani, $dnis, $message, $other_messages, $correcto)
 	{
-		$query2 = $this->db->query("call `traspasosdb`.`agregarLogSMS`('".$username."', '".$ani."', '".$dnis."', '".$message."', '".$other_messages."');");
+		$query2 = $this->db->query("call `traspasosdb`.`agregarLogSMS`('".$username."', '".$ani."', '".$dnis."', '".$message."', '".$other_messages."', ".$correcto.");");
 		return $query2->result_array();
 	}
 }
