@@ -349,11 +349,11 @@ class Sms extends CI_Controller {
 			{
 				if($data->username == "Sglo2019" && $data->password == "Sg.2019$$##")
 				{
-					if (strpos($dato, "_") > 1) {
+					if (strpos($data->message, "_") > 1) {
 						$datos = explode("_", $data->message);
 					}else
 					{
-						if (strpos($dato, "$") > 1) {
+						if (strpos($data->message, "$") > 1) {
 							$datos = explode("$", $data->message);
 						}
 					}
