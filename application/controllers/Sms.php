@@ -349,18 +349,33 @@ class Sms extends CI_Controller {
 			{
 				if($data->username == "Sglo2019" && $data->password == "Sg.2019$$##")
 				{
-					$datos = explode("_", $data->message);
-					if(sizeof($datos) == 5){
+					if (strpos($dato, "_") > 1) {
+						$datos = explode("_", $data->message);
+					}else
+					{
+						if (strpos($dato, "$") > 1) {
+							$datos = explode("$", $data->message);
+						}
+					}
+					
+					if(sizeof($datos) >= 5){
 						$rut = $datos[0];
 						$serie = $datos[1];
 						$tipo_documento = (int)$datos[2];
 						$telefono = $datos[3];
 						$folio = $datos[4];
-						
+						$latitud = "null";
+						$longitud = "null";
+
+						if (sizeof($datos) >= 6) {
+							$latitud = $datos[5];
+							$longitud = $datos[6];
+						}
+
 						$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $data->message, $data->other_messages, 1);
 
 						mysqli_next_result($this->db->conn_id);
-						$query = $this->Sms_model->agregarSMS($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio);
+						$query = $this->Sms_model->agregarSMS($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio, $latitud, $longitud);
 
 						if($query != null && $query[0]['resultado'] == "1")
 						{
