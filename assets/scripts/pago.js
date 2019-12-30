@@ -2,7 +2,7 @@
 
  	$("#institucionPago").change(function() {
 		institucion = $("#institucionPago").val();
-		var baseurl = window.origin + '/minsal/Pago/listarHospitalesInstitucion';
+		var baseurl = window.origin + '/Pago/listarHospitalesInstitucion';
 	    jQuery.ajax({
 		type: "POST",
 		url: baseurl,
@@ -20,7 +20,7 @@
 
 				institucion = $("#institucionPago").val();
 		    	hospital =  $("#hospitalPago").val();
-				var baseurl = window.origin + '/minsal/Pago/listarProveedores';
+				var baseurl = window.origin + '/Pago/listarProveedores';
 			    jQuery.ajax({
 				type: "POST",
 				url: baseurl,
@@ -39,7 +39,7 @@
 						institucion = $("#institucionPago").val();
 				    	hospital =  $("#hospitalPago").val();
 				    	proveedor =  $("#principalPago").val();
-						var baseurl = window.origin + '/minsal/Pago/listarMesesAnios';
+						var baseurl = window.origin + '/Pago/listarMesesAnios';
 					    jQuery.ajax({
 						type: "POST",
 						url: baseurl,
@@ -82,7 +82,7 @@
  	$("#hospitalPago").change(function() {
  		institucion = $("#institucionPago").val();
     	hospital =  $("#hospitalPago").val();
-		var baseurl = window.origin + '/minsal/Pago/listarProveedores';
+		var baseurl = window.origin + '/Pago/listarProveedores';
 	    jQuery.ajax({
 		type: "POST",
 		url: baseurl,
@@ -125,7 +125,7 @@
 	    anio = $("#anioPago").val();
 		proveedor = $('#principalPago').val();
 
-	    var baseurl = window.origin + '/minsal/Pago/listarPagosFiltrados';
+	    var baseurl = window.origin + '/Pago/listarPagosFiltrados';
 	    jQuery.ajax({
 		type: "POST",
 		url: baseurl,

@@ -372,7 +372,11 @@ class Sms extends CI_Controller {
 							$longitud = $datos[6];
 						}
 
-						$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $data->message, $data->other_messages, 1);
+						$mensaje = $rut.';'.$serie.';'.$tipo_documento.';'.$telefono.';'.$folio.';'.$latitud.';'.$longitud.';';
+						
+
+						//$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $data->message, $data->other_messages, 1);
+						$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $mensaje.$data->message, $data->other_messages, 1);
 
 						mysqli_next_result($this->db->conn_id);
 						$query = $this->Sms_model->agregarSMS($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio, $latitud, $longitud);
