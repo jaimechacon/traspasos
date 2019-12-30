@@ -486,20 +486,21 @@ class Orden extends CI_Controller {
 	        $contador = 1;
 	        $this->excel->getActiveSheet()->setCellValue("A1", 'ID OT');
 			$this->excel->getActiveSheet()->setCellValue("B1", 'Sucursal');
-			$this->excel->getActiveSheet()->setCellValue("C1", 'Rut Usuario');
-			$this->excel->getActiveSheet()->setCellValue("D1", 'Usuario');
-			$this->excel->getActiveSheet()->setCellValue("E1", 'Perfil');
-			$this->excel->getActiveSheet()->setCellValue("F1", 'Rut Afiliado');
-			$this->excel->getActiveSheet()->setCellValue("G1", 'Nombres');
-			$this->excel->getActiveSheet()->setCellValue("H1", 'Apellido Paterno');
-			$this->excel->getActiveSheet()->setCellValue("I1", 'Apellido Materno');
-			$this->excel->getActiveSheet()->setCellValue("J1", 'AFP Origen');
-			$this->excel->getActiveSheet()->setCellValue("K1", 'Teléfono');
-			$this->excel->getActiveSheet()->setCellValue("L1", 'Folio');
-			$this->excel->getActiveSheet()->setCellValue("M1", 'Fecha');
-			$this->excel->getActiveSheet()->setCellValue("N1", 'Estado Cédula');
-			$this->excel->getActiveSheet()->setCellValue("O1", 'Estado Certificación');
-			$this->excel->getActiveSheet()->setCellValue("P1", 'Vía Ingreso');
+			$this->excel->getActiveSheet()->setCellValue("C1", 'Celular Origen');
+			$this->excel->getActiveSheet()->setCellValue("D1", 'Rut Usuario');
+			$this->excel->getActiveSheet()->setCellValue("E1", 'Usuario');
+			$this->excel->getActiveSheet()->setCellValue("F1", 'Perfil');
+			$this->excel->getActiveSheet()->setCellValue("G1", 'Rut Afiliado');
+			$this->excel->getActiveSheet()->setCellValue("H1", 'Nombres');
+			$this->excel->getActiveSheet()->setCellValue("I1", 'Apellido Paterno');
+			$this->excel->getActiveSheet()->setCellValue("J1", 'Apellido Materno');
+			$this->excel->getActiveSheet()->setCellValue("K1", 'AFP Origen');
+			$this->excel->getActiveSheet()->setCellValue("L1", 'Teléfono');
+			$this->excel->getActiveSheet()->setCellValue("M1", 'Folio');
+			$this->excel->getActiveSheet()->setCellValue("N1", 'Fecha');
+			$this->excel->getActiveSheet()->setCellValue("O1", 'Estado Cédula');
+			$this->excel->getActiveSheet()->setCellValue("P1", 'Estado Certificación');
+			$this->excel->getActiveSheet()->setCellValue("Q1", 'Vía Ingreso');
 			
 			
 	        //Definimos la data del cuerpo.        
@@ -511,6 +512,7 @@ class Orden extends CI_Controller {
 
 	            $this->excel->getActiveSheet()->setCellValue("A{$contador}", $registro['id_sms']);
 				$this->excel->getActiveSheet()->setCellValue("B{$contador}", $registro['sucursal']);
+				$this->excel->getActiveSheet()->setCellValue("C{$contador}", $registro['ani']);
 				$this->excel->getActiveSheet()->setCellValue("C{$contador}", $registro['u_rut']);
 				$this->excel->getActiveSheet()->setCellValue("D{$contador}", $registro['u_nombres']." ".$registro['u_apellidos']);
 				$this->excel->getActiveSheet()->setCellValue("E{$contador}", $registro['pf_nombre']);
