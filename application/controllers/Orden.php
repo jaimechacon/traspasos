@@ -513,20 +513,20 @@ class Orden extends CI_Controller {
 	            $this->excel->getActiveSheet()->setCellValue("A{$contador}", $registro['id_sms']);
 				$this->excel->getActiveSheet()->setCellValue("B{$contador}", $registro['sucursal']);
 				$this->excel->getActiveSheet()->setCellValue("C{$contador}", $registro['ani']);
-				$this->excel->getActiveSheet()->setCellValue("C{$contador}", $registro['u_rut']);
-				$this->excel->getActiveSheet()->setCellValue("D{$contador}", $registro['u_nombres']." ".$registro['u_apellidos']);
-				$this->excel->getActiveSheet()->setCellValue("E{$contador}", $registro['pf_nombre']);
-				$this->excel->getActiveSheet()->setCellValue("F{$contador}", $registro['rut']);
-				$this->excel->getActiveSheet()->setCellValue("G{$contador}", $registro['nombres']);
-				$this->excel->getActiveSheet()->setCellValue("H{$contador}", $registro['apellido_paterno']);
-				$this->excel->getActiveSheet()->setCellValue("I{$contador}", $registro['apellido_materno']);
-				$this->excel->getActiveSheet()->setCellValue("J{$contador}", $registro['institucion']);
-				$this->excel->getActiveSheet()->setCellValue("K{$contador}", $registro['telefono']);
-				$this->excel->getActiveSheet()->setCellValue("L{$contador}", $registro['folio']);
-				$this->excel->getActiveSheet()->setCellValue("M{$contador}", $registro['fecha']);
-				$this->excel->getActiveSheet()->setCellValue("N{$contador}", $registro['nombre_resultado_rc']);
-				$this->excel->getActiveSheet()->setCellValue("O{$contador}", $registro['certificado']);
-				$this->excel->getActiveSheet()->setCellValue("P{$contador}", $registro['via_entrada']);
+				$this->excel->getActiveSheet()->setCellValue("D{$contador}", $registro['u_rut']);
+				$this->excel->getActiveSheet()->setCellValue("E{$contador}", $registro['u_nombres']." ".$registro['u_apellidos']);
+				$this->excel->getActiveSheet()->setCellValue("F{$contador}", $registro['pf_nombre']);
+				$this->excel->getActiveSheet()->setCellValue("G{$contador}", $registro['rut']);
+				$this->excel->getActiveSheet()->setCellValue("H{$contador}", $registro['nombres']);
+				$this->excel->getActiveSheet()->setCellValue("I{$contador}", $registro['apellido_paterno']);
+				$this->excel->getActiveSheet()->setCellValue("J{$contador}", $registro['apellido_materno']);
+				$this->excel->getActiveSheet()->setCellValue("K{$contador}", $registro['institucion']);
+				$this->excel->getActiveSheet()->setCellValue("L{$contador}", $registro['telefono']);
+				$this->excel->getActiveSheet()->setCellValue("M{$contador}", $registro['folio']);
+				$this->excel->getActiveSheet()->setCellValue("N{$contador}", $registro['fecha']);
+				$this->excel->getActiveSheet()->setCellValue("O{$contador}", $registro['nombre_resultado_rc']);
+				$this->excel->getActiveSheet()->setCellValue("P{$contador}", $registro['certificado']);
+				$this->excel->getActiveSheet()->setCellValue("Q{$contador}", $registro['via_entrada']);
 
 	        }
 
