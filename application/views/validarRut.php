@@ -19,7 +19,7 @@
 			      <th id="thTipoDoc" name="thTipoDoc" scope="col" class="text-center align-middle registro">Tipo Documento</th>
 			      <th id="thCantRepeticiones" name="thCantRepeticiones" scope="col" class="text-center align-middle registro">Cant. Repeticiones</th>
 			      <th id="thSinConexion" name="thSinConexion" scope="col" class="text-center align-middle registro">Sin Conexion</th>
-			      <th id="thErrorRC" name="thErrorRC" scope="col" class="text-center align-middle registro">Error RC</th>
+			      <th id="thErrorRC" name="thErrorRC" scope="col" class="text-center align-middle registro">Error RC / Error de Datos</th>
 			      <th id="thNoVigente" name="thNoVigente" scope="col" class="text-center align-middle registro">No Vigente</th>
 			      <th id="thVigente" name="thVigente" scope="col" class="text-center align-middle registro">Vigente</th>
 			    </tr>
