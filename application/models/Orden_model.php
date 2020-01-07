@@ -22,7 +22,7 @@ class Orden_model extends CI_Model
 
 	public function insertCRMNeotel($idSucursal, $idUsuarioVendedor, $id_estado_rc, $fecha_inicio, $fecha_fin, $id_estado_certificacion, $idUsuario, $por_defecto)
 	{
-		$query = $this->db->query("call `traspasosdb`.`sp_insertCRMNeotel`(".$idSucursal.", ".$idUsuarioVendedor.", ".$id_estado_rc.", ".$fecha_inicio.", ".$fecha_fin.", ".$id_estado_certificacion.", ".$idUsuario.", ".$por_defecto.");");
+		$query = $this->db->query("call `traspasosdb`.`sp_insertCRMNeotel`(".$idSucursal.", ".$idUsuarioVendedor.", ".$id_estado_rc.", ".($fecha_inicio == "null" ? $fecha_inicio : ("'".$fecha_inicio."'")).", ".($fecha_fin == "null" ? $fecha_fin : ("'".$fecha_fin."'")).", ".$id_estado_certificacion.", ".$idUsuario.", ".$por_defecto.");");
 		return $query->result_array();
 	}
 
