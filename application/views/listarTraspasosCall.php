@@ -127,12 +127,12 @@
 							if($estadosC)
 							{
 								foreach ($estadosC as $estado_c) {
-									if(isset($idEstadoC) && (int)$estado_c['id_estado'] == $idEstadoC)
+									if(isset($idEstadoC) && (int)$estado_c['id_certificado'] == $idEstadoC)
 									{
-                                        echo '<option value="'.$estado_c['id_estado'].'" selected>'.$estado_c['nombre'].'</option>';
+                                        echo '<option value="'.$estado_c['id_certificado'].'" selected>'.$estado_c['nombre'].'</option>';
                                     }else
                                     {
-                                        echo '<option value="'.$estado_c['id_estado'].'">'.$estado_c['nombre'].'</option>';
+                                        echo '<option value="'.$estado_c['id_certificado'].'">'.$estado_c['nombre'].'</option>';
                                     }
 								}
 							}
