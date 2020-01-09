@@ -10,7 +10,7 @@ class Sms_model extends CI_Model
 
 	public function agregarSMS($username, $password, $ani, $dnis, $message, $other_messages, $rut, $serie, $tipo_documento, $telefono, $folio, $latitud, $longitud)
 	{
-		$query2 = $this->db->query("call `traspasosdb`.`agregarSMS`('".$username."', '".$password."', '".$ani."', '".$dnis."', '".$message."', '".$other_messages."', '".$rut."', '".$serie."', ".$tipo_documento.", '".$telefono."', '".$folio."',  '".$latitud."', '".$longitud."');");
+		$query2 = $this->db->query("call `traspasosdb`.`agregarSMS`('".$username."', '".$password."', '".$ani."', '".$dnis."', '".$message."', '".$other_messages."', '".$rut."', '".$serie."', ".$tipo_documento.", '".$telefono."', '".$folio."',  ".($latitud == "null" ? $latitud : ("'".$latitud."'")).", ".($longitud == "null" ? $longitud : ("'".$longitud."'")).");");
 
 		return $query2->result_array();
 	}
