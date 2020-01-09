@@ -393,7 +393,7 @@ class Sms extends CI_Controller {
 						}
 
 						//$mensaje = $rut.';'.$serie.';'.$tipo_documento.';'.$telefono.';'.$folio.';'.$latitud.';'.$longitud.';';
-						$mensaje = $data->message;
+						$mensaje = $data->message.strlen($data->message);
 						
 
 						$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $data->message, $data->other_messages, 1);
