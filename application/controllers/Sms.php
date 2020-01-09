@@ -355,8 +355,28 @@ class Sms extends CI_Controller {
 					{
 						if (strpos($data->message, "$") > 1) {
 							$datos = explode("$", $data->message);
+						}else{
+							if (strlen($data->message) == 54) {
+								$rut = substr($data->message, 0, 9);
+								$serie = substr($data->message, 9, 10);
+								$tipo_doc = substr($data->message, 19, 1);
+								$telefono = substr($data->message, 20, 9);
+								$folio = substr($data->message, 29, 7);
+								$latitud = substr($data->message, 36, 9);
+								$longitud = substr($data->message, 45, 9);
+
+								$datos[0] = $rut;
+								$datos[1] = $serie;
+								$datos[2] = $tipo_doc;
+								$datos[3] = $telefono;
+								$datos[4] = $folio;
+								$datos[5] = $latitud;
+								$datos[6] = $longitud;
+							}
 						}
 					}
+
+					
 					
 					if(sizeof($datos) >= 5){
 						$rut = $datos[0];
@@ -372,11 +392,12 @@ class Sms extends CI_Controller {
 							$longitud = $datos[6];
 						}
 
-						$mensaje = $rut.';'.$serie.';'.$tipo_documento.';'.$telefono.';'.$folio.';'.$latitud.';'.$longitud.';';
+						//$mensaje = $rut.';'.$serie.';'.$tipo_documento.';'.$telefono.';'.$folio.';'.$latitud.';'.$longitud.';';
+						$mensaje = $data->message;
 						
 
-						//$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $data->message, $data->other_messages, 1);
-						$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $mensaje.$data->message, $data->other_messages, 1);
+						$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $data->message, $data->other_messages, 1);
+						//$query = $this->Sms_model->agregarLogSMS($data->username, $data->ani, $data->dnis, $mensaje, $data->other_messages, 1);
 
 						mysqli_next_result($this->db->conn_id);
 						$query = $this->Sms_model->agregarSMS($data->username, $data->password, $data->ani, $data->dnis, $data->message, $data->other_messages, $rut, $serie, $tipo_documento, $telefono, $folio, $latitud, $longitud);
