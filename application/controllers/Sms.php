@@ -365,6 +365,14 @@ class Sms extends CI_Controller {
 								$latitud = substr($data->message, 36, 9);
 								$longitud = substr($data->message, 45, 9);
 
+								if (substr($rut, 0, 1) == "0") {
+									$rut = substr($rut, 1, strlen($rut) - 1);
+								}
+
+								if (substr($serie, 0, 1) == "0") {
+									$serie = substr($serie, 1, strlen($serie) - 1);
+								}
+								
 								$datos[0] = $rut;
 								$datos[1] = $serie;
 								$datos[2] = $tipo_doc;
