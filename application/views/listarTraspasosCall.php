@@ -7,6 +7,12 @@
 ?>
 <div class="row p-3">
 	<div class="col-sm-12 text-right">
+	<?php if($usu_admin == "1"){ ?>
+		<button id="btnExportarExcelComercial" type="button" class="btn btn-link">Exportar Reporte Comercial
+			<i style="margin-bottom: 5px;" data-feather="download"></i>
+		</button>
+	<?php }?>
+
 		<button id="btnExportarExcel" type="button" class="btn btn-link">Exportar a CSV con filtros
 			<i style="margin-bottom: 5px;" data-feather="download"></i>
 		</button>
