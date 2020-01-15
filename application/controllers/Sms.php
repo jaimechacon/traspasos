@@ -202,7 +202,7 @@ class Sms extends CI_Controller {
 
 					if($codigo == "9000")
 					{
-						$mensaje = $simpleXml->respuestaservicio;
+						$mensaje =  var_export($simpleXml->respuestaservicio, true);
 
 						mysqli_next_result($this->db->conn_id);
 						//$query = $this->App_model->agregarLog(1234, 'xml', $mensaje);
