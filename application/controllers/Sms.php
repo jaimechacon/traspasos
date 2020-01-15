@@ -7,6 +7,7 @@ class Sms extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Sms_model');
+		$this->load->model('App_model');
 		$this->load->library('NuSoap_lib');
 	}
 
@@ -201,6 +202,13 @@ class Sms extends CI_Controller {
 
 					if($codigo == "9000")
 					{
+						$mensaje = $simpleXml->respuestaservicio;
+
+						mysqli_next_result($this->db->conn_id);
+						//$query = $this->App_model->agregarLog(1234, 'xml', $mensaje);
+
+						$query = $this->App_model->agregarLog($usuario['id_usuario'], 'XML Cliente', $mensaje);
+
 						foreach ($simpleXml->respuestaservicio as $servicio) {
 							if(isset($servicio) && isset($servicio->attributes()['tipo']) && sizeof((string)$servicio->attributes()['tipo']) > 0)
 							{
