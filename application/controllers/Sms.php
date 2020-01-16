@@ -80,19 +80,22 @@ class Sms extends CI_Controller {
 			if(!is_null($this->input->post('validarRut')) && $this->input->post('validarRut') == "1" && $this->input->post('validarRut') != "")
 				$validarRut = $this->input->post('validarRut');
 
+			var_dump($validarRut);
 
 			if (is_null($validarRut)) {
 				$tipo = "1";
 				$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
 
-				//var_dump($resultado);
+				var_dump($resultado);
 				if(isset($resultado))
 				{
+					var_dump('entro a resultados <br/>');
 					if(isset($resultado[0]))
 					{
+						var_dump('entro a resultados   [0] <br/>');
 						if(isset($resultado[0]['rut_afiliado']) && isset($resultado[0]['periodo']) && isset($resultado[0]['telefono']))
 						{
-
+							var_dump('entro a resultados   [0]   [rut_afiliado] <br/>');
 							$telefono = $resultado[0]['telefono'];
 							$rut_afiliado = (substr($resultado[0]['rut_afiliado'], 0, ((strlen($resultado[0]['rut_afiliado']))-1)).'-'.substr($resultado[0]['rut_afiliado'], ((strlen($resultado[0]['rut_afiliado']))-1), 1));
 
@@ -128,6 +131,7 @@ class Sms extends CI_Controller {
 							}
 
 							//var_dump($se_envio, $telefono, $mensaje, $tipo);
+							var_dump('llego a obtener datos previred <br/>');
 
 							$periodo = $resultado[0]['periodo'];
 							$this->obtenerDatosPrevired($id_sms, $rut_afiliado, $periodo, $tipo);
