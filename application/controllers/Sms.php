@@ -202,12 +202,8 @@ class Sms extends CI_Controller {
 
 					if($codigo == "9000")
 					{
-						#$mensaje = 'esta llegando'; #var_export($simpleXml->respuestaservicio, true);
-						$mensajese = (string)$response;
-						
+						$mensajese = (string)$response;						
 						mysqli_next_result($this->db->conn_id);
-						//$query = $this->App_model->agregarLog(1234, 'xml', $mensaje);
-
 						$query = $this->App_model->agregarLog($usuario['id_usuario'], 'XML Cliente', $mensajese);
 
 						foreach ($simpleXml->respuestaservicio as $servicio) {
@@ -222,43 +218,75 @@ class Sms extends CI_Controller {
 										$codigo_servicio = (string)$servicio->control['codigo'];
 										if($codigo_servicio == '9050' && isset($servicio->respuestacaf->linea))
 										{
-											// sin errores
-											//var_dump(''.(string)$servicio->respuestacaf->linea->attributes());
-											/*var_dump('Rut: '.(string)$servicio->respuestacaf->linea->attributes()['rut'].'<br/>');
-											var_dump('Nombres: '.(string)$servicio->respuestacaf->linea->attributes()['nombres'].'<br/>');
-											var_dump('Apellido_Paterno: '.(string)$servicio->respuestacaf->linea->attributes()['apellidopaterno'].'<br/>');
-											var_dump('Apellid_Materno: '.(string)$servicio->respuestacaf->linea->attributes()['apellidomaterno'].'<br/>');
-											var_dump('Cod_AFP: '.(string)$servicio->respuestacaf->linea->attributes()['codafp'].'<br/>');
-											var_dump('Nombre_AFP: '.(string)$servicio->respuestacaf->linea->attributes()['nomafp'].'<br/>');
-											var_dump('Fecha_Nac: '.(string)$servicio->respuestacaf->linea->attributes()['fechanacimiento'].'<br/>');
-											var_dump('Genero: '.(string)$servicio->respuestacaf->linea->attributes()['sexo'].'<br/>');
-											var_dump('Fecha_Ing: '.(string)$servicio->respuestacaf->linea->attributes()['fechaingreso'].'<br/>');
-											var_dump('Fecha_Sub: '.(string)$servicio->respuestacaf->linea->attributes()['fechasubscripcion'].'<br/>');
-											var_dump('Fecha_Inc: '.(string)$servicio->respuestacaf->linea->attributes()['fechaincorporacion'].'<br/>');
-											var_dump('Tipo_Solicitud: '.(string)$servicio->respuestacaf->linea->attributes()['tiposolicitud'].'<br/>');
-											var_dump('Situacion: '.(string)$servicio->respuestacaf->linea->attributes()['situacion'].'<br/>');
-											var_dump('Cta_Personales: '.(string)$servicio->respuestacaf->linea->attributes()['cuentaspersonales'].'<br/>');*/
+											$rut = "";
+											$nombres = "";
+											$apellido_Paterno = "";
+											$apellid_Materno = "";
+											$cod_AFP = "";
+											$nombre_AFP = "";
+											$fecha_Nac = "";
+											$genero = "";
+											$fecha_Ing = "";
+											$fecha_Sub = "";
+											$fecha_Inc = "";
+											$tipo_Solicitud = "";
+											$situacion = "";
+											$cta_Personales = "";
+											
+											$mensaje = $servicio->respuestacaf->children();
+											$xml = simplexml_load_string($mensaje);
+											$json = json_encode($mensaje);
+											$array = json_decode($json,TRUE);
+											$cant = sizeof($array['linea']);
 
-											$rut = (string)$servicio->respuestacaf->linea->attributes()['rut'];
-											$nombres = (string)$servicio->respuestacaf->linea->attributes()['nombres'];
-											$apellido_Paterno = (string)$servicio->respuestacaf->linea->attributes()['apellidopaterno'];
-											$apellid_Materno = (string)$servicio->respuestacaf->linea->attributes()['apellidomaterno'];
-											$cod_AFP = (string)$servicio->respuestacaf->linea->attributes()['codafp'];
-											$nombre_AFP = (string)$servicio->respuestacaf->linea->attributes()['nomafp'];
-											$fecha_Nac = (string)$servicio->respuestacaf->linea->attributes()['fechanacimiento'];
-											$genero = (string)$servicio->respuestacaf->linea->attributes()['sexo'];
-											$fecha_Ing = (string)$servicio->respuestacaf->linea->attributes()['fechaingreso'];
-											$fecha_Sub = (string)$servicio->respuestacaf->linea->attributes()['fechasubscripcion'];
-											$fecha_Inc = (string)$servicio->respuestacaf->linea->attributes()['fechaincorporacion'];
-											$tipo_Solicitud = (string)$servicio->respuestacaf->linea->attributes()['tiposolicitud'];
-											$situacion = (string)$servicio->respuestacaf->linea->attributes()['situacion'];
-											$cta_Personales = (string)$servicio->respuestacaf->linea->attributes()['cuentaspersonales'];
+											if ($cant > 1) {
+												for ($i=0; $i < $cant; $i++) {
+													$codigo_cuenta_personal = $array['linea'][$i]['@attributes']['cuentaspersonales'];
+													$es_cta_obligatoria = substr($codigo_cuenta_personal, 0, 1);
+													if ($es_cta_obligatoria == "1") {
+														$rut = $array['linea'][$i]['@attributes']['rut'];
+														$nombres = $array['linea'][$i]['@attributes']['nombres'];
+														$apellido_Paterno = $array['linea'][$i]['@attributes']['apellidopaterno'];
+														$apellid_Materno = $array['linea'][$i]['@attributes']['apellidomaterno'];
+														$cod_AFP = $array['linea'][$i]['@attributes']['codafp'];
+														$nombre_AFP = $array['linea'][$i]['@attributes']['nomafp'];
+														$fecha_Nac = $array['linea'][$i]['@attributes']['fechanacimiento'];
+														$genero = $array['linea'][$i]['@attributes']['sexo'];
+														$fecha_Ing = $array['linea'][$i]['@attributes']['fechaingreso'];
+														$fecha_Sub = $array['linea'][$i]['@attributes']['fechasubscripcion'];
+														$fecha_Inc = $array['linea'][$i]['@attributes']['fechaincorporacion'];
+														$tipo_Solicitud = $array['linea'][$i]['@attributes']['tiposolicitud'];
+														$situacion = $array['linea'][$i]['@attributes']['situacion'];
+														$cta_Personales = $array['linea'][$i]['@attributes']['cuentaspersonales'];
+														break;
+													}
+												}
+											}else
+											{
+												$rut = (string)$servicio->respuestacaf->linea->attributes()['rut'];
+												$nombres = (string)$servicio->respuestacaf->linea->attributes()['nombres'];
+												$apellido_Paterno = (string)$servicio->respuestacaf->linea->attributes()['apellidopaterno'];
+												$apellid_Materno = (string)$servicio->respuestacaf->linea->attributes()['apellidomaterno'];
+												$cod_AFP = (string)$servicio->respuestacaf->linea->attributes()['codafp'];
+												$nombre_AFP = (string)$servicio->respuestacaf->linea->attributes()['nomafp'];
+												$fecha_Nac = (string)$servicio->respuestacaf->linea->attributes()['fechanacimiento'];
+												$genero = (string)$servicio->respuestacaf->linea->attributes()['sexo'];
+												$fecha_Ing = (string)$servicio->respuestacaf->linea->attributes()['fechaingreso'];
+												$fecha_Sub = (string)$servicio->respuestacaf->linea->attributes()['fechasubscripcion'];
+												$fecha_Inc = (string)$servicio->respuestacaf->linea->attributes()['fechaincorporacion'];
+												$tipo_Solicitud = (string)$servicio->respuestacaf->linea->attributes()['tiposolicitud'];
+												$situacion = (string)$servicio->respuestacaf->linea->attributes()['situacion'];
+												$cta_Personales = (string)$servicio->respuestacaf->linea->attributes()['cuentaspersonales'];
+											}
 
-											//var_dump($servicio->respuestacaf);
 											$es_hombre = ($genero == "M" ? 1 : ($genero == "F" ? 0 : null));
 											mysqli_next_result($this->db->conn_id);
-											$resultado = $this->Sms_model->actualizarOTPrevired($usuario['id_usuario'], $id_sms, $nombres, $apellido_Paterno, $apellid_Materno, $es_hombre, $nombre_AFP, $cod_AFP, $cta_Personales, date("Y-m-d", strtotime($fecha_Nac)), date("Y-m-d", strtotime($fecha_Ing)), date("Y-m-d", strtotime($fecha_Sub)), date("Y-m-d", strtotime($fecha_Inc)), $tipo_Solicitud, $situacion, $situacion);
+											$resultado = $this->Sms_model->actualizarOTPrevired($usuario['id_usuario'], $id_sms, $nombres, $apellido_Paterno, $apellid_Materno, $es_hombre, $nombre_AFP, $cod_AFP, $cta_Personales, date("Y-m-d", strtotime($fecha_Nac)), date("Y-m-d", strtotime($fecha_Ing)), date("Y-m-d", strtotime($fecha_Sub)), date("Y-m-d", strtotime($fecha_Inc)), $tipo_Solicitud, $situacion);
 
+											$mensaje = $codigo_servicio.'|'.$id_sms.'|Se ingreso correctamente el SMS|';
+											mysqli_next_result($this->db->conn_id);
+											$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Codigo Servicio: '.$codigo_servicio), $mensaje);
+											
 											if(isset($resultado))
 											{
 												if(isset($resultado[0]))
@@ -266,27 +294,6 @@ class Sms extends CI_Controller {
 													if(isset($resultado[0]) == "1")
 													{
 														
-														/*$mensaje = "";
-														$telefono = $resultado[0]['telefono'];
-
-														if($tipo == "1")
-														{
-															$mensaje = "Afiliado VIGENTE, institucion: ".$cod_AFP.' - '.$nombre_AFP;
-														}
-
-														if($tipo == "2")
-														{
-															$mensaje = "Afiliado NO VIGENTE";
-														}
-
-														if($tipo == "3" || $tipo == "4")
-														{
-															$mensaje = "Afiliado PENDIENTE DE VALIDACION";
-														}
-
-														$parametros['celular'] = $telefono;
-														$parametros['mensaje'] = $mensaje;
-														$se_envio = $this->enviarSms($parametros);*/
 													}else
 													{
 
@@ -297,30 +304,24 @@ class Sms extends CI_Controller {
 
 										}else
 										{
-											if($codigo_servicio == '9060')
-											{
-												//Error en el tipo de servicio indicado.
-											}else
-											{
-												if ($codigo_servicio == '9070') {
-													//El usuario no tiene permisos para ejecutar este servicio
-												} else {
-													//Error no identificado
-												}
-											}
+											$mensaje = $codigo_servicio.'|'.$id_sms.'|Hubo un error en el codigo de servicio previred|';
+											mysqli_next_result($this->db->conn_id);
+											$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Error Codigo Servicio: '.$codigo_servicio), $mensaje);
 										}
 									}
-									
+								}else{
+									$codigo_servicio_aut = (string)$servicio->control['codigo'];
+									$mensaje = $codigo_servicio_aut.'|'.$id_sms.'|Hubo un error en el codigo de servicio AUT previred|';
+									mysqli_next_result($this->db->conn_id);
+									$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Error Codigo Servicio AUT: '.$codigo_servicio_aut), $mensaje);
 								}
 							}
-
-							//var_dump((string)$value->attributes()['tipo']);
-
 						}
-						//var_dump('exito');
 					}else
 					{
-						var_dump('error en el formato del xml');
+						$mensaje = $codigo.'|'.$id_sms.'|Hubo un error al ejecutar el servicio previred|';
+						mysqli_next_result($this->db->conn_id);
+						$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Error Servicio: '.$codigo), $mensaje);
 					}
 				}
 			}else{
