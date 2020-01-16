@@ -283,10 +283,10 @@ class Sms extends CI_Controller {
 											mysqli_next_result($this->db->conn_id);
 											$resultado = $this->Sms_model->actualizarOTPrevired($usuario['id_usuario'], $id_sms, $nombres, $apellido_Paterno, $apellid_Materno, $es_hombre, $nombre_AFP, $cod_AFP, $cta_Personales, date("Y-m-d", strtotime($fecha_Nac)), date("Y-m-d", strtotime($fecha_Ing)), date("Y-m-d", strtotime($fecha_Sub)), date("Y-m-d", strtotime($fecha_Inc)), $tipo_Solicitud, $situacion);
 
-											$mensaje = $codigo_servicio.'|'.$id_sms.'|Se ingreso correctamente el SMS|';
+											$mensaje = $codigo_servicio.'|'.$id_sms.'|Se ingreso correctamente los datos de previred|';
 											mysqli_next_result($this->db->conn_id);
-											$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Codigo Servicio: '.$codigo_servicio), $mensaje);
-											
+											$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Codigo Servicio CAF: '.$codigo_servicio), $mensaje);
+
 											if(isset($resultado))
 											{
 												if(isset($resultado[0]))
@@ -311,9 +311,16 @@ class Sms extends CI_Controller {
 									}
 								}else{
 									$codigo_servicio_aut = (string)$servicio->control['codigo'];
-									$mensaje = $codigo_servicio_aut.'|'.$id_sms.'|Hubo un error en el codigo de servicio AUT previred|';
-									mysqli_next_result($this->db->conn_id);
-									$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Error Codigo Servicio AUT: '.$codigo_servicio_aut), $mensaje);
+									if ($codigo_servicio_aut == "9050") {
+										$mensaje = $codigo_servicio_aut.'|'.$id_sms.'|Codigo Servicio AUT previred|';
+										mysqli_next_result($this->db->conn_id);
+										$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Codigo Servicio AUT: '.$codigo_servicio_aut), $mensaje);
+									}else
+									{
+										$mensaje = $codigo_servicio_aut.'|'.$id_sms.'|Hubo un error en el codigo de servicio AUT previred|';
+										mysqli_next_result($this->db->conn_id);
+										$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Error Codigo Servicio AUT: '.$codigo_servicio_aut), $mensaje);
+									}
 								}
 							}
 						}
