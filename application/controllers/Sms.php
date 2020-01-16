@@ -132,10 +132,16 @@ class Sms extends CI_Controller {
 
 							//var_dump($se_envio, $telefono, $mensaje, $tipo);
 							var_dump('llego a obtener datos previred <br/>');
+							try {
+								$periodo = $resultado[0]['periodo'];
+								$this->obtenerDatosPrevired($id_sms, $rut_afiliado, $periodo, $tipo);
+								echo json_encode($resultado[0]["resultado"]);
+							} catch (Exception $e) {
 
-							$periodo = $resultado[0]['periodo'];
-							$this->obtenerDatosPrevired($id_sms, $rut_afiliado, $periodo, $tipo);
-							echo json_encode($resultado[0]["resultado"]);
+							    $errores_ = 'Excepción capturada: ',  $e->getMessage();
+								mysqli_next_result($this->db->conn_id);
+								$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Error Servicio Previred'.$id_sms), $errores_);
+							}
 						}
 					}
 				}
