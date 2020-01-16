@@ -243,6 +243,8 @@ class Sms extends CI_Controller {
 											$array = json_decode($json,TRUE);
 											$cant = sizeof($array['linea']);
 
+											var_dump($array);
+
 											if ($cant > 1) {
 												for ($i=0; $i < $cant; $i++) {
 													$codigo_cuenta_personal = $array['linea'][$i]['@attributes']['cuentaspersonales'];
