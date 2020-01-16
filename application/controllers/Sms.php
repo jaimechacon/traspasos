@@ -138,7 +138,7 @@ class Sms extends CI_Controller {
 								echo json_encode($resultado[0]["resultado"]);
 							} catch (Exception $e) {
 
-							    $errores_ = 'Excepción capturada: ',  $e->getMessage();
+							    $errores_ = 'Excepción capturada: '.$e->getMessage();
 								mysqli_next_result($this->db->conn_id);
 								$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Error Servicio Previred'.$id_sms), $errores_);
 							}
