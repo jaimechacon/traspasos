@@ -54,4 +54,12 @@ class Inicio extends CI_Controller {
 		}
 
 	}
+
+	public function politica_de_confidencialidad()
+	{
+		$mi_pdf = 'assets/doc/Precheck-ProVida-AFP-Politicas-de-Confidencialidad-y-Seguridad-de-la-app.pdf'; 
+		header('Content-type: application/pdf');
+		header('Content-Disposition: inline; filename="'.$mi_pdf.'"');
+		readfile($mi_pdf); 
+	}
 }
