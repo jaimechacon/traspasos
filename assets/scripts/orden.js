@@ -97,6 +97,23 @@
 		    loader.setAttribute('hidden', '');
 	  	});
 
+	  	$("#btnExportarExcelUsuarioSupervisor").on('click', function() {
+			var loader = document.getElementById("loader");
+		    loader.removeAttribute('hidden');
+			
+			id_sucursal = $("#sucursalCall").val();
+		    id_usuario_vendedor = $("#vendedorCall").val();
+			fecha_desde = $("#fechaDesde").val();
+			fecha_hasta = $("#fechaHasta").val();
+			id_estado_rc = $("#estadoRC").val();
+			id_estado_c = $("#estadoC").val();
+
+			//var url = window.location.href.replace("ListarPagos", "exportarexcel");
+		    var urlFinal = window.location.href.replace("listarTraspasos", (("").concat("exportarexcelUsuarioFiltroSuper?idsucursal=", id_sucursal, "&idvendedor=", id_usuario_vendedor, "&fechadesde=", fecha_desde, "&fechahasta=", fecha_hasta, "&idestadorc=", id_estado_rc, "&idestadoc=", id_estado_c)));
+		    window.location.href = urlFinal;
+		    loader.setAttribute('hidden', '');
+	  	});	  	
+
 	  	$("#btnBuscar").on('click', function() {
 	  		listarTraspasosCall();
 	  	});

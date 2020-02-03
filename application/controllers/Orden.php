@@ -708,4 +708,105 @@ class Orden extends CI_Controller {
 		}
     }	
 
+    public function exportarexcelUsuarioFiltroSuper(){
+		$usuario = $this->session->userdata();
+		$datos = [];
+		if($this->session->userdata('id_usuario'))
+		{
+			 $id_sucursal = "null";
+		     $id_usuario_vendedor = "null";
+		     $fecha_desde = "null";
+		     $fecha_hasta = "null";
+		     $id_estado_rc = "null";
+		     $id_estado_c = "null";
+
+			if(!is_null($this->input->get('idsucursal')) && $this->input->get('idsucursal') != "-1" 
+			#	&& $this->input->get('id_sucursal') != ""
+			)
+				$id_sucursal = (trim($this->input->get('idsucursal')) == "" ? "''" : $this->input->get('idsucursal'));
+
+			if(!is_null($this->input->get('idvendedor')) && $this->input->get('idvendedor') != "-1" #&& $this->input->get('id_usuario_vendedor') != ""
+			)
+				$id_usuario_vendedor = (trim($this->input->get('idvendedor')) == "" ? "''" : $this->input->get('idvendedor'));
+
+			if(!is_null($this->input->get('fechadesde')) && $this->input->get('fechadesde') != "-1" && $this->input->get('fechadesde') != "")
+				$fecha_desde = $this->input->get('fechadesde');
+
+			if(!is_null($this->input->get('fechahasta')) && $this->input->get('fechahasta') != "-1" && $this->input->get('fechahasta') != "")
+				$fecha_hasta = $this->input->get('fechahasta');
+
+			if(!is_null($this->input->get('idestadorc')) && $this->input->get('idestadorc') != "-1" && $this->input->get('idestadorc') != "")
+				$id_estado_rc = $this->input->get('idestadorc');
+
+			if(!is_null($this->input->get('idestadoc')) && $this->input->get('idestadoc') != "-1" && $this->input->get('idestadoc') != "")
+				$id_estado_c = $this->input->get('idestadoc');
+
+			$traspasos = $this->Orden_model->listarTraspasosUsuario($usuario['id_usuario'], $id_sucursal, $id_usuario_vendedor, $fecha_desde, $fecha_hasta, $id_estado_rc, $id_estado_c, "null");
+
+			
+			$this->excel->getActiveSheet()->setTitle('Orden de Traspasos');
+	        $contador = 1;
+	        //$this->excel->getActiveSheet()->setCellValue("A1", 'ID OT');
+			//$this->excel->getActiveSheet()->setCellValue("B1", 'Sucursal');
+			//$this->excel->getActiveSheet()->setCellValue("C1", 'Celular Origen');
+			
+			//$this->excel->getActiveSheet()->setCellValue("F1", 'Perfil');
+			$this->excel->getActiveSheet()->setCellValue("A1", 'Folio');
+			$this->excel->getActiveSheet()->setCellValue("B1", 'Rut Afiliado');
+			$this->excel->getActiveSheet()->setCellValue("C1", 'AFP Origen');
+			$this->excel->getActiveSheet()->setCellValue("D1", 'Fecha');
+			$this->excel->getActiveSheet()->setCellValue("E1", 'Usuario');
+			//$this->excel->getActiveSheet()->setCellValue("H1", 'Nombres');
+			//$this->excel->getActiveSheet()->setCellValue("I1", 'Apellido Paterno');
+			//$this->excel->getActiveSheet()->setCellValue("J1", 'Apellido Materno');
+			//$this->excel->getActiveSheet()->setCellValue("L1", 'Teléfono');			
+			//$this->excel->getActiveSheet()->setCellValue("O1", 'Estado Cédula');
+			//$this->excel->getActiveSheet()->setCellValue("P1", 'Estado Certificación');
+			//$this->excel->getActiveSheet()->setCellValue("Q1", 'Vía Ingreso');
+			
+			
+	        //Definimos la data del cuerpo.        
+	        
+	        foreach($traspasos as $registro){
+	           //Incrementamos una fila más, para ir a la siguiente.
+	           $contador++;
+	           //Informacion de las filas de la consulta.
+	           
+	           $this->excel->getActiveSheet()->setCellValue("A{$contador}", $registro['folio']);
+	           $this->excel->getActiveSheet()->setCellValue("B{$contador}", $registro['rut']);
+	           $this->excel->getActiveSheet()->setCellValue("C{$contador}", $registro['institucion']);
+	           $this->excel->getActiveSheet()->setCellValue("D{$contador}", $registro['fecha']);
+	           $this->excel->getActiveSheet()->setCellValue("E{$contador}", $registro['u_nombres']." ".$registro['u_apellidos']);
+	            //$this->excel->getActiveSheet()->setCellValue("A{$contador}", $registro['id_sms']);
+				//$this->excel->getActiveSheet()->setCellValue("B{$contador}", $registro['sucursal']);
+				//$this->excel->getActiveSheet()->setCellValue("C{$contador}", $registro['ani']);
+				//$this->excel->getActiveSheet()->setCellValue("D{$contador}", $registro['u_rut']);
+				//$this->excel->getActiveSheet()->setCellValue("E{$contador}", $registro['u_nombres']." ".$registro['u_apellidos']);
+				//$this->excel->getActiveSheet()->setCellValue("F{$contador}", $registro['pf_nombre']);
+				//$this->excel->getActiveSheet()->setCellValue("H{$contador}", $registro['nombres']);
+				//$this->excel->getActiveSheet()->setCellValue("I{$contador}", $registro['apellido_paterno']);
+				//$this->excel->getActiveSheet()->setCellValue("J{$contador}", $registro['apellido_materno']);
+				//$this->excel->getActiveSheet()->setCellValue("L{$contador}", $registro['telefono']);
+				//$this->excel->getActiveSheet()->setCellValue("O{$contador}", $registro['nombre_resultado_rc']);
+				//$this->excel->getActiveSheet()->setCellValue("P{$contador}", $registro['certificado']);
+				//$this->excel->getActiveSheet()->setCellValue("Q{$contador}", $registro['via_entrada']);
+	        }
+
+	        //Le ponemos un nombre al archivo que se va a generar.
+	        $archivo = "OT_{$contador}.xls";
+	        header('Content-Type: application/force-download');
+	        header('Content-Disposition: attachment;filename="'.$archivo.'"');
+	        header('Cache-Control: max-age=0');
+
+	        #$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+	        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+	        //Hacemos una salida al navegador con el archivo Excel.
+	        $objWriter->save('php://output'); 
+		}
+		else
+		{
+			redirect('Login');
+		}
+    }	
+
 }
