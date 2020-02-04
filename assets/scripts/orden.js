@@ -59,7 +59,8 @@
 
 			//var url = window.location.href.replace("ListarPagos", "exportarexcel");
 		    var urlFinal = window.location.href.replace("listarTraspasosCall", (("").concat("exportarexcelNeotelFiltroComercial?idsucursal=", id_sucursal, "&idvendedor=", id_usuario_vendedor, "&fechadesde=", fecha_desde, "&fechahasta=", fecha_hasta, "&idestadorc=", id_estado_rc, "&idestadoc=", id_estado_c)));
-		    window.location.href = urlFinal;
+		    document.location = urlFinal;
+		    //window.location.href = urlFinal;
 		    loader.setAttribute('hidden', '');
 	  	});
 
