@@ -58,7 +58,7 @@
 			id_estado_c = $("#estadoC").val();
 
 			//var url = window.location.href.replace("ListarPagos", "exportarexcel");
-		    var urlFinal = window.location.href.replace("listarTraspasosCall", (("").concat("exportarexcelNeotelFiltroComercial?idsucursal=", id_sucursal, "&idvendedor=", id_usuario_vendedor, "&fechadesde=", fecha_desde, "&fechahasta=", fecha_hasta, "&idestadorc=", id_estado_rc, "&idestadoc=", id_estado_c)));
+		    var urlFinal = window.location.href.replace("listarTraspasosCall", (("").concat("exportarFiltroComercial?idsucursal=", id_sucursal, "&idvendedor=", id_usuario_vendedor, "&fechadesde=", fecha_desde, "&fechahasta=", fecha_hasta, "&idestadorc=", id_estado_rc, "&idestadoc=", id_estado_c)));
 		    //document.location = urlFinal;
 		   	window.location.href = urlFinal;
 		    loader.setAttribute('hidden', '');
