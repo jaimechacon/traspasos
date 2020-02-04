@@ -456,7 +456,7 @@ class Orden extends CI_Controller {
 	        }
 
 	        //Le ponemos un nombre al archivo que se va a generar.
-	        $archivo = "Reporte_Comercial_OT_{$contador}.xls";
+	        $archivo = "Reporte_Comercial_OT_{$contador}.xlsx";
 	        //header('Content-Type: application/force-download');
 	        header('Content-Type: application/vnd.ms-excel');
 	        header('Content-Disposition: attachment;filename="'.$archivo.'"');
@@ -465,7 +465,7 @@ class Orden extends CI_Controller {
 
 
 	        #$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-	        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+	        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel2007');
 	        //Hacemos una salida al navegador con el archivo Excel.
 	        $objWriter->save('php://output');
 		}
