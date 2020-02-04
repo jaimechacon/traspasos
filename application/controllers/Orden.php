@@ -312,7 +312,7 @@ class Orden extends CI_Controller {
 		}
     }
 
-    public function exportarexcelNeotelFiltroComercial(){
+    public function exportarFiltroComercial(){
 		$usuario = $this->session->userdata();
 		$datos = [];
 		if($this->session->userdata('id_usuario'))
@@ -344,7 +344,18 @@ class Orden extends CI_Controller {
 			if(!is_null($this->input->get('idestadoc')) && $this->input->get('idestadoc') != "-1" && $this->input->get('idestadoc') != "")
 				$id_estado_certificacion = $this->input->get('idestadoc');
 			
+
+			var_dump('idSucursal => '.$idSucursal);
+			var_dump('idUsuarioVendedor => '.$idUsuarioVendedor);
+			var_dump('id_estado_rc => '.$id_estado_rc);
+			var_dump('fecha_desde => '.$fecha_desde);
+			var_dump('fecha_hasta => '.$fecha_hasta);
+			var_dump('id_estado_certificacion => '.$id_estado_certificacion);
+
+			
 			$registrosOT = $this->Orden_model->listarTraspasosUsuarioCall($usuario['id_usuario'], $idSucursal, $idUsuarioVendedor, $fecha_desde, $fecha_hasta, $id_estado_rc, $id_estado_certificacion);
+
+			//var_dump($registrosOT);
 			
 			$this->excel->getActiveSheet()->setTitle('Registros OT');
 			
@@ -456,18 +467,25 @@ class Orden extends CI_Controller {
 	        }
 
 	        //Le ponemos un nombre al archivo que se va a generar.
-	        $archivo = "Reporte_Comercial_OT_{$contador}.xlsx";
+	        $archivo = "Reporte_Comercial_OT_{$contador}.xls";
 	        //header('Content-Type: application/force-download');
 	        header('Content-Type: application/vnd.ms-excel');
 	        header('Content-Disposition: attachment;filename="'.$archivo.'"');
 	        header('Cache-Control: max-age=0');
 
-
+	        
 
 	        #$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-	        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel2007');
+	        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
 	        //Hacemos una salida al navegador con el archivo Excel.
+	        
 	        $objWriter->save('php://output');
+	        var_dump('sadf');
+
+	        $this->load->view('temp/header');
+			$this->load->view('temp/menu', $usuario);
+			//$this->load->view('', $usuario);
+			$this->load->view('temp/footer', $usuario);
 		}
 		else
 		{
