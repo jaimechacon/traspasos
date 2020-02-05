@@ -344,15 +344,6 @@ class Orden extends CI_Controller {
 			if(!is_null($this->input->get('idestadoc')) && $this->input->get('idestadoc') != "-1" && $this->input->get('idestadoc') != "")
 				$id_estado_certificacion = $this->input->get('idestadoc');
 			
-
-			var_dump('idSucursal => '.$idSucursal);
-			var_dump('idUsuarioVendedor => '.$idUsuarioVendedor);
-			var_dump('id_estado_rc => '.$id_estado_rc);
-			var_dump('fecha_desde => '.$fecha_desde);
-			var_dump('fecha_hasta => '.$fecha_hasta);
-			var_dump('id_estado_certificacion => '.$id_estado_certificacion);
-
-			
 			$registrosOT = $this->Orden_model->listarTraspasosUsuarioCall($usuario['id_usuario'], $idSucursal, $idUsuarioVendedor, $fecha_desde, $fecha_hasta, $id_estado_rc, $id_estado_certificacion);
 
 			//var_dump($registrosOT);
@@ -468,9 +459,15 @@ class Orden extends CI_Controller {
 
 	        //Le ponemos un nombre al archivo que se va a generar.
 	        $archivo = "Reporte_Comercial_OT_{$contador}.xls";
+
+	        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+ 			header('Content-Disposition: attachment; filename='.$archivo);
+
 	        //header('Content-Type: application/force-download');
-	        header('Content-Type: application/vnd.ms-excel');
-	        header('Content-Disposition: attachment;filename="'.$archivo.'"');
+	        //header('Content-Type: application/vnd.ms-excel');
+
+	        //header("Content-Type: $mtype; charset=" . $objPHPExcel->sEncoding);
+	        //header('Content-Disposition: attachment;filename="'.$archivo.'"');
 	        header('Cache-Control: max-age=0');
 
 	        
@@ -480,12 +477,6 @@ class Orden extends CI_Controller {
 	        //Hacemos una salida al navegador con el archivo Excel.
 	        
 	        $objWriter->save('php://output');
-	        var_dump('sadf');
-
-	        $this->load->view('temp/header');
-			$this->load->view('temp/menu', $usuario);
-			//$this->load->view('', $usuario);
-			$this->load->view('temp/footer', $usuario);
 		}
 		else
 		{
