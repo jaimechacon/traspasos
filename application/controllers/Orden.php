@@ -660,20 +660,23 @@ class Orden extends CI_Controller {
 	        $this->excel->getActiveSheet()->setCellValue("A1", 'ID OT');
 			$this->excel->getActiveSheet()->setCellValue("B1", 'Sucursal');
 			$this->excel->getActiveSheet()->setCellValue("C1", 'Celular Origen');
-			$this->excel->getActiveSheet()->setCellValue("D1", 'Rut Usuario');
-			$this->excel->getActiveSheet()->setCellValue("E1", 'Usuario');
-			$this->excel->getActiveSheet()->setCellValue("F1", 'Perfil');
-			$this->excel->getActiveSheet()->setCellValue("G1", 'Rut Afiliado');
-			$this->excel->getActiveSheet()->setCellValue("H1", 'Nombres');
-			$this->excel->getActiveSheet()->setCellValue("I1", 'Apellido Paterno');
-			$this->excel->getActiveSheet()->setCellValue("J1", 'Apellido Materno');
-			$this->excel->getActiveSheet()->setCellValue("K1", 'AFP Origen');
-			$this->excel->getActiveSheet()->setCellValue("L1", 'Teléfono');
-			$this->excel->getActiveSheet()->setCellValue("M1", 'Folio');
-			$this->excel->getActiveSheet()->setCellValue("N1", 'Fecha');
-			$this->excel->getActiveSheet()->setCellValue("O1", 'Estado Cédula');
-			$this->excel->getActiveSheet()->setCellValue("P1", 'Estado Certificación');
-			$this->excel->getActiveSheet()->setCellValue("Q1", 'Vía Ingreso');
+			$this->excel->getActiveSheet()->setCellValue("D1", 'PU');
+			$this->excel->getActiveSheet()->setCellValue("E1", 'Rut Usuario');
+			$this->excel->getActiveSheet()->setCellValue("F1", 'Usuario');
+			$this->excel->getActiveSheet()->setCellValue("G1", 'Perfil');
+			$this->excel->getActiveSheet()->setCellValue("H1", 'Rut Afiliado');
+			$this->excel->getActiveSheet()->setCellValue("I1", 'Nombres');
+			$this->excel->getActiveSheet()->setCellValue("J1", 'Apellido Paterno');
+			$this->excel->getActiveSheet()->setCellValue("K1", 'Apellido Materno');
+			$this->excel->getActiveSheet()->setCellValue("L1", 'AFP Origen');
+			$this->excel->getActiveSheet()->setCellValue("M1", 'Teléfono');
+			$this->excel->getActiveSheet()->setCellValue("N1", 'Folio');
+			$this->excel->getActiveSheet()->setCellValue("O1", 'Fecha');
+			$this->excel->getActiveSheet()->setCellValue("P1", 'Estado Cédula');
+			$this->excel->getActiveSheet()->setCellValue("Q1", 'Estado Certificación');
+			$this->excel->getActiveSheet()->setCellValue("R1", 'Vía Ingreso');
+			$this->excel->getActiveSheet()->setCellValue("S1", 'Latitud');
+			$this->excel->getActiveSheet()->setCellValue("T1", 'Longitud');
 			
 			
 	        //Definimos la data del cuerpo.        
@@ -682,26 +685,38 @@ class Orden extends CI_Controller {
 	           //Incrementamos una fila más, para ir a la siguiente.
 	           $contador++;
 	           //Informacion de las filas de la consulta.
+	           $latitud = "";
+	           $longitud = "";
+	           $latitud = str_replace(",", ".", $registro['latitud']);
+	           $longitud = str_replace(",", ".", $registro['longitud']);
+
+	           //$latitud = "'".$latitud;
+	           //$longitud = "'".$longitud;
 
 	            $this->excel->getActiveSheet()->setCellValue("A{$contador}", $registro['id_sms']);
 				$this->excel->getActiveSheet()->setCellValue("B{$contador}", $registro['sucursal']);
 				$this->excel->getActiveSheet()->setCellValue("C{$contador}", $registro['ani']);
-				$this->excel->getActiveSheet()->setCellValue("D{$contador}", $registro['u_rut']);
-				$this->excel->getActiveSheet()->setCellValue("E{$contador}", $registro['u_nombres']." ".$registro['u_apellidos']);
-				$this->excel->getActiveSheet()->setCellValue("F{$contador}", $registro['pf_nombre']);
-				$this->excel->getActiveSheet()->setCellValue("G{$contador}", $registro['rut']);
-				$this->excel->getActiveSheet()->setCellValue("H{$contador}", $registro['nombres']);
-				$this->excel->getActiveSheet()->setCellValue("I{$contador}", $registro['apellido_paterno']);
-				$this->excel->getActiveSheet()->setCellValue("J{$contador}", $registro['apellido_materno']);
-				$this->excel->getActiveSheet()->setCellValue("K{$contador}", $registro['institucion']);
-				$this->excel->getActiveSheet()->setCellValue("L{$contador}", $registro['telefono']);
-				$this->excel->getActiveSheet()->setCellValue("M{$contador}", $registro['folio']);
-				$this->excel->getActiveSheet()->setCellValue("N{$contador}", $registro['fecha']);
-				$this->excel->getActiveSheet()->setCellValue("O{$contador}", $registro['nombre_resultado_rc']);
-				$this->excel->getActiveSheet()->setCellValue("P{$contador}", $registro['certificado']);
-				$this->excel->getActiveSheet()->setCellValue("Q{$contador}", $registro['via_entrada']);
-
+				$this->excel->getActiveSheet()->setCellValue("D{$contador}", $registro['u_cod_usuario']);
+				$this->excel->getActiveSheet()->setCellValue("E{$contador}", $registro['u_rut']);
+				$this->excel->getActiveSheet()->setCellValue("F{$contador}", $registro['u_nombres']." ".$registro['u_apellidos']);
+				$this->excel->getActiveSheet()->setCellValue("G{$contador}", $registro['pf_nombre']);
+				$this->excel->getActiveSheet()->setCellValue("H{$contador}", $registro['rut']);
+				$this->excel->getActiveSheet()->setCellValue("I{$contador}", $registro['nombres']);
+				$this->excel->getActiveSheet()->setCellValue("J{$contador}", $registro['apellido_paterno']);
+				$this->excel->getActiveSheet()->setCellValue("K{$contador}", $registro['apellido_materno']);
+				$this->excel->getActiveSheet()->setCellValue("L{$contador}", $registro['institucion']);
+				$this->excel->getActiveSheet()->setCellValue("M{$contador}", $registro['telefono']);
+				$this->excel->getActiveSheet()->setCellValue("N{$contador}", $registro['folio']);
+				$this->excel->getActiveSheet()->setCellValue("O{$contador}", $registro['fecha']);
+				$this->excel->getActiveSheet()->setCellValue("P{$contador}", $registro['nombre_resultado_rc']);
+				$this->excel->getActiveSheet()->setCellValue("Q{$contador}", $registro['certificado']);
+				$this->excel->getActiveSheet()->setCellValue("R{$contador}", $registro['via_entrada']);
+				$this->excel->getActiveSheet()->setCellValue("S{$contador}", $latitud);
+				$this->excel->getActiveSheet()->setCellValue("T{$contador}", $longitud);
 	        }
+
+	        $range = 'S1:T'.$contador;
+	        $this->excel->getActiveSheet()->getStyle($range)->getNumberFormat()->setFormatCode( PHPExcel_Style_NumberFormat::FORMAT_TEXT);
 
 	        //Le ponemos un nombre al archivo que se va a generar.
 	        $archivo = "OT_{$contador}.xls";
