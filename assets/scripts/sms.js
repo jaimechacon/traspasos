@@ -34,12 +34,15 @@ $(document).ready(function() {
 
  		if(estado > -1){
  			var id_sms = e.currentTarget.dataset.id;
+ 			var rut = e.currentTarget.dataset.rut;
+ 			var serie = e.currentTarget.dataset.serie;
+ 			var tipo_doc = e.currentTarget.dataset.tipo_documento;
 			var baseurl = window.origin + '/Sms/validarRCOT';
 		    jQuery.ajax({
 				type: "POST",
 				url: baseurl,
 				dataType: 'json',
-				data: { id_sms: id_sms, tipo: estado },
+				data: { id_sms: id_sms, tipo: estado, rut: rut, serie: serie, tipo_doc: tipo_doc },
 				success: function(data) {
 				    if (data)
 				    {

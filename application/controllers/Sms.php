@@ -72,7 +72,25 @@ class Sms extends CI_Controller {
 			if(!is_null($this->input->post('id_sms')) && $this->input->post('id_sms') != "-1" && $this->input->post('id_sms') != "")
 				$id_sms = $this->input->post('id_sms');
 
-			$tipo = "null";
+			$rut = "";
+			$dv = "";
+			$rut_completo = "";
+			if(!is_null($this->input->post('rut')) && $this->input->post('rut') != "-1" && $this->input->post('rut') != "")
+				{
+					$rut_completo = $this->input->post('rut');
+					$rut = substr($rut_completo, 0, (strlen($rut_completo)-1));
+					$dv = substr($rut, (strlen($rut)-1), 1);
+				}
+
+			$serie = "";
+			if(!is_null($this->input->post('serie')) && $this->input->post('serie') != "-1" && $this->input->post('serie') != "")
+				$serie = $this->input->post('serie');
+
+			$tipo_doc = "";
+			if(!is_null($this->input->post('tipo_doc')) && $this->input->post('tipo_doc') != "-1" && $this->input->post('tipo_doc') != "")
+				$tipo_doc = $this->input->post('tipo_doc');
+
+			$tipo = "";
 			if(!is_null($this->input->post('tipo')) && $this->input->post('tipo') != "-1" && $this->input->post('tipo') != "")
 				$tipo = $this->input->post('tipo');
 
@@ -82,8 +100,124 @@ class Sms extends CI_Controller {
 
 			//var_dump($validarRut);
 
+		
+
 			if (is_null($validarRut)) {
-				$tipo = "1";
+
+				for ($o=0; $o < 3; $o++) {
+					
+					$username = "u9PfV4nzdlu2JTWYcnovAOzQhv5PkpP";
+					$password = "KUs0QJdYZ6DGLaNK";
+					$host = "https://api.minsal.cl/v1/personas/srcei/verificaciones/identidades?codTipoDocumento=C&numRUN=".$rut."&numSerie=".$serie;
+					$headers = array(
+				        'Content-Type:application/json',
+				        'Authorization: Basic '. base64_encode("u9PfV4nzdlu2JTWYcnovAOzQhv5PkpP:KUs0QJdYZ6DGLaNK") // place your auth details here
+				    );
+					$ch = curl_init($host);
+					// To save response in a variable from server, set headers;
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+					// Get response
+					$response = curl_exec($ch);
+					// Decode
+					$result = json_decode($response);
+
+					if($result)
+					{
+						$tipo_result = "null";
+						$estado = "null";
+						$cod_codigo = "null";
+						$accion = "null";
+						$aplicacion = "null";
+						$parametros_api = "null";
+						$ruta = "null";
+						$uri = "null";
+						$cod_estado_respuesta = "null";
+						$desc_estado_respuesta = "null";
+						$runPersona_resultado = "null";
+						$dvPersona_resultado = "null";
+						$codTipoDocumento_resultado = "null";
+						$codClaseDocumento_resultado = "null";
+						$numDocumento_resultado = "null";
+						$numSerie_resultado = "null";
+						$indVigencia_resultado = "null";
+						$fhoVcto_resultado = "null";
+						$indBloqueo_resultado = "null";
+						$obs_respuesta = "null";
+						$error_respuesta = "null";
+						$tiempo = "null";
+						$organizacion = "null";
+						$ip = "null";
+						$id = "null";
+						$cod_obs_respuesta = "null";
+						$descripcion_obs_respuesta = "null";
+
+						//var_dump($result);
+						$tipo_result = $result->tipo;
+						$estado = $result->estado;
+						$cod_codigo = $result->codigo;
+						$accion = $result->accion;
+						$aplicacion = $result->aplicacion;
+						$parametros_api = $result->parametros;
+						$ruta = $result->ruta;
+						$uri = $result->uri;
+
+						if($estado == 200)
+						{
+							$o = 3;
+							$cod_estado_respuesta = $result->respuesta->estado->codigo;
+							$desc_estado_respuesta = $result->respuesta->estado->descripcion;
+
+							//$resultado_respuesta = $result->respuesta->resultado;
+							if ($cod_estado_respuesta == "OK") {
+								$runPersona_resultado = $result->respuesta->resultado->runPersona;  
+								$dvPersona_resultado = $result->respuesta->resultado->dvPersona;
+								$codTipoDocumento_resultado = $result->respuesta->resultado->codTipoDocumento;
+								$codClaseDocumento_resultado = $result->respuesta->resultado->codClaseDocumento;
+								$numDocumento_resultado = $result->respuesta->resultado->numDocumento;
+								$numSerie_resultado = $result->respuesta->resultado->numSerie;
+								$indVigencia_resultado = $result->respuesta->resultado->indVigencia;
+								$fhoVcto_resultado = $result->respuesta->resultado->fhoVcto;
+								$indBloqueo_resultado = $result->respuesta->resultado->indBloqueo;
+								$obs_respuesta = $result->respuesta->observaciones;
+
+								if ($indVigencia_resultado == "S" && $indBloqueo_resultado == "NO BLOQUEADO") {
+									$tipo = 5;
+								}else
+								{
+									if ($indVigencia_resultado == "S" && $indBloqueo_resultado == "BLOQUEADO") {
+										$tipo = 6;
+									}
+								}
+							}else
+							{
+								$cod_obs_respuesta = $result->respuesta->observaciones[0]->codigo;
+								$descripcion_obs_respuesta = $result->respuesta->observaciones[0]->descripcion;
+								$error_respuesta = $result->respuesta->error;
+								$tiempo = $result->tiempo;
+								$organizacion = $result->organizacion;
+								$ip = $result->ip;
+								$id = $result->id;
+								$tipo = "1";
+							}
+						}else
+						{
+							if($o == 2)
+							{
+								$tipo = "1";
+							}
+						}
+
+						//var_dump($o);
+						
+						if ($o >= 1)
+							mysqli_next_result($this->db->conn_id);
+
+						$resultado_cedula = $this->Sms_model->agregarLogCedula($tipo_result, $estado, $cod_codigo, $accion, $aplicacion, $parametros_api, $ruta, $uri, $cod_estado_respuesta, $desc_estado_respuesta, $runPersona_resultado, $dvPersona_resultado, $codTipoDocumento_resultado, $codClaseDocumento_resultado, $numDocumento_resultado, $numSerie_resultado, $indVigencia_resultado, $fhoVcto_resultado, $indBloqueo_resultado, $obs_respuesta, $error_respuesta, $tiempo, $organizacion, $ip, $id, $cod_obs_respuesta, $descripcion_obs_respuesta);
+					}
+				}
+
+				mysqli_next_result($this->db->conn_id);
 				$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
 
 				//var_dump($resultado);
@@ -108,10 +242,10 @@ class Sms extends CI_Controller {
 								$mensaje = "ProVida AFP Confirma la recepción de tus datos. El código de validación es ".$id_sms.".";
 							}
 
-							/*if($tipo == "2")
-							{
-								$mensaje = "Afiliado NO VIGENTE";
-							}*/
+							//if($tipo == "2")
+							//{
+							//	$mensaje = "Afiliado NO VIGENTE";
+							//}
 
 							if($tipo == "3")
 							{

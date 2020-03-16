@@ -53,7 +53,7 @@
 						        	<button id="btnNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnNoVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-warning btnEstados" data-id="<?php echo $validacion['id_sms']; ?>">No Vigente</button>
 					        	</td>
 					        	<td id="tdVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="tdVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" class="text-center align-middle registro">
-						        	<button id="btnVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-success btnEstados" data-id="<?php echo $validacion['id_sms']; ?>">Vigente</button>
+						        	<button id="btnVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" name="btnVigente_<?php echo ($fila == 0 ? "1": $validacion['id_sms']); ?>" type="button" class="btn btn-success btnEstados" data-id="<?php echo $validacion['id_sms']; ?>" data-rut="<?php echo $validacion['rut']; ?>" data-serie="<?php echo $validacion['serie']; ?>" data-tipo_documento="<?php echo $validacion['tipo_documento']; ?>" >Vigente</button>
 					        	</td>
 					    	</tr>
 				  		<?php endforeach;
