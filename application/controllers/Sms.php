@@ -213,7 +213,7 @@ class Sms extends CI_Controller {
 							}
 						}
 
-						var_dump($o);
+						//var_dump($o);
 						
 						if ($o > 0 && $o != 3)
 							mysqli_next_result($this->db->conn_id);
@@ -281,6 +281,8 @@ class Sms extends CI_Controller {
 								mysqli_next_result($this->db->conn_id);
 								$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Error Servicio Previred'.$id_sms), $errores_);
 							}
+
+							echo json_encode($mensaje);
 						}
 					}
 				}
