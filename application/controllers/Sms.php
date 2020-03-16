@@ -218,7 +218,7 @@ class Sms extends CI_Controller {
 						if ($o >= 1)
 							mysqli_next_result($this->db->conn_id);
 
-						$resultado_cedula = $this->Sms_model->agregarLogCedula($tipo_result, $estado, $cod_codigo, $accion, $aplicacion, $parametros_api, $ruta, $uri, $cod_estado_respuesta, $desc_estado_respuesta, $runPersona_resultado, $dvPersona_resultado, $codTipoDocumento_resultado, $codClaseDocumento_resultado, $numDocumento_resultado, $numSerie_resultado, $indVigencia_resultado, $fhoVcto_resultado, $indBloqueo_resultado, $obs_respuesta, $error_respuesta, $tiempo, $organizacion, $ip, $id, $cod_obs_respuesta, $descripcion_obs_respuesta);
+						$resultado_cedula = $this->Sms_model->agregarLogCedula($tipo_result, $estado, $cod_codigo, $accion, $aplicacion, $parametros_api, $ruta, $uri, $cod_estado_respuesta, $desc_estado_respuesta, $runPersona_resultado, $dvPersona_resultado, $codTipoDocumento_resultado, $codClaseDocumento_resultado, $numDocumento_resultado, $numSerie_resultado, $indVigencia_resultado, $fhoVcto_resultado, $indBloqueo_resultado, $obs_respuesta, $error_respuesta, $tiempo, $organizacion, $ip, $id, $cod_obs_respuesta, $descripcion_obs_respuesta, $id_sms);
 					}
 				}
 
