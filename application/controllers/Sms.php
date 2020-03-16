@@ -587,7 +587,7 @@ class Sms extends CI_Controller {
 							$mensaje = $query[0]['mensaje'];
 							$parametros['celular'] = $data->ani;
 							$parametros['mensaje'] = $mensaje;
-							//$se_envio = $this->enviarSms($parametros);
+							$se_envio = $this->enviarSms($parametros);
 
 							if($se_envio === 0){
 								for ($intentos=0; $intentos < 3; $intentos++) { 
