@@ -266,7 +266,7 @@ class Sms extends CI_Controller {
 							{
 								$parametros['celular'] = $telefono;
 								$parametros['mensaje'] = $mensaje;
-								$se_envio = $this->enviarSms($parametros);
+								//$se_envio = $this->enviarSms($parametros);
 							}
 
 							//var_dump($se_envio, $telefono, $mensaje, $tipo);
