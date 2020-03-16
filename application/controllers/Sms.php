@@ -187,6 +187,11 @@ class Sms extends CI_Controller {
 								{
 									if ($indVigencia_resultado == "S" && $indBloqueo_resultado == "BLOQUEADO") {
 										$tipo = 6;
+									}else
+									{
+										if ($indVigencia_resultado != "S") {
+											$tipo = 7;
+										}
 									}
 								}
 							}else
