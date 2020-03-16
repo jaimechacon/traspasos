@@ -282,7 +282,7 @@ class Sms extends CI_Controller {
 								$query = $this->App_model->agregarLog($usuario['id_usuario'], ('Error Servicio Previred'.$id_sms), $errores_);
 							}
 
-							echo json_encode($mensaje);
+							//echo json_encode($mensaje);
 						}
 					}
 				}
