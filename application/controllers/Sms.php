@@ -152,64 +152,65 @@ class Sms extends CI_Controller {
 						$cod_obs_respuesta = "null";
 						$descripcion_obs_respuesta = "null";
 
-						//var_dump($result);
-						$tipo_result = $result->tipo;
-						$estado = $result->estado;
-						$cod_codigo = $result->codigo;
-						$accion = $result->accion;
-						$aplicacion = $result->aplicacion;
-						$parametros_api = $result->parametros;
-						$ruta = $result->ruta;
-						$uri = $result->uri;
+						if (isset($result->tipo)) {
+							$tipo_result = $result->tipo;
+							$estado = $result->estado;
+							$cod_codigo = $result->codigo;
+							$accion = $result->accion;
+							$aplicacion = $result->aplicacion;
+							$parametros_api = $result->parametros;
+							$ruta = $result->ruta;
+							$uri = $result->uri;
 
-						if($estado == 200)
-						{
-							$o = 3;
-							$cod_estado_respuesta = $result->respuesta->estado->codigo;
-							$desc_estado_respuesta = $result->respuesta->estado->descripcion;
+							if($estado == 200)
+							{
+								$o = 3;
+								$cod_estado_respuesta = $result->respuesta->estado->codigo;
+								$desc_estado_respuesta = $result->respuesta->estado->descripcion;
 
-							//$resultado_respuesta = $result->respuesta->resultado;
-							if ($cod_estado_respuesta == "OK") {
-								$runPersona_resultado = $result->respuesta->resultado->runPersona;  
-								$dvPersona_resultado = $result->respuesta->resultado->dvPersona;
-								$codTipoDocumento_resultado = $result->respuesta->resultado->codTipoDocumento;
-								$codClaseDocumento_resultado = $result->respuesta->resultado->codClaseDocumento;
-								$numDocumento_resultado = $result->respuesta->resultado->numDocumento;
-								$numSerie_resultado = $result->respuesta->resultado->numSerie;
-								$indVigencia_resultado = $result->respuesta->resultado->indVigencia;
-								$fhoVcto_resultado = $result->respuesta->resultado->fhoVcto;
-								$indBloqueo_resultado = $result->respuesta->resultado->indBloqueo;
-								$obs_respuesta = $result->respuesta->observaciones;
+								//$resultado_respuesta = $result->respuesta->resultado;
+								if ($cod_estado_respuesta == "OK") {
+									$runPersona_resultado = $result->respuesta->resultado->runPersona;  
+									$dvPersona_resultado = $result->respuesta->resultado->dvPersona;
+									$codTipoDocumento_resultado = $result->respuesta->resultado->codTipoDocumento;
+									$codClaseDocumento_resultado = $result->respuesta->resultado->codClaseDocumento;
+									$numDocumento_resultado = $result->respuesta->resultado->numDocumento;
+									$numSerie_resultado = $result->respuesta->resultado->numSerie;
+									$indVigencia_resultado = $result->respuesta->resultado->indVigencia;
+									$fhoVcto_resultado = $result->respuesta->resultado->fhoVcto;
+									$indBloqueo_resultado = $result->respuesta->resultado->indBloqueo;
+									$obs_respuesta = $result->respuesta->observaciones;
 
-								if ($indVigencia_resultado == "S" && $indBloqueo_resultado == "NO BLOQUEADO") {
-									$tipo = 5;
-								}else
-								{
-									if ($indVigencia_resultado == "S" && $indBloqueo_resultado == "BLOQUEADO") {
-										$tipo = 6;
+									if ($indVigencia_resultado == "S" && $indBloqueo_resultado == "NO BLOQUEADO") {
+										$tipo = 5;
 									}else
 									{
-										if ($indVigencia_resultado != "S") {
-											$tipo = 7;
+										if ($indVigencia_resultado == "S" && $indBloqueo_resultado == "BLOQUEADO") {
+											$tipo = 6;
+										}else
+										{
+											if ($indVigencia_resultado != "S") {
+												$tipo = 7;
+											}
 										}
 									}
+								}else
+								{
+									$cod_obs_respuesta = $result->respuesta->observaciones[0]->codigo;
+									$descripcion_obs_respuesta = $result->respuesta->observaciones[0]->descripcion;
+									$error_respuesta = $result->respuesta->error;
+									$tiempo = $result->tiempo;
+									$organizacion = $result->organizacion;
+									$ip = $result->ip;
+									$id = $result->id;
+									$tipo = "1";
 								}
 							}else
 							{
-								$cod_obs_respuesta = $result->respuesta->observaciones[0]->codigo;
-								$descripcion_obs_respuesta = $result->respuesta->observaciones[0]->descripcion;
-								$error_respuesta = $result->respuesta->error;
-								$tiempo = $result->tiempo;
-								$organizacion = $result->organizacion;
-								$ip = $result->ip;
-								$id = $result->id;
-								$tipo = "1";
-							}
-						}else
-						{
-							if($o == 2)
-							{
-								$tipo = "1";
+								if($o == 2)
+								{
+									$tipo = "1";
+								}
 							}
 						}
 
