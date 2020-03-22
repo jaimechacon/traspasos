@@ -23,6 +23,47 @@ class Inicio extends CI_Controller {
 			{
 				redirect('Sms');
 			}else{
+				/*eliminar desde aca */
+				try {
+					$post = '<?xml version="1.0" encoding="ISO-8859-1" ?>';
+					$post .= '<peticion llave="2vUR4BV2iS">';
+					$post .= '<peticionservicio tipo="AUT">';
+					$post .= '<parametro nombre="usuario" valor="76391999-4" />';
+					$post .= '<parametro nombre="password" valor="2vUR4BV2iS" />'; //ProvidaPrevired2019" />';
+					$post .= '</peticionservicio>';
+					$post .= '<peticionservicio tipo="CAF">';
+				    $post .= '<parametro nombre="rut" valor="43781383" />';
+				    $post .= '<parametro nombre="periodo" valor="202001" />';
+			        $post .= '</peticionservicio>';
+			     	$post .= '</peticion>';
+
+
+			     	$wsdl = 'https://wbackend.previred.com/axis/services/MonitorPrevired?wsdl';
+					$url = 'https://wbackend.previred.com/axis/services/MonitorPrevired';
+		
+
+					$soapx = new SoapClient($wsdl,
+					    array(
+					    	'trace' => true,
+							'cache_wsdl' => WSDL_CACHE_NONE,
+							'location' => $url,
+							'xml' => $post
+							)
+					);
+
+			     	$response = $soapx->__soapCall("ejecuta", array('xml' => $post));
+
+			     	$simpleXml = simplexml_load_string($response);
+			     	
+					$cant = 0;
+					$cantNod = 0;
+
+					var_dump($simpleXml);
+				
+				} catch (Exception $e) {
+					
+				}
+
 				$this->load->view('temp/header');
 				$this->load->view('temp/menu', $usuario);
 				$this->load->view('inicioSesion', $usuario);
