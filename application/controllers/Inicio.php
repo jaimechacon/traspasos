@@ -23,7 +23,7 @@ class Inicio extends CI_Controller {
 			{
 				redirect('Sms');
 			}else{
-				/*eliminar desde aca */
+				/*eliminar desde aca 
 				try {
 					$post = '<?xml version="1.0" encoding="ISO-8859-1" ?>';
 					$post .= '<peticion llave="2vUR4BV2iS">';
@@ -62,7 +62,7 @@ class Inicio extends CI_Controller {
 				
 				} catch (Exception $e) {
 					
-				}
+				}*/
 
 				$this->load->view('temp/header');
 				$this->load->view('temp/menu', $usuario);
