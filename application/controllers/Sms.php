@@ -109,10 +109,15 @@ class Sms extends CI_Controller {
 					$username = "u9PfV4nzdlu2JTWYcnovAOzQhv5PkpP";
 					$password = "KUs0QJdYZ6DGLaNK";
 					$host = "https://api.minsal.cl/v1/personas/srcei/verificaciones/identidades?codTipoDocumento=C&numRUN=".$rut."&numSerie=".$serie;
+					$token = $this->getToken();
+
+					//var_dump($token);
+
 					$headers = array(
 				        'Content-Type:application/json',
-				        'Authorization: Basic '. base64_encode("u9PfV4nzdlu2JTWYcnovAOzQhv5PkpP:KUs0QJdYZ6DGLaNK") // place your auth details here
+				        'Authorization: Bearer '. $token // place your auth details here
 				    );
+
 					$ch = curl_init($host);
 					// To save response in a variable from server, set headers;
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -308,6 +313,36 @@ class Sms extends CI_Controller {
 		{
 			redirect('Login');
 		}
+	}
+
+	private function getToken()
+    {
+        $url = 'https://api.minsal.cl/oauth/token';
+        $data = array('grant_type' => 'client_credentials');
+		$client_id = "u9PfV4nzdIu2JTWYcnvovAOzQhv5PkpP";
+		$client_secret = "KUs0QJdYZ6DGLaNK";
+		$str_base64 = base64_encode($client_id.':'.$client_secret);
+        $options = array(
+                'http' => array(
+                        'header'  => "Content-type: application/x-www-form-urlencoded\r\n".
+									 "Authorization: Basic ".$str_base64,
+                        'method'  => 'POST',
+                        'content' => http_build_query($data)
+                )
+        );
+		
+        $context  = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        //if ($result === FALSE) { /* error */ }
+
+        $authObj = json_decode($result);
+    	
+    	//$accessToken = $authObj['accessToken'];
+   		//var_dump($authObj);
+    	$accessToken = $authObj->access_token;
+        //$accessToken = $authObj->accessToken;
+        
+        return $accessToken;
 	}
 
 	private function obtenerDatosPrevired($id_sms, $rut_afiliado, $periodo, $tipo) {
