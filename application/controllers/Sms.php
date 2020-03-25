@@ -100,17 +100,17 @@ class Sms extends CI_Controller {
 
 			//var_dump($validarRut);
 
-		
+			var_dump('1  capturo todos los paraemtros');
 
 			if (is_null($validarRut)) {
-
+				var_dump('2  rut valido');
 				for ($o=0; $o < 3; $o++) {
 					
 					$username = "u9PfV4nzdlu2JTWYcnovAOzQhv5PkpP";
 					$password = "KUs0QJdYZ6DGLaNK";
 					$host = "https://api.minsal.cl/v1/personas/srcei/verificaciones/identidades?codTipoDocumento=C&numRUN=".$rut."&numSerie=".$serie;
 					$token = $this->getToken();
-
+					var_dump('3  trajo el token'.$token);
 					//var_dump($token);
 
 					$headers = array(
@@ -126,9 +126,10 @@ class Sms extends CI_Controller {
 					$response = curl_exec($ch);
 					// Decode
 					$result = json_decode($response);
-
+					var_dump('4  se ejecuto validacion de cedula');
 					if($result)
 					{
+						var_dump('5  obtiene datos');
 						$tipo_result = "null";
 						$estado = "null";
 						$cod_codigo = "null";
@@ -158,6 +159,8 @@ class Sms extends CI_Controller {
 						$descripcion_obs_respuesta = "null";
 
 						if (isset($result->tipo)) {
+
+							var_dump('6  obtiene datos de respuesta');
 							$tipo_result = $result->tipo;
 							$estado = $result->estado;
 							$cod_codigo = $result->codigo;
@@ -169,6 +172,7 @@ class Sms extends CI_Controller {
 
 							if($estado == 200)
 							{
+								var_dump('7 obtiene respuesta positiva');
 								$o = 3;
 								$cod_estado_respuesta = $result->respuesta->estado->codigo;
 								$desc_estado_respuesta = $result->respuesta->estado->descripcion;
@@ -185,7 +189,7 @@ class Sms extends CI_Controller {
 									$fhoVcto_resultado = $result->respuesta->resultado->fhoVcto;
 									$indBloqueo_resultado = $result->respuesta->resultado->indBloqueo;
 									$obs_respuesta = $result->respuesta->observaciones;
-
+									var_dump('8 salio todo bien de validacion');
 									if ($indVigencia_resultado == "S" && $indBloqueo_resultado == "NO BLOQUEADO") {
 										$tipo = 5;
 									}else
@@ -209,9 +213,11 @@ class Sms extends CI_Controller {
 									$ip = $result->ip;
 									$id = $result->id;
 									$tipo = "1";
+									var_dump('8 salio mal los datos, solo trajo basicos');
 								}
 							}else
 							{
+								var_dump('7 error de call service');
 								if($o == 2)
 								{
 									$tipo = "1";
@@ -223,24 +229,26 @@ class Sms extends CI_Controller {
 						
 						if ($o > 0 && $o != 3)
 							mysqli_next_result($this->db->conn_id);
-
+						var_dump('9 se llamara el servicio para agregar log de cedula');
 						$resultado_cedula = $this->Sms_model->agregarLogCedula($tipo_result, $estado, $cod_codigo, $accion, $aplicacion, $parametros_api, $ruta, $uri, $cod_estado_respuesta, $desc_estado_respuesta, $runPersona_resultado, $dvPersona_resultado, $codTipoDocumento_resultado, $codClaseDocumento_resultado, $numDocumento_resultado, $numSerie_resultado, $indVigencia_resultado, $fhoVcto_resultado, $indBloqueo_resultado, $obs_respuesta, $error_respuesta, $tiempo, $organizacion, $ip, $id, $cod_obs_respuesta, $descripcion_obs_respuesta, $id_sms);
+						var_dump('10 deberia haber salido bien el llamado del log cedula');
 					}
 				}
-
+				var_dump('11 se llamo la validacion del cliente');
 				mysqli_next_result($this->db->conn_id);
 				$resultado = $this->Sms_model->validarRCOT($usuario["id_usuario"], $id_sms, $tipo);
-
+				var_dump('12 se termino la llamada de la validacion del cliente');
 				//var_dump($resultado);
 				if(isset($resultado))
 				{
-					//var_dump('entro a resultados <br/>');
+					var_dump('13 entro a resultados');
 					if(isset($resultado[0]))
 					{
-						//var_dump('entro a resultados   [0] <br/>');
+						var_dump('14 entro a resultados   [0] <br/>');
 						if(isset($resultado[0]['rut_afiliado']) && isset($resultado[0]['periodo']) && isset($resultado[0]['telefono']))
 						{
 							//var_dump('entro a resultados   [0]   [rut_afiliado] <br/>');
+							var_dump('15 entro a resultados.');
 							$telefono = $resultado[0]['telefono'];
 							$rut_afiliado = (substr($resultado[0]['rut_afiliado'], 0, ((strlen($resultado[0]['rut_afiliado']))-1)).'-'.substr($resultado[0]['rut_afiliado'], ((strlen($resultado[0]['rut_afiliado']))-1), 1));
 
@@ -268,11 +276,17 @@ class Sms extends CI_Controller {
 								$mensaje = "ProVida no pudo validar los datos de tu cédula de identidad. Por favor revísalos con el ejecutivo.";
 							}
 
+							var_dump('16 se verifica cual es el mensaje que sea <> de "" mensaje = '.$mensaje);
 							if($mensaje != "")
 							{
+								var_dump('17 se prepara info para enviar mensaje');
+								var_dump('18 telefono  =   '.$telefono);
+								var_dump('19 mensaje  =   '.$mensaje);
 								$parametros['celular'] = $telefono;
 								$parametros['mensaje'] = $mensaje;
 								$se_envio = $this->enviarSms($parametros);
+								var_dump('20 se envio el mensaje');
+								var_dump($se_envio);
 							}
 
 							//var_dump($se_envio, $telefono, $mensaje, $tipo);
