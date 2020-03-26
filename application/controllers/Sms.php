@@ -278,7 +278,7 @@ class Sms extends CI_Controller {
 
 							var_dump('16 se verifica cual es el mensaje que sea <> de "" mensaje = '.$mensaje);
 							var_dump($mensaje);
-							
+							var_dump($tipo);
 							if($mensaje != "")
 							{
 								var_dump('17 se prepara info para enviar mensaje');
