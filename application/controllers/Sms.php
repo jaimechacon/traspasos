@@ -248,7 +248,7 @@ class Sms extends CI_Controller {
 
 							//var_dump($telefono);
 
-							if($tipo == "1" || $tipo == "2")
+							if($tipo == "1" || $tipo == "2" || $tipo == 1 || $tipo == 2)
 							{
 								$mensaje = "ProVida AFP Confirma la recepción de tus datos. El código de validación es ".$id_sms.".";
 							}
