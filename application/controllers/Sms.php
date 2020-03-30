@@ -547,7 +547,7 @@ class Sms extends CI_Controller {
 	public function receiveSMS()
 	{
 		$json = file_get_contents('php://input');
-
+		$datos = null;
 		if($json != null)
 		{
 			$data = json_decode($json);
