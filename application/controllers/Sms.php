@@ -267,6 +267,10 @@ class Sms extends CI_Controller {
 							{
 								$mensaje = "ProVida no pudo validar los datos de tu cédula de identidad. Por favor revísalos con el ejecutivo.";
 							}
+							var_dump('mensaje:    ');
+							var_dump($mensaje);
+							var_dump('tipo:    ');
+							var_dump($tipo);
 
 							if($mensaje != "")
 							{
