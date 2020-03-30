@@ -247,7 +247,14 @@ class Sms extends CI_Controller {
 							$mensaje = "";
 
 							//var_dump($telefono);
+
 							var_dump((int)$tipo==(int)'1');
+
+							var_dump('mensaje:    ');
+							var_dump($mensaje);
+							var_dump('tipo:    ');
+							var_dump($tipo);
+
 							if($tipo == "1" || $tipo == "2" || $tipo == 1 || $tipo == 2)
 							{
 								$mensaje = "ProVida AFP Confirma la recepción de tus datos. El código de validación es ".$id_sms.".";
@@ -267,6 +274,8 @@ class Sms extends CI_Controller {
 							{
 								$mensaje = "ProVida no pudo validar los datos de tu cédula de identidad. Por favor revísalos con el ejecutivo.";
 							}
+							
+							var_dump('***************************************************************');
 							var_dump('mensaje:    ');
 							var_dump($mensaje);
 							var_dump('tipo:    ');
