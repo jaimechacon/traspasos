@@ -659,7 +659,7 @@ class Sms extends CI_Controller {
 	    $client = new SoapClient('http://ida.itdchile.cl/services/smsApiService?wsdl');
 
 	    $array_ws = array('in0' => 'jchacon',
-	                      'in1' => 'jchacon123',
+	                      'in1' => 'Provida2020$$',
 	                      'in2' => $parametros['celular'],
 	                      'in3' => $mensaje);
 
