@@ -35,12 +35,14 @@
 		      inputRut: {
 		        required: true,
 		        minlength: 8,
-        		maxlength: 9
+        		maxlength: 9,
+        		rut: true
 		      },
 		      inputSerie: {
 		        required: true,
 		        minlength: 9,
-        		maxlength: 10
+        		maxlength: 10,
+        		serie: true
 		      },
 		      selectTipoDoc: {
 		        required: true,
@@ -62,7 +64,8 @@
 		      inputRut: {
 		        required: "Ingrese un Rut de Cliente.",
 		        minlength: "Se requieren m&iacute;nimo {0} caracteres.",
-        		maxlength: "Se requiere no mas de {0} caracteres."
+        		maxlength: "Se requiere no mas de {0} caracteres.",
+        		rut: "Rut inv&aacute;lido. Ingrese un Rut v&aacute;lido."
 		      },
 		      inputSerie: {
 		        required: "Ingrese la Serie de la c&eacute;dula del Cliente.",
@@ -140,9 +143,6 @@
 		      loader.setAttribute('hidden', '');
 		    }
 	  	});
-
-	  	
-
 
 		$('#listaTraspasos').dataTable({
 	        searching: true,
@@ -500,22 +500,91 @@
 
 	});
 	window.onload = function () {
-		
-		/*feather.replace()
-	    $('[data-toggle="tooltip"]').tooltip()
-		var codigo = '5939450885303642045:2172193455657819264';
-		var baseurl = 'https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml';
-	    jQuery.ajax({
-			type: "POST",
-			url: baseurl,
-			dataType: 'jsonp',
-			headers: {"Authorization": localStorage.getItem('5939450885303642045:2172193455657819264')},
-			data: {run: '175903267', selectDocType: 'CEDULA', docNumber: '107311071'},
-			success: function(data) {
-			    if (data)
-			    {
+		jQuery.validator.addMethod("rut", function(value, element) { 
+		        return this.optional(element) || validaRut(value); 
+		}, "RUT con formato incorrecto.");
 
-			    }
+		jQuery.validator.addMethod("serie", function(value, element) { 
+		        return this.optional(element) || validaSerie(value); 
+		}, "SERIE con formato incorrecto.");
+
+		function validaRut(campo){
+			if ( campo.length == 0 ){ return false; }
+			if ( campo.length < 8 ){ return false; }
+
+			campo = campo.replace('-','')
+			campo = campo.replace(/\./g,'')
+
+			var suma = 0;
+			var caracteres = "1234567890kK";
+			var contador = 0;    
+			for (var i=0; i < campo.length; i++){
+				u = campo.substring(i, i + 1);
+				if (caracteres.indexOf(u) != -1)
+				contador ++;
 			}
-		});*/
+			if ( contador==0 ) { return false }
+			
+			var rut = campo.substring(0,campo.length-1)
+			var drut = campo.substring( campo.length-1 )
+			var dvr = '0';
+			var mul = 2;
+			
+			for (i= rut.length -1 ; i >= 0; i--) {
+				suma = suma + rut.charAt(i) * mul
+		                if (mul == 7) 	mul = 2
+				        else	mul++
+			}
+			res = suma % 11
+			if (res==1)		dvr = 'k'
+		                else if (res==0) dvr = '0'
+			else {
+				dvi = 11-res
+				dvr = dvi + ""
+			}
+			if ( dvr != drut.toLowerCase() ) { return false; }
+			else { return true; }
+		}
+
+		function validaSerie(campo){
+			campo = campo.trim()
+			if ( campo.length == 0 ){ return false; }
+			if ( campo.length < 9 ){ return false; }
+			if ( campo.length > 10 ){ return false; }
+
+			campo = campo.replace('a','A')
+			campo = campo.replace(/\./g,'')
+
+			var suma = 0;
+			var caracteres = "1234567890aA";
+			var validoCaracteres = 0;    
+			for (var i=0; i < campo.length; i++){
+				u = campo.substring(i, i + 1);
+				if (caracteres.indexOf(u) < 0) { return false; }
+			}
+			//if ( contador==0 ) { return false }
+			
+			var largo = campo.length;
+			var letra = campo.substring(0, 1)
+			
+
+			if (largo == 10) {
+				var numerosSerie = campo.substring(1, campo.length)
+				if ( letra.toUpperCase() != "A" ){ return false; }
+				
+				var caracter_numerico = "1234567890";
+				for (var i=0; i < numerosSerie.length; i++){
+					u = numerosSerie.substring(i, i + 1);
+					if (caracter_numerico.indexOf(u) < 0) { return false; }
+				}
+			}else{
+				var numerosSerie = campo;
+				var caracter_numerico = "1234567890";
+				for (var i=0; i < numerosSerie.length; i++){
+					u = numerosSerie.substring(i, i + 1);
+					if (caracter_numerico.indexOf(u) < 0) { return false; }
+				}
+			}
+			return true;
+		}
 	}

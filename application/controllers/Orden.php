@@ -850,10 +850,10 @@ class Orden extends CI_Controller {
 			     $longitud = "null";
 
 				if(!is_null($this->input->post('inputRut')) && $this->input->post('inputRut') != "-1" && $this->input->post('inputRut') != "")
-					$rut = trim($this->input->post('inputRut'));
+					$rut = strtoupper(trim($this->input->post('inputRut')));
 
 				if(!is_null($this->input->post('inputSerie')) && $this->input->post('inputSerie') != "-1" && $this->input->post('inputSerie') != "")
-					$serie = trim($this->input->post('inputSerie'));
+					$serie = strtoupper(trim($this->input->post('inputSerie')));
 
 				if(!is_null($this->input->post('selectTipoDoc')) && is_numeric($this->input->post('selectTipoDoc')) && $this->input->post('selectTipoDoc') != "-1" && $this->input->post('selectTipoDoc') != "" && (floatval($this->input->post('selectTipoDoc')) > 0) )
 					$tipoDoc = trim($this->input->post('selectTipoDoc'));
