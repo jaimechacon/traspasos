@@ -57,12 +57,11 @@
 					</div>
 				</div>
 				
-				
-				<div id="botones" class="row m-3">
-					<div class="col-sm-6 text-left">
+				<div id="botones" class="row mt-3">
+					<div class="col text-left">
 						<a class="btn btn-link"  href="<?php echo base_url();?>Equipo/ListarEquipos">Volver</a>
 					</div>
-					<div  class="col-sm-6 text-right">
+					<div class="col text-right">
 					 	<button id="btnAgregarOrdenTraspaso" type="submit" class="btn btn-primary">Agregar Orden Traspaso</button>
 					</div>
 				</div>
