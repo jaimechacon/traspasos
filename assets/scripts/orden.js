@@ -74,7 +74,7 @@
         		serie: "Serie inv&aacute;lida. Ingrese una Serie v&aacute;lida."
 		      },
 		      selectTipoDoc: {
-		        required: "Seleccione un Tipo de Documento v&aacute;lido.",
+		        required: "Seleccione un Tipo de Documento.",
 		        minlength: "Se requieren m&iacute;nimo {0} caracteres.",
         		maxlength: "Se requiere no mas de {0} caracteres."
 		      },

@@ -39,9 +39,9 @@
 					<div class="form-group col-sm-6">
 						<label for="selectTipoDoc">Tipo de Documento</label>
 						<select id="selectTipoDoc" name="selectTipoDoc" class="custom-select custom-select-sm">
-							<option value="-1" selected>Seleccione un Tipo de Documento</option>
+							<option value="" selected>Seleccione un Tipo de Documento</option>
 							<option value="1">C&eacute;dula de identidad Chilena</option>
-							<option value="2">C&eacute;dula de identidad de extranjeros</option>
+							<option value="2">C&eacute;dula de identidad de Extranjeros</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-6">
