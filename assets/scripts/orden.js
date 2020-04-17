@@ -114,7 +114,7 @@
 					$("#parrafoME").empty();
 					$("#tituloME").append('<i class="plusTitulo mb-2" data-feather="check"></i> Exito!!!');
 					$("#parrafoME").append(data['mensaje']);
-					$("#formAgregarOrdenTraspaso")[0].reset();
+					$("#agregarOrdenTraspaso")[0].reset();
 					loader.setAttribute('hidden', '');
 					$('#modalMensaje').modal({
 					  show: true
