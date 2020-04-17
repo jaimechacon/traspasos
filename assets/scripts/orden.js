@@ -1,6 +1,149 @@
  $(document).ready(function() {
 		feather.replace()
 
+		$("#agregarOrdenTraspaso").validate({
+		    errorClass:'invalid-feedback',
+		    errorElement:'span',
+		    ignore: ":hidden:not(.selectpicker)",
+		    errorPlacement: function( span, element ) {
+		      if(element[0].className === "selectpicker invalid") {
+		        element.parent().append(span);
+		      } else {
+		        span.insertAfter(element);
+		      }
+		    },
+		    //ignore: ":hidden:not(.selectpicker)",
+		    highlight: function(element, errorClass, validClass) {
+		      $(element).addClass("is-invalid").removeClass("invalid-feedback");
+		      if(element.className == "selectpicker is-invalid")
+		      {
+		        $(element.parentElement.children[1]).addClass('form-control');
+		        $(element.parentElement.children[1]).addClass('is-invalid');
+		        $(element).removeClass("is-invalid");
+		        $(element).addClass('invalid');
+		      }
+		    },
+		    unhighlight: function(element, errorClass, validClass) {
+		      $(element).removeClass("is-invalid");
+		      if(element.className == "selectpicker invalid")
+		      {
+		        $(element.parentElement.children[1]).removeClass('form-control');
+		        $(element.parentElement.children[1]).removeClass('is-invalid');
+		      }
+		    },
+		    rules: {
+		      inputRut: {
+		        required: true,
+		        minlength: 8,
+        		maxlength: 9
+		      },
+		      inputSerie: {
+		        required: true,
+		        minlength: 9,
+        		maxlength: 10
+		      },
+		      selectTipoDoc: {
+		        required: true,
+		        minlength: 1,
+        		maxlength: 3
+		      },
+		      inputTelefono:{
+		        required: true,
+		        minlength: 9,
+        		maxlength: 9
+		      },
+		      inputFolio:{
+		        required: true,
+		        minlength: 7,
+        		maxlength: 7
+		      },
+		    },
+		    messages:{
+		      inputRut: {
+		        required: "Ingrese un Rut de Cliente.",
+		        minlength: "Se requieren m&iacute;nimo {0} caracteres.",
+        		maxlength: "Se requiere no mas de {0} caracteres."
+		      },
+		      inputSerie: {
+		        required: "Ingrese la Serie de la c&eacute;dula del Cliente.",
+		        minlength: "Se requieren m&iacute;nimo {0} caracteres.",
+        		maxlength: "Se requiere no mas de {0} caracteres."
+		      },
+		      selectTipoDoc: {
+		        required: "Seleccione un Tipo de Documento v&aacute;lido.",
+		        minlength: "Se requieren m&iacute;nimo {0} caracteres.",
+        		maxlength: "Se requiere no mas de {0} caracteres."
+		      },
+		      inputTelefono: {
+		        required: "Ingrese un tel&eacute;fono del Cliente.",
+		        minlength: "Se requieren m&iacute;nimo {0} caracteres.",
+        		maxlength: "Se requiere no mas de {0} caracteres."
+		      },
+		      inputFolio: {
+		        required: "Ingrese el N&#176; de Folio.",
+		        minlength: "Se requieren m&iacute;nimo {0} caracteres.",
+        		maxlength: "Se requiere no mas de {0} caracteres."
+		      }
+		    }     
+		});
+
+		$("#agregarOrdenTraspaso").submit(function(e) {
+		    var loader = document.getElementById("loader");
+		    loader.removeAttribute('hidden');
+
+		    var validacion = $("#agregarOrdenTraspaso").validate();
+		    if(validacion.numberOfInvalids() == 0)
+		    {
+		      e.preventDefault();
+		      var f = $(this);
+		      var form = document.getElementById("agregarOrdenTraspaso");
+		      var formData = new FormData(form);
+
+		      jQuery.ajax({
+		      type: form.getAttribute('method'),
+		      url: form.getAttribute('action'),
+		      dataType: 'json',
+		      cache: false,
+		      contentType: false,
+		      processData: false,
+		      data: formData,
+		      success: function(data) {
+		        if(data['resultado'] == '1')
+				{
+					$('#tituloME').empty();
+					$("#parrafoME").empty();
+					$("#tituloME").append('<i class="plusTitulo mb-2" data-feather="check"></i> Exito!!!');
+					$("#parrafoME").append(data['mensaje']);
+					$("#formAgregarOrdenTraspaso")[0].reset();
+					loader.setAttribute('hidden', '');
+					$('#modalMensaje').modal({
+					  show: true
+					});
+					feather.replace()
+				}else{
+					$('#tituloME').empty();
+					$("#parrafoME").empty();
+					$("#tituloME").append('<i class="plusTituloError mb-2" data-feather="x-circle"></i> Error!!!');
+					$("#parrafoME").append(data['mensaje']);
+					loader.setAttribute('hidden', '');
+					$('#modalMensaje').modal({
+					  show: true
+					});
+				}
+				feather.replace()
+				$('[data-toggle="tooltip"]').tooltip()
+		        
+		      }
+		      });
+		    }else
+		    {
+		      loader.setAttribute('hidden', '');
+		    }
+	  	});
+
+	  	
+
+
 		$('#listaTraspasos').dataTable({
 	        searching: true,
 	        //scrollX : false,

@@ -43,4 +43,11 @@ class Orden_model extends CI_Model
 		$query = $this->db->query("call `traspasosdb`.`listarCertificadosUsuCall`(".$idUsuario.");");
 		return $query->result_array();
 	}
+
+	public function agregarOrdenTraspaso($rut, $serie, $tipoDoc, $telefono, $folio, $latitud, $longitud, $idUsuario)
+	{
+		$query = $this->db->query("call `traspasosdb`.`agregarOrdenTraspaso`(".($rut == "null" ? $rut : ("'".$rut."'")).", ".($serie == "null" ? $serie : ("'".$serie."'")).", ".$tipoDoc.", ".($telefono == "null" ? $telefono : ("'".$telefono."'")).", ".($folio == "null" ? $folio : ("'".$folio."'")).", ".($latitud == "null" ? $latitud : ("'".$latitud."'")).", ".($longitud == "null" ? $longitud : ("'".$longitud."'")).", ".$idUsuario.");");
+		return $query->result_array();
+	}
+	
 }

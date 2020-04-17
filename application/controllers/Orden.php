@@ -836,4 +836,73 @@ class Orden extends CI_Controller {
 		}
     }	
 
+    public function agregarOrdenTraspaso()
+	{
+		$usuario = $this->session->userdata();
+		if(isset($usuario['id_usuario'])){
+			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+				 $rut = "null";
+			     $serie = "null";
+			     $tipoDoc = "null";
+			     $telefono = "null";
+			     $folio = "null";
+			     $latitud = "null";
+			     $longitud = "null";
+
+				if(!is_null($this->input->post('inputRut')) && $this->input->post('inputRut') != "-1" && $this->input->post('inputRut') != "")
+					$rut = trim($this->input->post('inputRut'));
+
+				if(!is_null($this->input->post('inputSerie')) && $this->input->post('inputSerie') != "-1" && $this->input->post('inputSerie') != "")
+					$serie = trim($this->input->post('inputSerie'));
+
+				if(!is_null($this->input->post('selectTipoDoc')) && is_numeric($this->input->post('selectTipoDoc')) && $this->input->post('selectTipoDoc') != "-1" && $this->input->post('selectTipoDoc') != "" && (floatval($this->input->post('selectTipoDoc')) > 0) )
+					$tipoDoc = trim($this->input->post('selectTipoDoc'));
+
+				if(!is_null($this->input->post('inputTelefono')) && is_numeric($this->input->post('inputTelefono')) && $this->input->post('inputTelefono') != "-1" && $this->input->post('inputTelefono') != "" && (floatval($this->input->post('inputTelefono')) > 0))
+					$telefono = trim($this->input->post('inputTelefono'));
+
+				if(!is_null($this->input->post('inputFolio')) && is_numeric($this->input->post('inputFolio')) && $this->input->post('inputFolio') != "-1" && $this->input->post('inputFolio') != "" && $this->input->post('inputFolio') != "-1" && $this->input->post('inputFolio') != "" && (floatval($this->input->post('inputFolio')) > 0) )
+					$folio = trim($this->input->post('inputFolio'));
+
+				$idUsuario = $usuario['id_usuario'];
+
+				$resultado = $this->Orden_model->agregarOrdenTraspaso($rut, $serie, $tipoDoc, $telefono, $folio, $latitud, $longitud, $idUsuario);
+
+				if($resultado != null && sizeof($resultado[0]) >= 1 && is_numeric($resultado[0]['resultado']))
+				{
+					$datos['mensaje'] = 'Se ha agregado exitosamente la Orden de Traspaso.';
+					$datos['resultado'] = 1;
+				}
+				echo json_encode($datos);
+
+				/*
+				$traspasos = $this->Orden_model->listarTraspasosUsuario($usuario['id_usuario'], $id_sucursal, $id_usuario_vendedor, $fecha_desde, $fecha_hasta, $id_estado_rc, $id_estado_c, "null");
+
+				if(isset($traspasos))
+				{
+					
+					$mensaje = '';
+					$resultado = 1;
+					$datos = array('mensaje' =>$mensaje, 'resultado' => $resultado, 'tabla' => $traspasos);
+					echo json_encode($datos);
+				}else{
+					$mensaje = 'Ocurrió un error al obtener las ordenes de traspasos.';
+					$resultado = 0;
+					$datos = array('mensaje' =>$mensaje, 'resultado' => $resultado, 'tabla' => $traspasos);
+					echo json_encode($datos);
+				}*/
+			}else
+			{
+				$usuario['controller'] = 'orden';
+				$this->load->view('temp/header');
+				$this->load->view('temp/menu', $usuario);
+				$this->load->view('agregarOrdenTraspaso', $usuario);
+				$this->load->view('temp/footer', $usuario);
+			}
+		}else
+		{
+			redirect('Inicio');
+		}
+	}
+
 }
