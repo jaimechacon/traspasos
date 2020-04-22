@@ -657,7 +657,7 @@ class Sms extends CI_Controller {
 	    //$mensaje = "Número de Atención: ".$idllamada." Rut Cliente: ".$rut;
 
 	    //$client = new SoapClient(WS_URL_ITD);
-	    $client = new SoapClient('http://ida.itdchile.cl/services/smsApiService?wsdl');
+	    $client = new SoapClient('https://ida.itdchile.cl/services/smsApiService?wsdl');
 
 	    $array_ws = array('in0' => 'jchacon',
 	                      'in1' => 'Provida2020$$',
