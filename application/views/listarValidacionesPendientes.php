@@ -6,7 +6,7 @@
 	}
 ?>
 <div class="row p-3" id="contenedor">
-	<a id="link_rc" name="link_rc" target="_blank" class="btn btn-primary" href="https://portal.sidiv.registrocivil.cl/usuarios-portal/pages/DocumentRequestStatus.xhtml">Registro Civil</a>
+	<a id="link_rc" name="link_rc" target="_blank" class="btn btn-primary" href="https://www.registrocivil.cl/principal/servicios-en-linea/consulta-vigencia-documento-1">Registro Civil</a>
 	<div id="tDatos" class="col-sm-12 p-3" name="tDatos">
 		<div class="table-responsive" id="div_tabla_datos" name="div_tabla_datos">
 			<table class="table table-sm table-hover">
