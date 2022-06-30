@@ -12,10 +12,11 @@ class Usuario_model extends CI_Model
 	{
 		//$usuario = $this->db->get_where('usuarios', array('u_email' => $email), 1);
 
-		$this->db->select('usuarios.id_usuario, usuarios.u_rut, usuarios.u_nombres, usuarios.u_apellidos, perfiles.pf_analista, usuarios.u_contrasenia');
+		$this->db->select('usuarios.id_usuario, usuarios.u_rut, usuarios.u_nombres, usuarios.u_apellidos, perfiles.pf_analista, usuarios.u_contrasenia, empresas.url_validacion_cedula');
 		$this->db->from('usuarios');
 		$this->db->join('usuarios_perfiles','usuarios.id_usuario = usuarios_perfiles.id_usuario');
 		$this->db->join('perfiles','usuarios_perfiles.id_perfil = perfiles.id_perfil');
+		$this->db->join('empresas','usuarios.id_empresa = empresas.id_empresa');
 		$this->db->where('usuarios.u_rut',$rut);
 		$this->db->where('usuarios.id_estado','1');
 		$usuario = $this->db->get();

@@ -44,6 +44,7 @@ class Login extends CI_Controller {
 			$this->session->set_userdata('u_nombres', $result['u_nombres']);
 			$this->session->set_userdata('u_apellidos', $result['u_apellidos']);
 			$this->session->set_userdata('pf_analista', $result['pf_analista']);
+			$this->session->set_userdata('url_validacion_cedula', $result['url_validacion_cedula']);
 			$this->session->set_userdata('u_menu', $menus);
 			redirect('Inicio');
 		}else{

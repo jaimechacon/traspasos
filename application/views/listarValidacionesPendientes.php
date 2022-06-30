@@ -1,12 +1,13 @@
 <?php
 	$id_usuario=$this->session->userdata('id_usuario');
+	$url_validacion_cedula=$this->session->userdata('url_validacion_cedula');
 	 
 	if(!$id_usuario){
 	  redirect('Login');
 	}
 ?>
 <div class="row p-3" id="contenedor">
-	<a id="link_rc" name="link_rc" target="_blank" class="btn btn-primary" href="https://www.registrocivil.cl/principal/servicios-en-linea/consulta-vigencia-documento-1">Registro Civil</a>
+	<a id="link_rc" name="link_rc" target="_blank" class="btn btn-primary" href="<?php echo $url_validacion_cedula; ?>">Registro Civil</a>
 	<div id="tDatos" class="col-sm-12 p-3" name="tDatos">
 		<div class="table-responsive" id="div_tabla_datos" name="div_tabla_datos">
 			<table class="table table-sm table-hover">
