@@ -8,6 +8,7 @@ class Sms extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Sms_model');
 		$this->load->model('App_model');
+		$this->load->library('excel');
 		//$this->load->library('NuSoap_lib');
 	}
 
@@ -434,21 +435,21 @@ class Sms extends CI_Controller {
 													$codigo_cuenta_personal = $array['linea'][$i]['@attributes']['cuentaspersonales'];
 													$es_cta_obligatoria = substr($codigo_cuenta_personal, 0, 1);
 													if ($es_cta_obligatoria == "1") {
-														$rut = $array['linea'][$i]['@attributes']['rut'];
-														$nombres = $array['linea'][$i]['@attributes']['nombres'];
-														$apellido_Paterno = $array['linea'][$i]['@attributes']['apellidopaterno'];
-														$apellid_Materno = $array['linea'][$i]['@attributes']['apellidomaterno'];
-														$cod_AFP = $array['linea'][$i]['@attributes']['codafp'];
-														$nombre_AFP = $array['linea'][$i]['@attributes']['nomafp'];
-														$fecha_Nac = $array['linea'][$i]['@attributes']['fechanacimiento'];
-														$genero = $array['linea'][$i]['@attributes']['sexo'];
-														$fecha_Ing = $array['linea'][$i]['@attributes']['fechaingreso'];
-														$fecha_Sub = $array['linea'][$i]['@attributes']['fechasubscripcion'];
-														$fecha_Inc = $array['linea'][$i]['@attributes']['fechaincorporacion'];
-														$tipo_Solicitud = $array['linea'][$i]['@attributes']['tiposolicitud'];
-														$situacion = $array['linea'][$i]['@attributes']['situacion'];
-														$cta_Personales = $array['linea'][$i]['@attributes']['cuentaspersonales'];
-														break;
+							$rut = $array['linea'][$i]['@attributes']['rut'];
+							$nombres = $array['linea'][$i]['@attributes']['nombres'];
+							$apellido_Paterno = $array['linea'][$i]['@attributes']['apellidopaterno'];
+							$apellid_Materno = $array['linea'][$i]['@attributes']['apellidomaterno'];
+							$cod_AFP = $array['linea'][$i]['@attributes']['codafp'];
+							$nombre_AFP = $array['linea'][$i]['@attributes']['nomafp'];
+							$fecha_Nac = $array['linea'][$i]['@attributes']['fechanacimiento'];
+							$genero = $array['linea'][$i]['@attributes']['sexo'];
+							$fecha_Ing = $array['linea'][$i]['@attributes']['fechaingreso'];
+							$fecha_Sub = $array['linea'][$i]['@attributes']['fechasubscripcion'];
+							$fecha_Inc = $array['linea'][$i]['@attributes']['fechaincorporacion'];
+							$tipo_Solicitud = $array['linea'][$i]['@attributes']['tiposolicitud'];
+							$situacion = $array['linea'][$i]['@attributes']['situacion'];
+							$cta_Personales = $array['linea'][$i]['@attributes']['cuentaspersonales'];
+							break;
 													}
 												}
 											}else
@@ -483,7 +484,7 @@ class Sms extends CI_Controller {
 												{
 													if(isset($resultado[0]) == "1")
 													{
-														
+							
 													}else
 													{
 
@@ -675,6 +676,369 @@ class Sms extends CI_Controller {
 	      }else{
 	    return 0;
 	      } 
-    }
+    	}
+
+    	public function listarTraspasosValidados()
+	{
+		$usuario = $this->session->userdata();
+		if (isset($usuario['id_usuario'])) {
+			$traspasos = null;
+			$mes = null;
+			$anio = null;
+			$anio_defecto = date('Y');
+			$mes_defecto = date('m');
+
+			if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+				$mes = "null";
+				$anio = "null";
+				$fecha = null;
+
+				if(!is_null($this->input->post('fecha')) && $this->input->post('fecha') != "-1" && $this->input->post('fecha') != ""
+				)
+					$fecha = (trim($this->input->post('fecha')) == "" ? "''" : $this->input->post('fecha'));
+
+				if (!is_null($fecha) && strpos($fecha, '-') > 0) {
+					$anio = substr($fecha, 0, strpos($fecha, '-'));
+					$mes = substr($fecha, strpos($fecha, '-')+1, 2);
+
+					$traspasos = $this->Sms_model->listarTraspasosValidados($usuario['id_usuario'], $mes, $anio);
+
+					if(isset($traspasos))
+					{
+						$mensaje = '';
+						$resultado = 1;
+						$datos = array('mensaje' =>$mensaje, 'resultado' => $resultado, 'tabla' => $traspasos);
+						echo json_encode($datos);
+					}else{
+						$mensaje = 'Ocurrió un error al obtener las ordenes de traspasos.';
+						$resultado = 0;
+						$datos = array('mensaje' =>$mensaje, 'resultado' => $resultado, 'tabla' => $traspasos);
+						echo json_encode($datos);
+					}
+
+				}else{
+					$mensaje = 'Ocurrió un error al obtener las ordenes de traspasos, debe seleccionar mes y año.';
+					$resultado = 0;
+					$datos = array('mensaje' =>$mensaje, 'resultado' => $resultado, 'tabla' => $traspasos);
+					echo json_encode($datos);
+				}
+
+
+			}else{
+				$traspasos = $this->Sms_model->listarTraspasosValidados($usuario['id_usuario'], $mes_defecto, $anio_defecto);
+				$usuario['traspasos'] = $traspasos;
+				#var_dump($traspasos);
+				$usuario['controller'] = 'sms';
+				$this->load->view('temp/header');
+				$this->load->view('temp/menu', $usuario);
+				$this->load->view('listarTraspasosValidados', $usuario);
+				$this->load->view('temp/footer', $usuario);
+			}
+
+
+
+			
+		}else
+		{
+			redirect('Inicio');
+		}
+		
+	}
+
+
+
+	public function exportarexcelTV(){
+		$usuario = $this->session->userdata();
+		$datos = [];
+		if($this->session->userdata('id_usuario'))
+		{
+			
+		     	$traspasos = null;
+			$mes = null;
+			$anio = null;
+			$anio_defecto = date('Y');
+			$mes_defecto = date('m');
+
+			if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+				$mes = "null";
+				$anio = "null";
+				$fecha = null;
+
+				if(!is_null($this->input->get('fecha')) && $this->input->get('fecha') != "-1" && $this->input->get('fecha') != ""
+				)
+					$fecha = (trim($this->input->get('fecha')) == "" ? "''" : $this->input->get('fecha'));
+
+				if (!is_null($fecha) && strpos($fecha, '-') > 0) {
+					$anio = substr($fecha, 0, strpos($fecha, '-'));
+					$mes = substr($fecha, strpos($fecha, '-')+1, 2);
+
+					$traspasos = $this->Sms_model->listarTraspasosValidados($usuario['id_usuario'], $mes, $anio);
+
+					if(isset($traspasos))
+					{
+						$mensaje = '';
+						$resultado = 1;
+						#$datos = array('mensaje' =>$mensaje, 'resultado' => $resultado, 'tabla' => $traspasos);
+						#echo json_encode($datos);
+
+
+						
+						$fecha_prueba = new DateTime();
+						$fecha_prueba->setDate($anio, $mes, 1);
+
+						$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+						#var_dump($meses[$fecha_prueba->format('m')-1]);
+						#var_dump($fecha_prueba);
+						#echo $fecha_prueba->format('M');
+
+						$nombre_mes = $meses[$fecha_prueba->format('m')-1];
+						$nombre_pestaña = $nombre_mes.'_'.$anio;
+
+
+						$objDrawing = new PHPExcel_Worksheet_Drawing();
+						$objDrawing->setName('test_img');
+						$objDrawing->setDescription('test_img');
+						#$objDrawing->setPath('../images/logo.png');
+						$objDrawing->setPath('./assets/img/zenweb.png');
+						$objDrawing->setCoordinates('A2');
+						//setOffsetX works properly
+						$objDrawing->setOffsetX(3);
+						$objDrawing->setOffsetY(3);
+						//set width, height
+						$objDrawing->setWidth(70); 
+						$objDrawing->setHeight(70); 
+						$objDrawing->setWorksheet($this->excel->getActiveSheet());
+
+						$this->excel->getActiveSheet()->setTitle($nombre_pestaña);
+					        
+					        //$this->excel->getActiveSheet()->setCellValue("A1", 'ID OT');
+							//$this->excel->getActiveSheet()->setCellValue("B1", 'Sucursal');
+							//$this->excel->getActiveSheet()->setCellValue("C1", 'Celular Origen');
+							
+							//$this->excel->getActiveSheet()->setCellValue("F1", 'Perfil');
+							#$this->excel->getActiveSheet()->setCellValue("A1", 'Folio');
+							#$this->excel->getActiveSheet()->setCellValue("B1", 'Rut Afiliado');
+							#$this->excel->getActiveSheet()->setCellValue("C1", 'AFP Origen');
+							#$this->excel->getActiveSheet()->setCellValue("D1", 'Fecha');
+							#$this->excel->getActiveSheet()->setCellValue("E1", 'Usuario');
+
+
+							#$titulo = "LISTADO DE LLAMADAS SERVICIO API REGISTRO CIVIL ". PHP_EOL." ".$nombre_mes.' '.$anio;
+					        	$titulo = "LISTADO DE LLAMADAS SERVICIO API REGISTRO CIVIL \n".$nombre_mes.' '.$anio;
+
+							$this->excel->getActiveSheet()->getColumnDimension('A')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('A')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('B')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('C')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('C')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('D')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('D')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('E')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('E')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('F')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('F')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('G')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('G')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('H')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('H')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('I')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('I')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('J')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('J')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('K')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('K')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('L')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('L')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('M')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('M')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('N')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('N')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('O')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('O')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('P')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('P')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('Q')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('Q')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('R')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('R')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('S')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('S')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('T')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('T')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('U')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('U')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('V')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('V')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('W')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('W')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('X')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('X')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('Y')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('Y')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('Z')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('Z')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('AA')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('AA')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('AB')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('AB')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('AC')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('AC')->setWidth(12.4);
+							$this->excel->getActiveSheet()->getColumnDimension('AD')->setAutoSize(false);
+							$this->excel->getActiveSheet()->getColumnDimension('AD')->setWidth(12.4);
+
+
+							$this->excel->getActiveSheet()->setCellValue('A2', $titulo);
+							$this->excel->getActiveSheet()->mergeCells('A2:AD5');
+
+							$style = array(
+								'alignment' => array(
+									'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+									'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+								),
+								'font' => [
+									'size' => 20
+								],
+								'borders' => array(
+								    'allborders' => array(
+								      'style' => PHPExcel_Style_Border::BORDER_THIN
+								    )
+								)
+							);
+
+							$style_negrita = array(
+								'font' => array(
+									'name' => 'Helvetica Neue',
+									'bold' => true
+								)
+							);
+
+
+							
+
+							$this->excel->getActiveSheet()->getStyle("A2:AD5")->applyFromArray($style);
+							$this->excel->getActiveSheet()->getStyle('A2:AD5')->getAlignment()->setWrapText(true);
+							$this->excel->getActiveSheet()->getStyle('A7:AD7')->applyFromArray($style_negrita);
+							$this->excel->getActiveSheet()->setCellValue("A7", 'id_log_api_cedula');
+							$this->excel->getActiveSheet()->setCellValue("B7", 'tipo_result');
+							$this->excel->getActiveSheet()->setCellValue("C7", 'estado');
+							$this->excel->getActiveSheet()->setCellValue("D7", 'cod_codigo');
+							$this->excel->getActiveSheet()->setCellValue("E7", 'accion');
+							$this->excel->getActiveSheet()->setCellValue("F7", 'aplicacion');
+							$this->excel->getActiveSheet()->setCellValue("G7", 'parametros');
+							$this->excel->getActiveSheet()->setCellValue("H7", 'ruta');
+							$this->excel->getActiveSheet()->setCellValue("I7", 'uri');
+							$this->excel->getActiveSheet()->setCellValue("J7", 'cod_estado_respuesta');
+							$this->excel->getActiveSheet()->setCellValue("K7", 'desc_estado_respuesta');
+							$this->excel->getActiveSheet()->setCellValue("L7", 'runPersona_resultado');
+							$this->excel->getActiveSheet()->setCellValue("M7", 'dvPersona_resultado');
+							$this->excel->getActiveSheet()->setCellValue("N7", 'codTipoDocumento_resultado');
+							$this->excel->getActiveSheet()->setCellValue("O7", 'codClaseDocumento_resultado');
+							$this->excel->getActiveSheet()->setCellValue("P7", 'numDocumento_resultado');
+							$this->excel->getActiveSheet()->setCellValue("Q7", 'numSerie_resultado');
+							$this->excel->getActiveSheet()->setCellValue("R7", 'indVigencia_resultado');
+							$this->excel->getActiveSheet()->setCellValue("S7", 'fhoVcto_resultado');
+							$this->excel->getActiveSheet()->setCellValue("T7", 'indBloqueo_resultado');
+							$this->excel->getActiveSheet()->setCellValue("U7", 'obs_respuesta');
+							$this->excel->getActiveSheet()->setCellValue("V7", 'error_respuesta');
+							$this->excel->getActiveSheet()->setCellValue("W7", 'tiempo');
+							$this->excel->getActiveSheet()->setCellValue("X7", 'organizacion');
+							$this->excel->getActiveSheet()->setCellValue("Y7", 'ip');
+							$this->excel->getActiveSheet()->setCellValue("Z7", 'id');
+							$this->excel->getActiveSheet()->setCellValue("AA7", 'fecha');
+							$this->excel->getActiveSheet()->setCellValue("AB7", 'cod_obs_respuesta');
+							$this->excel->getActiveSheet()->setCellValue("AC7", 'descripcion_obs_respuesta');
+							$this->excel->getActiveSheet()->setCellValue("AD7", 'id_sms');
+
+							$this->excel->getActiveSheet()->getStyle("A7:AD7")->getFont()->setSize(10);
+
+
+							
+							
+							
+					        //Definimos la data del cuerpo.        
+					        $contador = 7;
+					        foreach($traspasos as $registro){
+					           //Incrementamos una fila más, para ir a la siguiente.
+					           $contador++;
+					           //Informacion de las filas de la consulta.
+					           	$this->excel->getActiveSheet()->setCellValue("A{$contador}", $registro['id_log_api_cedula']);
+							$this->excel->getActiveSheet()->setCellValue("B{$contador}", $registro['tipo_result']);
+							$this->excel->getActiveSheet()->setCellValue("C{$contador}", $registro['estado']);
+							$this->excel->getActiveSheet()->setCellValue("D{$contador}", $registro['cod_codigo']);
+							$this->excel->getActiveSheet()->setCellValue("E{$contador}", $registro['accion']);
+							$this->excel->getActiveSheet()->setCellValue("F{$contador}", $registro['aplicacion']);
+							$this->excel->getActiveSheet()->setCellValue("G{$contador}", $registro['parametros']);
+							$this->excel->getActiveSheet()->setCellValue("H{$contador}", $registro['ruta']);
+							$this->excel->getActiveSheet()->setCellValue("I{$contador}", $registro['uri']);
+							$this->excel->getActiveSheet()->setCellValue("J{$contador}", $registro['cod_estado_respuesta']);
+							$this->excel->getActiveSheet()->setCellValue("K{$contador}", $registro['desc_estado_respuesta']);
+							$this->excel->getActiveSheet()->setCellValue("L{$contador}", $registro['runPersona_resultado']);
+							$this->excel->getActiveSheet()->setCellValue("M{$contador}", $registro['dvPersona_resultado']);
+							$this->excel->getActiveSheet()->setCellValue("N{$contador}", $registro['codTipoDocumento_resultado']);
+							$this->excel->getActiveSheet()->setCellValue("O{$contador}", $registro['codClaseDocumento_resultado']);
+							$this->excel->getActiveSheet()->setCellValue("P{$contador}", $registro['numDocumento_resultado']);
+							$this->excel->getActiveSheet()->setCellValue("Q{$contador}", $registro['numSerie_resultado']);
+							$this->excel->getActiveSheet()->setCellValue("R{$contador}", $registro['indVigencia_resultado']);
+							$this->excel->getActiveSheet()->setCellValue("S{$contador}", $registro['fhoVcto_resultado']);
+							$this->excel->getActiveSheet()->setCellValue("T{$contador}", $registro['indBloqueo_resultado']);
+							$this->excel->getActiveSheet()->setCellValue("U{$contador}", $registro['obs_respuesta']);
+							$this->excel->getActiveSheet()->setCellValue("V{$contador}", $registro['error_respuesta']);
+							$this->excel->getActiveSheet()->setCellValue("W{$contador}", $registro['tiempo']);
+							$this->excel->getActiveSheet()->setCellValue("X{$contador}", $registro['organizacion']);
+							$this->excel->getActiveSheet()->setCellValue("Y{$contador}", $registro['ip']);
+							$this->excel->getActiveSheet()->setCellValue("Z{$contador}", $registro['id']);
+							$this->excel->getActiveSheet()->setCellValue("AA{$contador}", $registro['fecha']);
+							$this->excel->getActiveSheet()->setCellValue("AB{$contador}", $registro['cod_obs_respuesta']);
+							$this->excel->getActiveSheet()->setCellValue("AC{$contador}", $registro['descripcion_obs_respuesta']);
+							$this->excel->getActiveSheet()->setCellValue("AD{$contador}", $registro['id_sms']);
+					        }
+
+					        $style_contenido = array(
+							'font' => array(
+								'name' => 'Calibri',
+								'size' => 12
+							)
+						);
+						
+						$texto = 'A8:AD'.$contador;
+						#var_dump($texto);
+						#exit();
+
+						$this->excel->getActiveSheet()->getStyle($texto)->applyFromArray($style_contenido);
+
+					        //Le ponemos un nombre al archivo que se va a generar.
+					        $archivo = "API REGISTRO CIVIL {$nombre_mes} - {$anio}.xls";
+					        header('Content-Type: application/force-download');
+					        header('Content-Disposition: attachment;filename="'.$archivo.'"');
+					        header('Cache-Control: max-age=0');
+
+					        #$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+					        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+					        //Hacemos una salida al navegador con el archivo Excel.
+					        $objWriter->save('php://output'); 
+					}else{
+						$mensaje = 'Ocurrió un error al obtener las ordenes de traspasos.';
+						$resultado = 0;
+						$datos = array('mensaje' =>$mensaje, 'resultado' => $resultado, 'tabla' => $traspasos);
+						echo json_encode($datos);
+					}
+
+				}else{
+					$mensaje = 'Ocurrió un error al obtener las ordenes de traspasos, debe seleccionar mes y año.';
+					$resultado = 0;
+					$datos = array('mensaje' =>$mensaje, 'resultado' => $resultado, 'tabla' => $traspasos);
+					echo json_encode($datos);
+				}
+			}
+		}
+		else
+		{
+			redirect('Login');
+		}
+    	}	
 	
 }
