@@ -726,6 +726,8 @@ class Sms extends CI_Controller {
 
 
 			}else{
+				$usuario["mes_defecto"] = $mes_defecto;
+				$usuario["anio_defecto"] = $anio_defecto;
 				$traspasos = $this->Sms_model->listarTraspasosValidados($usuario['id_usuario'], $mes_defecto, $anio_defecto);
 				$usuario['traspasos'] = $traspasos;
 				#var_dump($traspasos);

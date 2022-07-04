@@ -21,7 +21,7 @@
 						<span class="">Mes - A&ntilde;o</span>
 					</div>
 					<div class="col-sm-9">
-						<input type="month" id="fecha" name="fecha" class="form-control">
+						<input type="month" id="fecha" name="fecha" class="form-control" value="<?php echo (!is_null($anio_defecto) ? $anio_defecto.'-'.$mes_defecto : ''); ?>">
 					</div>
 				</div>
 			</div>
