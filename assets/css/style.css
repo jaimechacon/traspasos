@@ -1,3 +1,12 @@
+.cant_total {
+    font-size: 30px;
+}
+
+.cant_total_r{
+    font-size: 30px;
+    color: blue;
+}
+
 div#listaTraspasos_paginate {
     float: right;
 }

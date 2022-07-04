@@ -121,6 +121,7 @@ $(document).ready(function() {
 
 	                   		if(myJSON.resultado == "1")
 	                   		{
+	                   			document.getElementById('cant_total').innerHTML = myJSON.tabla.length;
 								$("#tTraspasos").html('');
 								var row = '';
 					            row = row.concat('\n<table class="table table-sm table-hover table-responsive" id="listaTraspasos" name="listaTraspasos">');

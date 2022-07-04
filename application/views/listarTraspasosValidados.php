@@ -25,6 +25,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-3">
+						<span class="cant_total">Total OT Validadas:</span>
+					</div>
+					<div class="col-sm-9">
+						<label class="cant_total_r" id="cant_total"><?php echo (!is_null($traspasos) ? sizeof($traspasos) : ""); ?></label>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
