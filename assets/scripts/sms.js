@@ -282,7 +282,7 @@ window.onload = function () {
 		}
 	});*/
 
-	if(window.location.pathname.split('/')[2].toLowerCase() == 'listarTraspasosValidados'.toLowerCase())
+	if(window.location.pathname.split('/')[2] != null && window.location.pathname.split('/')[2].toLowerCase() == 'listarTraspasosValidados'.toLowerCase())
     {
 		$('#listaTraspasos').dataTable({
 	        searching: true,
